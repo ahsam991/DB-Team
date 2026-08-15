@@ -146,7 +146,15 @@
   .video-shell{background:var(--paper);border:1px solid var(--line);border-radius:26px;padding:36px;box-shadow:var(--shadow-sm)}
   .video-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:32px;align-items:center}
   .video-frame{position:relative;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);aspect-ratio:16/9;background:#14110c;border:1px solid var(--line-strong)}
-  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none}
+  .video-frame.play iframe{display:block}
+  .video-frame.play .video-thumb{display:none}
+  .video-thumb{position:absolute;inset:0;width:100%;height:100%;cursor:pointer;background:#14110c}
+  .video-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .video-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.45))}
+  .vplay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:76px;height:76px;border-radius:50%;background:rgba(217,122,31,.95);color:#fff;display:grid;place-items:center;font-size:26px;padding-left:6px;box-shadow:0 18px 40px -12px rgba(0,0,0,.6);transition:all .25s}
+  .video-thumb:hover .vplay{transform:translate(-50%,-50%) scale(1.1);background:var(--amber)}
+  .video-thumb:focus-visible{outline:3px solid var(--amber-2);outline-offset:-3px}
   .video-side .kicker{font-family:var(--font-mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:600;display:block;margin-bottom:10px}
   .video-side h2{font-family:var(--font-disp);font-weight:800;font-size:clamp(26px,3.4vw,38px);letter-spacing:-1px;line-height:1.12}
   .video-side p{color:var(--muted);font-weight:300;font-size:15.5px;margin-top:14px;line-height:1.8}
@@ -306,7 +314,11 @@
     <div class="video-shell" data-reveal>
       <div class="video-grid">
         <div class="video-frame">
-          <iframe src="https://www.youtube.com/embed/En4uBQX7edY" title="Project Presentation Video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <div class="video-thumb" id="videoThumb" role="button" tabindex="0" aria-label="Play Project Presentation Video">
+            <img src="https://i.ytimg.com/vi/En4uBQX7edY/hqdefault.jpg" alt="Project Presentation Video thumbnail" loading="lazy">
+            <span class="vplay">▶</span>
+          </div>
+          <iframe id="videoFrame" data-src="https://www.youtube.com/embed/En4uBQX7edY?autoplay=1" title="Project Presentation Video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
         <div class="video-side">
           <span class="kicker">02 · Presentation</span>
@@ -349,6 +361,10 @@
   burger.addEventListener("click",()=>mmenu.classList.add("open"));
   document.getElementById("mmenuClose").addEventListener("click",()=>mmenu.classList.remove("open"));
   mmenu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>mmenu.classList.remove("open")));
+
+  const thumb=document.getElementById("videoThumb"),frame=document.getElementById("videoFrame"),vframe=document.querySelector(".video-frame");
+  function playVideo(){if(vframe.classList.contains("play"))return;frame.src=frame.dataset.src;vframe.classList.add("play");}
+  if(thumb){thumb.addEventListener("click",playVideo);thumb.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();playVideo();}});}
 
   const tb=document.getElementById("topbtn");
   window.addEventListener("scroll",()=>tb.classList.toggle("show",window.scrollY>500),{passive:true});
