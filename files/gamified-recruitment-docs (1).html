@@ -87,7 +87,7 @@ p{margin:.4em 0 1em;color:var(--ink-soft);}
 }
 #topbar .topbar{display:flex;align-items:center;justify-content:space-between;height:62px;max-width:1200px;margin:0 auto;padding:0 24px;}
 #topbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;text-decoration:none;color:var(--ink)}
-#topbar .brand .mark{width:32px;height:32px;border-radius:10px;background:var(--amber);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:15px;box-shadow:0 6px 16px -6px rgba(217,122,31,.6)}
+#topbar .brand .mark{width:32px;height:32px;border-radius:10px;display:block;object-fit:cover;box-shadow:0 6px 16px -6px rgba(217,122,31,.6)}
 #topbar nav.topnav{display:flex;gap:4px;align-items:center}
 #topbar nav.topnav a{color:var(--ink-soft);text-decoration:none;font-size:14.5px;font-weight:500;padding:8px 14px;border-radius:999px;transition:all .2s}
 #topbar nav.topnav a:hover{color:var(--ink);background:var(--paper-2)}
@@ -439,7 +439,7 @@ footer .foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.3fr;gap:2.2rem;p
 footer .fcol{min-width:0}
 footer .fcol.brand p{color:var(--ink-soft);font-size:.85rem;line-height:1.6;margin:.9rem 0 1rem;font-family:var(--font-mono)}
 footer .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;text-decoration:none;color:var(--ink)}
-footer .brand .mark{width:32px;height:32px;border-radius:10px;background:var(--amber);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:15px;box-shadow:0 6px 16px -6px rgba(217,122,31,.6)}
+footer .brand .mark{width:32px;height:32px;border-radius:10px;display:block;object-fit:cover;box-shadow:0 6px 16px -6px rgba(217,122,31,.6)}
 footer .fchips{display:flex;flex-wrap:wrap;gap:.4rem}
 footer .chip{font-family:var(--font-mono);font-size:.66rem;color:var(--teal);background:rgba(31,122,92,.1);border:1px solid rgba(31,122,92,.3);border-radius:999px;padding:.22rem .6rem}
 footer h4{font-family:var(--font-display);font-weight:700;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin:0 0 .9rem}
@@ -499,7 +499,7 @@ footer #footTop:hover{text-decoration:underline}
 
 <header id="topbar">
   <div class="wrap topbar">
-    <a class="brand" href="../index.html"><span class="mark">ক</span> কাজকর্ম শিখ</a>
+    <a class="brand" href="../index.html"><img class="mark" src="images/logo.png" alt="কাজকর্ম শিখ"> কাজকর্ম শিখ</a>
     <nav class="topnav">
       <a href="../index.html#hub">Documents</a>
       <a href="team.html">Team</a>
@@ -2229,7 +2229,7 @@ CREATE INDEX idx_candidates_active ON candidates(candidate_id)
         <div class="foot-blob b2"></div>
         <div class="wrap foot">
           <div class="fcol brand">
-            <a class="brand" href="../index.html"><span class="mark">ক</span> কাজকর্ম শিখ</a>
+            <a class="brand" href="../index.html"><img class="mark" src="images/logo.png" alt="কাজকর্ম শিখ"> কাজকর্ম শিখ</a>
             <p>Database Team-এর full documentation hub — guides, system flows ও database schema সব এক জায়গায় connected।</p>
             <div class="fchips">
               <span class="chip">📄 v4.0</span>
