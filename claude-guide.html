@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude ব্যবহারের ২৫টি সেটিংস ও অভ্যাস</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg-soft: #171a24;
+    --card: #1c2029;
+    --card-hover: #222733;
+    --border: #2a2f3d;
+    --text: #e8eaf0;
+    --muted: #9aa3b5;
+    --accent: #d97757;
+    --accent-2: #e8a76c;
+    --blue: #5aa2f0;
+    --green: #4cbf8f;
+    --purple: #a78bfa;
+    --radius: 16px;
+    --maxw: 1180px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body {
+    font-family: "Hind Siliguri", "Inter", sans-serif;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(217,119,87,.14), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(90,162,240,.10), transparent 55%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 17px;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 88px 0 56px; position: relative; overflow: hidden; }
+  .hero .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(217,119,87,.12); color: var(--accent-2);
+    border: 1px solid rgba(217,119,87,.35);
+    padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 500;
+    letter-spacing: .4px; margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-size: clamp(34px, 6vw, 56px); line-height: 1.18; font-weight: 700;
+    letter-spacing: -.5px; max-width: 880px;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent-2); }
+  .hero p.lead {
+    margin-top: 20px; color: var(--muted); font-size: 19px; max-width: 660px; font-weight: 300;
+  }
+  .hero-stats {
+    display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap;
+  }
+  .stat {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 22px; min-width: 140px;
+  }
+  .stat b { display: block; font-size: 28px; color: var(--accent-2); font-weight: 700; }
+  .stat span { font-size: 14px; color: var(--muted); }
+
+  /* ---------- Layout ---------- */
+  .layout { display: grid; grid-template-columns: 250px 1fr; gap: 40px; padding-bottom: 80px; }
+
+  /* ---------- Sidebar ---------- */
+  nav.toc {
+    position: sticky; top: 24px; align-self: start;
+    background: var(--bg-soft); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 18px; max-height: calc(100vh - 48px);
+    overflow-y: auto;
+  }
+  nav.toc h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 14px; font-weight: 600; }
+  nav.toc a {
+    display: block; color: var(--muted); text-decoration: none; font-size: 15px;
+    padding: 7px 10px; border-radius: 8px; border-left: 3px solid transparent;
+    transition: all .2s;
+  }
+  nav.toc a:hover { color: var(--text); background: var(--card); }
+  nav.toc a.active { color: var(--accent-2); border-left-color: var(--accent); background: rgba(217,119,87,.08); }
+  nav.toc .sub { padding-left: 14px; font-size: 14px; }
+
+  /* ---------- Sections ---------- */
+  .part { margin-bottom: 56px; }
+  .part-head {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+  }
+  .part-head .num {
+    flex-shrink: 0; width: 54px; height: 54px; border-radius: 14px;
+    display: grid; place-items: center; font-weight: 800; font-size: 22px;
+    font-family: "Inter", sans-serif;
+  }
+  .part-head h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 700; }
+  .part-head p { color: var(--muted); font-size: 15px; }
+
+  .p1 .num { background: linear-gradient(135deg,#d97757,#e8a76c); color: #14100c; }
+  .p2 .num { background: linear-gradient(135deg,#5aa2f0,#7cc0ff); color: #0c1522; }
+  .p3 .num { background: linear-gradient(135deg,#4cbf8f,#7fe0b4); color: #0b1a13; }
+  .p4 .num { background: linear-gradient(135deg,#a78bfa,#c4b0ff); color: #120d26; }
+  .p5 .num { background: linear-gradient(135deg,#f0a35a,#ffd08c); color: #241507; }
+
+  .cards { display: grid; gap: 16px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 26px 28px; display: flex; gap: 20px; transition: transform .2s, border-color .2s;
+  }
+  .card:hover { transform: translateY(-2px); border-color: #3a4152; }
+  .card .idx {
+    flex-shrink: 0; font-family: "Inter", sans-serif; font-weight: 800; font-size: 22px;
+    color: var(--accent-2); opacity: .9; width: 42px; line-height: 1.2;
+  }
+  .card h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 16px; font-weight: 300; }
+  .card p .en, .card h3 .en { color: var(--text); font-weight: 500; }
+  .card .tag {
+    display: inline-block; margin-top: 12px; font-size: 12.5px; font-weight: 500;
+    color: var(--accent-2); background: rgba(217,119,87,.1); border: 1px solid rgba(217,119,87,.25);
+    padding: 3px 10px; border-radius: 999px;
+  }
+
+  /* ---------- Callouts (prompts / quotes) ---------- */
+  .callout {
+    margin-top: 14px; border-left: 3px solid var(--accent); background: rgba(217,119,87,.06);
+    border-radius: 0 10px 10px 0; padding: 14px 18px; font-style: italic; color: var(--text);
+    font-size: 16px;
+  }
+  .callout.blue { border-left-color: var(--blue); background: rgba(90,162,240,.07); }
+  .callout .label {
+    display: block; font-style: normal; font-size: 12px; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--accent-2); font-weight: 600; margin-bottom: 4px;
+  }
+  .callout.blue .label { color: var(--blue); }
+
+  /* ---------- Pro tips ---------- */
+  .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .tip {
+    background: linear-gradient(160deg, var(--card), var(--bg-soft));
+    border: 1px solid var(--border); border-radius: var(--radius); padding: 22px;
+    position: relative; overflow: hidden;
+  }
+  .tip::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), transparent);
+  }
+  .tip p { font-size: 15.5px; color: var(--muted); font-weight: 300; }
+
+  /* ---------- Quick start ---------- */
+  .quick {
+    background: linear-gradient(160deg, #1d2433, var(--bg-soft));
+    border: 1px solid var(--border); border-radius: var(--radius); padding: 34px 32px;
+  }
+  .quick h2 { margin-bottom: 22px; font-size: 24px; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; counter-reset: step; }
+  .step {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
+    counter-increment: step; position: relative;
+  }
+  .step::before {
+    content: counter(step); position: absolute; top: -10px; left: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #14100c;
+    font-family: "Inter", sans-serif; font-weight: 800; font-size: 13px;
+    width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center;
+  }
+  .step h4 { font-size: 15px; margin-bottom: 6px; }
+  .step p { font-size: 13.5px; color: var(--muted); font-weight: 300; }
+
+  /* ---------- Closing ---------- */
+  .closing {
+    margin-top: 48px; background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 36px; text-align: center;
+  }
+  .closing h2 { font-size: 26px; margin-bottom: 14px; }
+  .closing p { color: var(--muted); max-width: 720px; margin: 0 auto 12px; font-weight: 300; }
+  .closing .key {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 22px;
+  }
+  .closing .key span {
+    background: var(--bg-soft); border: 1px solid var(--border); border-radius: 999px;
+    padding: 8px 18px; font-size: 15px; font-weight: 500;
+  }
+  .closing .key span b { color: var(--accent-2); }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0 40px; text-align: center; color: var(--muted); font-size: 14px; }
+
+  /* ---------- Back to top ---------- */
+  #top {
+    position: fixed; bottom: 26px; right: 26px; z-index: 50;
+    width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--border);
+    background: var(--card); color: var(--accent-2); font-size: 20px; cursor: pointer;
+    opacity: 0; pointer-events: none; transition: opacity .3s; font-family: "Inter", sans-serif;
+  }
+  #top.show { opacity: 1; pointer-events: auto; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { position: static; max-height: none; display: none; }
+    .hero { padding: 56px 0 40px; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .card { padding: 20px; }
+    .card .idx { font-size: 18px; width: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="badge">✦ Claude Beginner-to-Pro Guide</div>
+    <h1>Claude থেকে consistent, structured ও efficient output পেতে <em>২৫টি সেটিংস ও অভ্যাস</em></h1>
+    <p class="lead">প্রতিটি নতুন চ্যাটে একই কথা বারবার বুঝিয়ে বলার প্রয়োজন নেই — Projects, Skills এবং Memory ঠিকভাবে ব্যবহার করলেই Claude-এর কাজ আরও নির্ভরযোগ্য হয়।</p>
+    <div class="hero-stats">
+      <div class="stat"><b>২৫</b><span>Practice Settings</span></div>
+      <div class="stat"><b>৫</b><span>Sections</span></div>
+      <div class="stat"><b>৫ মিনিট</b><span>Quick Start</span></div>
+      <div class="stat"><b>৭</b><span>Pro Tips</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="toc" id="toc">
+    <h3>বিষয়সূচী</h3>
+    <a href="#setup">১. Setup ঠিক করুন</a>
+    <a href="#speed" class="sub">৮. কাজের গতি বাড়ান</a>
+    <a href="#security" class="sub">১৭. Security ও Privacy</a>
+    <a href="#judgment" class="sub">২১. নিজের বিচারবুদ্ধি</a>
+    <a href="#advanced" class="sub">২৫. Advanced</a>
+    <a href="#tips">Pro Tips</a>
+    <a href="#quickstart">Quick Start</a>
+    <a href="#closing">শেষ কথা</a>
+  </nav>
+
+  <main>
+    <!-- ================= PART 1 ================= -->
+    <section class="part p1" id="setup">
+      <div class="part-head">
+        <div class="num">১</div>
+        <div><h2>Setup ঠিক করুন</h2><p>ভিত্তি মজবুত হলে বাকি সব সহজ</p></div>
+      </div>
+      <div class="cards">
+
+        <article class="card">
+          <div class="idx">01</div>
+          <div>
+            <h3>Local file নিয়ে কাজ করতে হলে <span class="en">Claude Desktop</span> ব্যবহার করুন</h3>
+            <p>আপনার কম্পিউটারের <span class="en">local files</span> নিয়ে সরাসরি কাজ করতে <span class="en">Claude Desktop</span> গুরুত্বপূর্ণ। এতে Claude অনুমোদিত <span class="en">local folders</span> ও <span class="en">files</span> অ্যাক্সেস করতে পারে। <span class="en">Cowork</span> এখন web ও mobile-এও পাওয়া যায়; তবে <span class="en">local file access</span>-এর ক্ষেত্রে <span class="en">Desktop app</span>-এর প্রয়োজন হতে পারে।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">02</div>
+          <div>
+            <h3>ছোট প্রশ্নে <span class="en">Chat</span>, বড় কাজে <span class="en">Cowork</span></h3>
+            <p>সাধারণ প্রশ্নের জন্য <span class="en">Chat</span> যথেষ্ট। কিন্তু research, data analysis, document creation, file organization বা অন্য কোনো multi-step কাজ হলে <span class="en">Cowork</span> ব্যবহার করুন। <span class="en">Message box</span>-এর নিচে <span class="en">Cowork</span> নির্বাচন করে কাজের <span class="en">desired outcome</span> বলুন।</p>
+            <span class="tag">Multi-step কাজের জন্য</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">03</div>
+          <div>
+            <h3>কাজ দিয়ে চলে যেতে পারেন</h3>
+            <p><span class="en">Cowork</span>-এর <span class="en">remote sessions</span> আপনার কম্পিউটার বন্ধ থাকলেও চলতে পারে। তবে কাজটি যদি <span class="en">local files</span> বা <span class="en">local computer access</span>-এর ওপর নির্ভর করে, <span class="en">Desktop app</span>-এর connection প্রয়োজন হতে পারে।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">04</div>
+          <div>
+            <h3>বারবার ব্যবহার করা files <span class="en">Project</span>-এ রাখুন</h3>
+            <p>একই documentation, dataset, research papers বা reference files বারবার upload করার দরকার নেই। যে কাজগুলো একই context-এর মধ্যে করেন, সেগুলো একটি <span class="en">Project</span>-এ রাখুন। Project-এর knowledge সেই Project-এর chats-এ context হিসেবে ব্যবহৃত হয়।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">05</div>
+          <div>
+            <h3><span class="en">Project Instructions</span> একবার ঠিকভাবে লিখুন</h3>
+            <p>আপনার কাজের context, preferred tone, output format, terminology, formatting rules, কী করতে হবে আর কী করা যাবে না — সব <span class="en">Project Instructions</span>-এ লিখে রাখুন। তাহলে প্রতিটি নতুন chat-এ একই নির্দেশনা বারবার দিতে হবে না।</p>
+            <div class="callout blue"><span class="label">Rule of thumb</span>“কী করবে” শুধু নয়, “কী করবে না”ও লিখুন।</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">06</div>
+          <div>
+            <h3>একই কাজ বারবার করলে <span class="en">Skill</span> বানান</h3>
+            <p>একই workflow বা instruction বারবার দিতে হলে সেটাকে <span class="en">Skill</span> বানান। Skills specialized, repeatable workflow-এর জন্য তৈরি। <span class="en">Free, Pro, Max, Team ও Enterprise</span> — সব plan-ই এতে আছে; শুধু <span class="en">Code execution</span> enabled থাকতে হয়।</p>
+            <span class="tag">Repeatable workflow → Skill</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">07</div>
+          <div>
+            <h3>প্রয়োজনীয় <span class="en">Apps</span> ও <span class="en">Connectors</span>-ই connect করুন</h3>
+            <p>যে external app বা service সত্যিই দরকার, শুধু সেটাই connect করুন। অপ্রয়োজনীয় access দিলে complexity বাড়ে—agentic কাজের ক্ষেত্রে ভুল action-এর impact-ও বাড়তে পারে। তাই permission দেওয়ার আগে Claude কী access পাবে তা বুঝে নিন।</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= PART 2 ================= -->
+    <section class="part p2" id="speed">
+      <div class="part-head">
+        <div class="num">২</div>
+        <div><h2>কাজের গতি বাড়ান</h2><p>দ্রুত ও দক্ষ হতে ৯টি অভ্যাস</p></div>
+      </div>
+      <div class="cards">
+
+        <article class="card">
+          <div class="idx">08</div>
+          <div>
+            <h3>Work, Client ও Personal কাজ আলাদা <span class="en">Project</span>-এ রাখুন</h3>
+            <p>একটি Project-এ সবকিছু রাখবেন না। Research এক জায়গায়, client work অন্য জায়গায়, personal work আলাদা জায়গায়। Project-এর context ও memory আলাদা থাকায় relevant information বেশি focused থাকে।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">09</div>
+          <div>
+            <h3>Chat এলোমেলো হলে নতুন chat শুরু করুন</h3>
+            <p>একটি conversation-এ অনেক ভুল direction, correction ও unrelated discussion জমে গেলে নতুন chat শুরু করা বেশি কার্যকর। প্রয়োজনে আগের chat-এর final context বা গুরুত্বপূর্ণ সিদ্ধান্ত নতুন chat-এ দিন।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">10</div>
+          <div>
+            <h3>উত্তর পছন্দ না হলে <span class="en">message edit</span> করুন</h3>
+            <p>একই prompt আবার নতুন করে লিখে শুরু করার বদলে আগের message edit করে নতুন direction দিন। এতে conversation-এর অপ্রয়োজনীয় অংশ না টেনে desired direction-এ যাওয়া সহজ হয়।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">11</div>
+          <div>
+            <h3><span class="en">Model selector</span> ব্যবহার করুন</h3>
+            <p>Message box-এর আশেপাশে থাকা <span class="en">model selector</span> থেকে available model পরিবর্তন করা যায়। বর্তমান interface-এ model-এর পাশাপাশি <span class="en">effort</span> ও <span class="en">extended thinking</span>-এর মতো reasoning options-ও পাওয়া যেতে পারে।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">12</div>
+          <div>
+            <h3>কঠিন কাজে <span class="en">effort</span> বাড়ান</h3>
+            <p>Routine task হলে কম effort যথেষ্ট। কিন্তু complex reasoning, debugging, planning বা difficult analysis-এর ক্ষেত্রে higher effort ব্যবহার করুন। মনে রাখবেন—higher effort সাধারণত বেশি compute/token ব্যবহার করে।</p>
+            <span class="tag">Complex কাজে high effort</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">13</div>
+          <div>
+            <h3>Complex reasoning-এ <span class="en">Extended Thinking</span></h3>
+            <p>Math, logic, debugging, optimization বা complex planning-এর মতো কাজে <span class="en">Extended Thinking</span> কাজে লাগতে পারে। তবে প্রতিটি ছোট প্রশ্নে চালু রাখার প্রয়োজন নেই।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">14</div>
+          <div>
+            <h3>শুধু Steps নয়, <span class="en">Outcome</span> বলুন</h3>
+            <p>প্রতিটি ছোট step আলাদা করে বলে দেওয়ার দরকার নেই। বরং বলুন—আমি এই result চাই, context এটা, এবং এই constraints মেনে কাজ করো। তারপর Claude-কে approach তৈরি করতে দিন।</p>
+            <div class="callout blue"><span class="label">Prompt pattern</span>“আমি এই result চাই, context এটা, এবং এই constraints মেনে কাজ করো।”</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">15</div>
+          <div>
+            <h3>কথা বলে <span class="en">Brief</span> দিন</h3>
+            <p>দীর্ঘ explanation টাইপ করার চেয়ে voice-এ পুরো context বলা অনেক সময় সহজ। বিশেষ করে research idea, project requirements বা brainstorming-এর ক্ষেত্রে বিস্তারিত brief দিলে Claude-এর কাজের context ভালো হয়।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">16</div>
+          <div>
+            <h3>Usage ও Context দুটোই manage করুন</h3>
+            <p>লম্বা conversation, বড় attachment ও একসঙ্গে অনেক tools/connectors ব্যবহার করলে usage ও context দ্রুত বাড়ে। Routine কাজে Chat, complex multi-step কাজে Cowork ব্যবহার করুন; অপ্রয়োজনীয় tools ও extended thinking বন্ধ রাখুন।</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= PART 3 ================= -->
+    <section class="part p3" id="security">
+      <div class="part-head">
+        <div class="num">৩</div>
+        <div><h2>Security ও Privacy</h2><p>ডেটা সুরক্ষায় ৪টি নিয়ম</p></div>
+      </div>
+      <div class="cards">
+
+        <article class="card">
+          <div class="idx">17</div>
+          <div>
+            <h3>Password, API Key, NID বা Bank Details paste করবেন না</h3>
+            <p>প্রয়োজন হলে <code>YOUR_API_KEY</code>, <code>YOUR_NID</code>, <code>ACCOUNT_NUMBER</code>-এর মতো placeholder ব্যবহার করুন। তারপর final জায়গায় নিজে sensitive information বসান।</p>
+            <div class="callout"><span class="label">Security first</span>Placeholder ব্যবহার করুন, পরে নিজে বসান।</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">18</div>
+          <div>
+            <h3>Sensitive conversation-এর জন্য <span class="en">Incognito Chat</span></h3>
+            <p><span class="en">Incognito Chat</span> temporary conversation হিসেবে কাজ করে। এগুলো regular chat history-তে save হয় না এবং future memory-তেও যোগ হয় না। তবে সম্পূর্ণ সংরক্ষিত হয় না—Anthropic-এর policy অনুযায়ী default retention 30 দিন হতে পারে, এবং organization-এর retention policy প্রযোজ্য হতে পারে।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">19</div>
+          <div>
+            <h3>Memory-তে কী জমা আছে দেখে নিন</h3>
+            <p>Settings → Memory-তে গিয়ে Claude আপনার সম্পর্কে কী মনে রেখেছে তা review করুন। ভুল বা outdated information থাকলে edit বা delete করুন। চাইলে memory pause বা reset-ও করতে পারেন।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">20</div>
+          <div>
+            <h3>বেশি তথ্য মানেই ভালো উত্তর নয়</h3>
+            <p>১০টি file upload করার আগে নিজেকে জিজ্ঞেস করুন—<b>“এই কাজের জন্য আসলে কোন files দরকার?”</b> অপ্রয়োজনীয় information বাদ দিলে Claude-এর জন্য relevant context খুঁজে পাওয়া সহজ হয়।</p>
+            <div class="callout blue"><span class="label">Ask yourself</span>“এই কাজের জন্য আসলে কোন files দরকার?”</div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= PART 4 ================= -->
+    <section class="part p4" id="judgment">
+      <div class="part-head">
+        <div class="num">৪</div>
+        <div><h2>নিজের বিচারবুদ্ধি ব্যবহার করুন</h2><p>AI-কে blind trust নয়</p></div>
+      </div>
+      <div class="cards">
+
+        <article class="card">
+          <div class="idx">21</div>
+          <div>
+            <h3>Confident answer মানেই correct answer নয়</h3>
+            <p>বিশেষ করে সংখ্যা, তারিখ, statistics, citations, URLs, legal বা financial information নিজে cross-check করুন।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">22</div>
+          <div>
+            <h3>Claude-কে আপনার ধারণার বিপক্ষে argument দিতে বলুন</h3>
+            <p>শুধু “আমি ঠিক কি না?” জিজ্ঞেস করবেন না। বরং বলুন—<b>“আমার এই ধারণার বিরুদ্ধে সবচেয়ে শক্তিশালী যুক্তিগুলো দাও।”</b> এতে confirmation bias কমাতে সাহায্য করে।</p>
+            <div class="callout blue"><span class="label">Anti-bias prompt</span>“আমার এই ধারণার বিরুদ্ধে সবচেয়ে শক্তিশালী যুক্তিগুলো দাও।”</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">23</div>
+          <div>
+            <h3>নিজের কাজ নিজেকেই audit করতে দিন</h3>
+            <p>লেখা বা analysis শেষ হওয়ার পর বলুন—<b>“এই লেখায় factual error, contradiction, weak assumption এবং unsupported claim আলাদা করে বের করো।”</b> একই output-এর second-pass review অনেক ভুল ধরতে পারে।</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">24</div>
+          <div>
+            <h3>AI output-কে <span class="en">Draft</span> হিসেবে দেখুন</h3>
+            <p>Claude-এর output সরাসরি final ধরে নেবেন না। বিশেষ করে যে বিষয় আপনি নিজে পুরোপুরি বোঝেন না, publish বা submit করার আগে verify করুন।</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= PART 5 ================= -->
+    <section class="part p5" id="advanced">
+      <div class="part-head">
+        <div class="num">৫</div>
+        <div><h2>যেগুলো অনেকেই ব্যবহার করেন না</h2><p>Advanced capability + ৩টি prompt</p></div>
+      </div>
+      <div class="cards">
+
+        <article class="card">
+          <div class="idx">25</div>
+          <div>
+            <h3>Research + Critical Thinking ব্যবহার করুন</h3>
+            <p>গভীর research-এর জন্য Claude-এর <span class="en">Research</span> feature ব্যবহার করতে পারেন। এটি একাধিক search চালিয়ে বিভিন্ন source ও angle থেকে তথ্য সংগ্রহ করে citations-সহ report তৈরি করে। বর্তমানে Research <span class="en">paid Claude plans—Pro, Max, Team ও Enterprise</span>-এর জন্য available এবং <span class="en">Web Search</span> enabled থাকতে হয়।</p>
+          </div>
+        </article>
+
+      </div>
+
+      <div style="margin-top:16px">
+        <div class="quick">
+          <h2>বড় কাজ শুরুর আগে এই ৩টি prompt ব্যবহার করুন</h2>
+          <div class="steps">
+            <div class="step">
+              <h4>প্রশ্ন করুন</h4>
+              <p>“শুরু করার আগে এমন ৩টি প্রশ্ন করো, যেগুলোর উত্তর না জানলে কাজটি ভুল হতে পারে।”</p>
+            </div>
+            <div class="step">
+              <h4>Approach চান</h4>
+              <p>“৩টি সত্যিকারের আলাদা approach দাও এবং প্রত্যেকটির trade-off ব্যাখ্যা করো।”</p>
+            </div>
+            <div class="step">
+              <h4>নির্বাচন করান</h4>
+              <p>“এখন সবচেয়ে শক্তিশালী approach নির্বাচন করে কেন সেটি বেছে নিলে তা ব্যাখ্যা করো।”</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRO TIPS ================= -->
+    <section class="part" id="tips">
+      <div class="part-head">
+        <div class="num" style="background:linear-gradient(135deg,#e8a76c,#f0a35a);color:#241507;">★</div>
+        <div><h2>কয়েকটি Pro Tip</h2><p>পেশাদারদের কাছে এগুলো common sense</p></div>
+      </div>
+      <div class="tips">
+        <div class="tip"><p><b>Project Instructions-এ</b> শুধু <b>“কী করবে”</b> নয়, <b>“কী করবে না”</b>ও লিখুন।</p></div>
+        <div class="tip"><p>একই prompt বা workflow বারবার ব্যবহার করলে সেটাকে <b>Skill</b> বানান।</p></div>
+        <div class="tip"><p>Output format পছন্দ হলে সেই preference স্থায়ীভাবে relevant instructions বা style-এ রাখুন।</p></div>
+        <div class="tip"><p>বাংলায় লিখতে চাইলে বলুন: <b>“Technical terms English-এ রাখবে, explanation Bangla-তে দেবে।”</b></p></div>
+        <div class="tip"><p>Client বা confidential document নিয়ে কাজ করলে Incognito ব্যবহার করুন এবং <b>data retention policy</b> বুঝে নিন।</p></div>
+        <div class="tip"><p>AI-কে শুধু প্রশ্ন করার বদলে <b>workflow হিসেবে ব্যবহার করুন</b>—এটাই সবচেয়ে বড় পার্থক্য।</p></div>
+      </div>
+    </section>
+
+    <!-- ================= QUICK START ================= -->
+    <section class="part" id="quickstart">
+      <div class="quick">
+        <h2>৫ মিনিটের Quick Start</h2>
+        <div class="steps">
+          <div class="step"><h4>প্রথম মিনিট</h4><p>Settings → Capabilities দেখে <b>Code execution</b> ও <b>file creation</b> enabled আছে কি না নিশ্চিত করুন।</p></div>
+          <div class="step"><h4>দ্বিতীয় মিনিট</h4><p>সবচেয়ে বেশি করা কাজের জন্য একটি <b>Project</b> তৈরি করুন।</p></div>
+          <div class="step"><h4>তৃতীয় মিনিট</h4><p>Project Instructions-এ role, context, tone, formatting, workflow ও do/don’t নিয়ম লিখুন।</p></div>
+          <div class="step"><h4>চতুর্থ মিনিট</h4><p><b>Settings → Memory</b> গিয়ে Claude কী মনে রেখেছে তা review করুন।</p></div>
+          <div class="step"><h4>পঞ্চম মিনিট</h4><p>একটি কঠিন প্রশ্নে <b>higher effort / Extended Thinking</b> ব্যবহার করে normal setting-এর সাথে পার্থক্য দেখুন।</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CLOSING ================= -->
+    <section class="closing" id="closing">
+      <h2>শেষ কথা</h2>
+      <p>এই তালিকার সবচেয়ে গুরুত্বপূর্ণ বিষয়গুলো আসলে কোনো “secret trick” নয়। AI-কে শুধু প্রশ্ন করার বদলে workflow হিসেবে ব্যবহার করুন—তাহলেই Claude শুধু “উত্তর দেওয়ার tool” না হয়ে আপনার কাজের একটি <b style="color:var(--text)">structured collaborator</b> হয়ে উঠতে পারে।</p>
+      <div class="key">
+        <span><b>Projects</b> — context ধরে রাখে</span>
+        <span><b>Skills</b> — repeatable workflow শেখায়</span>
+        <span><b>Memory</b> — relevant personal context</span>
+        <span><b>Cowork</b> — complex কাজ execute</span>
+        <span><b>Research</b> — গভীর information gathering</span>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">Page1.md · Claude ব্যবহারের ২৫টি সেটিংস ও অভ্যাস — একটি visual guide</div>
+</footer>
+
+<button id="top" aria-label="Back to top">↑</button>
+
+<script>
+  const toc = document.getElementById("toc");
+  const links = [...toc.querySelectorAll("a")];
+  const sections = links.map(a => document.querySelector(a.getAttribute("href")));
+  const topBtn = document.getElementById("top");
+
+  window.addEventListener("scroll", () => {
+    topBtn.classList.toggle("show", window.scrollY > 500);
+    let current = sections[0];
+    for (const sec of sections) {
+      if (sec && sec.getBoundingClientRect().top <= 120) current = sec;
+    }
+    links.forEach(l => {
+      l.classList.toggle("active", l.getAttribute("href") === "#" + current.id);
+    });
+  }, { passive: true });
+
+  topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+</script>
+</body>
+</html>

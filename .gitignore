@@ -1,0 +1,17 @@
+# Python / virtualenv
+.venv/
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+
+# Graphify output (regenerated on demand)
+graphify-out/
+.graphify/
+
+# Editor / opencode
+node_modules/
+
+# Logs
+*.log

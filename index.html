@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Utilization Dashboard — Claude Guide + Database Team AI Ecosystem</title>
+<meta name="description" content="Main hub: Claude-এর ২৫টি সেটিংস ও অভ্যাস, Database Team AI Ecosystem, এবং সব গাইড/ডকুমেন্টের dashboard।">
+<meta property="og:title" content="AI Utilization Dashboard">
+<meta property="og:description" content="Claude ২৫ সেটিংস + Database Team AI Ecosystem — সব গাইড ও ডকুমেন্ট এক hub-এ।">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b0e12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0e12;
+    --panel:#11161d;
+    --panel-2:#161d26;
+    --line:rgba(148,163,184,.14);
+    --line-strong:rgba(148,163,184,.28);
+    --text:#e6eaf1;
+    --muted:#8b97a8;
+    --amber:#f2b134;
+    --orange:#e0522a;
+    --teal:#3dd6a8;
+    --blue:#5aa2f0;
+    --red:#f25c5c;
+    --radius:16px;
+    --shadow:0 24px 60px -28px rgba(0,0,0,.8);
+    --font-body:"Hind Siliguri",sans-serif;
+    --font-disp:"Fraunces",serif;
+    --font-mono:"IBM Plex Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:74px}
+  body{
+    font-family:var(--font-body);background:var(--bg);color:var(--text);
+    line-height:1.8;font-size:16px;overflow-x:hidden;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:1240px;margin:0 auto;padding:0 26px}
+  .mono{font-family:var(--font-mono)}
+  .en{font-weight:600;color:#fff}
+  a{color:inherit}
+
+  /* ---------- Topbar ---------- */
+  .top{position:sticky;top:0;z-index:100;background:rgba(11,14,18,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16.5px}
+  .brand .mark{width:30px;height:30px;border-radius:8px;background:var(--amber);color:#14100c;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:13px}
+  nav.topnav{display:flex;gap:4px;align-items:center}
+  nav.topnav a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:500;padding:7px 13px;border-radius:999px;transition:all .2s}
+  nav.topnav a:hover{color:var(--text);background:var(--panel)}
+  nav.topnav a.go{background:var(--amber);color:#14100c;font-weight:600}
+  nav.topnav a.go:hover{filter:brightness(1.1)}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;padding:76px 0 52px;overflow:hidden}
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(900px 420px at 75% -10%,rgba(242,177,52,.10),transparent 60%),
+      radial-gradient(700px 400px at 8% 15%,rgba(224,82,42,.10),transparent 55%);
+    pointer-events:none;
+  }
+  .hero .grid-lines{
+    position:absolute;inset:0;pointer-events:none;opacity:.35;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 85% 75% at 50% 0%,#000 20%,transparent 72%);
+  }
+  .hero .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);font-weight:600;animation:rise .7s .05s both}
+  .hero .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 12px var(--teal);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .hero h1{font-family:var(--font-disp);font-weight:800;font-size:clamp(38px,6.5vw,72px);line-height:1.05;letter-spacing:-1.5px;margin-top:20px;max-width:900px;animation:rise .7s .12s both}
+  .hero h1 .hl{color:var(--amber);font-style:italic}
+  .hero .sub{max-width:620px;color:var(--muted);font-size:18.5px;font-weight:300;margin-top:22px;animation:rise .7s .22s both}
+  .hero .cta{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;animation:rise .7s .32s both}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:11px 22px;border-radius:999px;text-decoration:none;border:1.5px solid var(--line-strong);background:var(--panel);color:var(--text);transition:all .2s;cursor:pointer}
+  .btn:hover{transform:translateY(-2px);border-color:var(--amber);box-shadow:0 12px 28px -14px rgba(242,177,52,.5)}
+  .btn.solid{background:var(--amber);border-color:var(--amber);color:#14100c}
+  .btn.solid:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent}
+
+  .hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:52px;animation:rise .7s .42s both}
+  .cell{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;position:relative;overflow:hidden}
+  .cell::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent)}
+  .cell .n{font-family:var(--font-disp);font-size:38px;font-weight:800;color:var(--amber);line-height:1}
+  .cell .l{font-size:13px;color:var(--muted);margin-top:8px;font-weight:500}
+
+  @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+  /* ---------- Marquee ---------- */
+  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel);overflow:hidden;padding:13px 0}
+  .marquee .track{display:flex;gap:52px;white-space:nowrap;width:max-content;animation:scroll 30s linear infinite}
+  .marquee span{font-family:var(--font-mono);font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+  .marquee b{color:var(--amber)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ---------- Sections ---------- */
+  section{padding:72px 0}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:40px;flex-wrap:wrap}
+  .sec-head .kicker{font-family:var(--font-mono);font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);font-weight:600;display:block;margin-bottom:8px}
+  .sec-head h2{font-family:var(--font-disp);font-weight:800;font-size:clamp(28px,4.5vw,44px);letter-spacing:-1px;line-height:1.1}
+  .sec-head p{color:var(--muted);max-width:430px;font-weight:300;font-size:16px}
+
+  /* ---------- Hub / documents ---------- */
+  .hub{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .hub-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px;
+    text-decoration:none;display:flex;flex-direction:column;gap:12px;transition:all .28s;position:relative;overflow:hidden;
+  }
+  .hub-card:hover{transform:translateY(-5px);border-color:var(--amber);box-shadow:var(--shadow)}
+  .hub-card .type{font-family:var(--font-mono);font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
+  .hub-card .type.md{color:var(--blue)}.hub-card .type.html{color:var(--teal)}.hub-card .type.pdf{color:var(--orange)}.hub-card .type.hub{color:var(--amber)}
+  .hub-card h3{font-family:var(--font-disp);font-size:22px;font-weight:700;line-height:1.25}
+  .hub-card p{color:var(--muted);font-size:14.5px;font-weight:300;flex:1}
+  .hub-card .meta{font-family:var(--font-mono);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+  .hub-card .meta .arr{color:var(--amber);transition:transform .25s}
+  .hub-card:hover .meta .arr{transform:translateX(6px)}
+
+  /* ---------- Tool grid ---------- */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+  .fbtn{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.5px;padding:7px 16px;border-radius:999px;border:1px solid var(--line-strong);background:var(--panel);color:var(--muted);cursor:pointer;transition:all .2s}
+  .fbtn.active,.fbtn:hover{background:var(--amber);border-color:var(--amber);color:#14100c;font-weight:600}
+  .tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+  .tool{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;transition:all .25s;animation:fade .4s ease}
+  .tool:hover{transform:translateY(-4px);border-color:var(--line-strong);background:var(--panel-2)}
+  .tool.hide{display:none}
+  @keyframes fade{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}
+  .tool .top{display:flex;justify-content:space-between;align-items:flex-start}
+  .tool .tcat{font-family:var(--font-mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--amber);border:1px solid rgba(242,177,52,.4);padding:2px 9px;border-radius:999px;font-weight:600}
+  .tool .tnum{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+  .tool h3{font-family:var(--font-disp);font-size:23px;font-weight:700;margin:10px 0 6px}
+  .tool p{color:var(--muted);font-size:14px;font-weight:300}
+  .tool .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .tool .tags span{font-size:11.5px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--muted)}
+
+  /* ---------- Workflows ---------- */
+  .flows{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+  .flow{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px}
+  .flow h3{font-family:var(--font-disp);font-size:21px;font-weight:700;margin-bottom:16px;color:var(--amber)}
+  .flow .chain{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+  .flow .chain span{font-size:13px;font-weight:500;border:1px solid var(--line-strong);border-radius:8px;padding:6px 11px;color:var(--muted);background:var(--bg)}
+  .flow .chain span.goal{background:var(--amber);color:#14100c;border-color:var(--amber);font-weight:600}
+  .flow .chain i{font-family:var(--font-mono);color:var(--teal);font-style:normal;font-weight:600}
+
+  /* ---------- Rules ---------- */
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+  .rule{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 24px;display:flex;gap:14px;align-items:flex-start}
+  .rule .ck{font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--teal);flex-shrink:0;width:26px;height:26px;border:1px solid rgba(61,214,168,.4);border-radius:8px;display:grid;place-items:center}
+  .rule .ck.no{color:var(--red);border-color:rgba(242,92,92,.4)}
+  .rule .rt{font-size:15px;font-weight:600}
+  .rule .rs{font-size:13px;color:var(--muted);font-weight:300;margin-top:3px}
+
+  /* ---------- CTA ---------- */
+  .cta-band{background:linear-gradient(120deg,var(--amber),var(--orange));position:relative;overflow:hidden;border-radius:24px;margin:0 26px}
+  .cta-band .wrap{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;padding:52px 40px}
+  .cta-band h2{font-family:var(--font-disp);font-size:clamp(28px,4.5vw,44px);font-weight:800;color:#14100c;letter-spacing:-1px;line-height:1.1}
+  .cta-band p{color:rgba(20,16,12,.8);font-weight:400;margin-top:8px;max-width:520px}
+  .cta-band .btn{background:#14100c;color:#fff;border-color:#14100c}
+  .cta-band .btn.ghost{background:transparent;color:#14100c;border-color:rgba(20,16,12,.5)}
+  .cta-band .btn:hover{box-shadow:0 14px 30px -12px rgba(20,16,12,.6)}
+
+  footer{border-top:1px solid var(--line);margin-top:72px;padding:38px 0 44px}
+  .foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+  .foot .mono{font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+  .foot a{color:var(--muted);text-decoration:none}
+  .foot a:hover{color:var(--amber)}
+
+  [data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+  [data-reveal].in{opacity:1;transform:none}
+  #topbtn{position:fixed;bottom:24px;right:24px;z-index:90;width:46px;height:46px;border-radius:50%;border:1px solid var(--line-strong);background:var(--panel);color:var(--amber);font-size:19px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
+  #topbtn.show{opacity:1;pointer-events:auto}
+  #topbtn:hover{border-color:var(--amber)}
+
+  @media (max-width:760px){
+    nav.topnav a:not(.go){display:none}
+    .cta-band{margin:0 14px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== TOPBAR ===== -->
+<header class="top">
+  <div class="wrap topbar">
+    <div class="brand"><span class="mark">AI</span> Utilization Hub</div>
+    <nav class="topnav">
+      <a href="#hub">Documents</a>
+      <a href="#tools">AI Tools</a>
+      <a href="#workflows">Workflows</a>
+      <a href="#rules">Rules</a>
+      <a class="go" href="claude-guide.html">Claude Guide →</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="grid-lines"></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> Main Hub · All Pages & Documents</div>
+    <h1>AI <span class="hl">Utilization</span> Dashboard</h1>
+    <p class="sub">Claude-এর ২৫টি সেটিংস ও অভ্যাস থেকে Database Team-এর AI ecosystem — পুরো প্রকল্পের সব গাইড, ডকুমেন্ট ও পেজ এই একটি hub-এ connected।</p>
+    <div class="cta">
+      <a class="btn solid" href="#hub">Documents Explore</a>
+      <a class="btn ghost" href="#tools">Tools Dashboard</a>
+      <a class="btn ghost" href="claude-guide.html">Visual Guide</a>
+    </div>
+    <div class="hero-stats">
+      <div class="cell"><div class="n">25</div><div class="l">Claude Settings & Habits</div></div>
+      <div class="cell"><div class="n">19</div><div class="l">AI Tools Mapped</div></div>
+      <div class="cell"><div class="n">6</div><div class="l">Team Workflows</div></div>
+      <div class="cell"><div class="n">4</div><div class="l">Documents & Guides</div></div>
+      <div class="cell"><div class="n">5<span style="font-size:20px">মি</span></div><div class="l">Quick Start</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MARQUEE ===== -->
+<div class="marquee">
+  <div class="track">
+    <span>Projects ধরে রাখে <b>context</b></span>
+    <span>Skills শেখায় <b>repeatable workflow</b></span>
+    <span>Memory ধরে রাখে <b>personal context</b></span>
+    <span>Cowork executes <b>complex কাজ</b></span>
+    <span>Research করে <b>গভীর information gathering</b></span>
+    <span>Cross-check <b>multiple AI tools</b></span>
+    <span>SQL query <b>test before production</b></span>
+  </div>
+</div>
+
+<!-- ===== DOCUMENT HUB ===== -->
+<section id="hub">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div>
+        <span class="kicker">01 · Document Hub</span>
+        <h2>সব পেজ ও ডকুমেন্ট</h2>
+      </div>
+      <p>প্রকল্পের প্রতিটি গাইড এখান থেকে এক ক্লিকে খুলুন — markdown, HTML বা combined format।</p>
+    </div>
+    <div class="hub">
+      <a class="hub-card" href="index.html" data-reveal>
+        <span class="type hub">Landing · Main</span>
+        <h3>AI Utilization Dashboard</h3>
+        <p>পুরো প্রকল্পের main landing page — সব কিছুর entry point।</p>
+        <div class="meta"><span>index.html</span><span class="arr">→</span></div>
+      </a>
+      <a class="hub-card" href="claude-guide.html" data-reveal>
+        <span class="type html">Visual Guide</span>
+        <h3>Claude ২৫ সেটিংস — Visual Guide</h3>
+        <p>Page1.md-এর সম্পূর্ণ content স্টাইলিশ HTML-এ। Part 1-এর বিস্তারিত।</p>
+        <div class="meta"><span>claude-guide.html</span><span class="arr">→</span></div>
+      </a>
+      <a class="hub-card" href="COMBINED-GUIDE.md" data-reveal>
+        <span class="type md">Combined · MD</span>
+        <h3>Complete Combined Guide</h3>
+        <p>Page1 + Page2 একসাথে — ৭১০ লাইনের সম্পূর্ণ markdown গাইড।</p>
+        <div class="meta"><span>COMBINED-GUIDE.md</span><span class="arr">→</span></div>
+      </a>
+      <a class="hub-card" href="Page1.md" data-reveal>
+        <span class="type md">Source · MD</span>
+        <h3>Page1 — Claude ২৫টি সেটিংস</h3>
+        <p>মূল সোর্স ডকুমেন্ট: Setup, Speed, Security, Judgment, Advanced।</p>
+        <div class="meta"><span>Page1.md</span><span class="arr">→</span></div>
+      </a>
+      <a class="hub-card" href="Page2.md" data-reveal>
+        <span class="type md">Source · MD</span>
+        <h3>Page2 — Database Team AI Ecosystem</h3>
+        <p>১৯টি AI tool, ৬টি workflow, Golden Rules ও Recommended Stack।</p>
+        <div class="meta"><span>Page2.md</span><span class="arr">→</span></div>
+      </a>
+      <a class="hub-card" href="https://opencode.ai" data-reveal>
+        <span class="type pdf">External</span>
+        <h3>opencode — AI Coding Assistant</h3>
+        <p>এই গাইড তৈরির টুল। প্রয়োজনীয় ডকুমেন্টেশন ও config schema।</p>
+        <div class="meta"><span>opencode.ai ↗</span><span class="arr">→</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TOOLS DASHBOARD ===== -->
+<section id="tools" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div>
+        <span class="kicker">02 · Tools Dashboard</span>
+        <h2>Database Team AI Ecosystem</h2>
+      </div>
+      <p>Best Tool for Specific Task — ১৯টি tool, category filter সহ। ক্লিক করে দ্রুত খুঁজুন।</p>
+    </div>
+    <div class="filters" data-reveal>
+      <button class="fbtn active" data-f="all">All (19)</button>
+      <button class="fbtn" data-f="core">Core AI</button>
+      <button class="fbtn" data-f="design">Design</button>
+      <button class="fbtn" data-f="dev">Development</button>
+      <button class="fbtn" data-f="data">Data & Analytics</button>
+      <button class="fbtn" data-f="meeting">Meeting</button>
+    </div>
+    <div class="tools" id="toolgrid">
+      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">01</span></div><h3>ChatGPT</h3><p>Requirement বুঝতে, documentation ও prompt optimize-এ সেরা।</p><div class="tags"><span>SQL Explanation</span><span>BRD</span><span>Storytelling</span></div></div>
+      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">02</span></div><h3>DeepSeek</h3><p>Complex query ও performance issue troubleshooting।</p><div class="tags"><span>Query Debug</span><span>Logic</span><span>Analysis</span></div></div>
+      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">03</span></div><h3>Claude AI</h3><p>100+ page document, BRD, SRS, policy বিশ্লেষণে বিশেষজ্ঞ।</p><div class="tags"><span>SOP</span><span>Requirement Review</span><span>Long Context</span></div></div>
+      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">04</span></div><h3>Gemini + NotebookLM</h3><p>Multiple document analyse ও research summary।</p><div class="tags"><span>Research</span><span>Knowledge Base</span><span>Meeting Notes</span></div></div>
+      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">05</span></div><h3>Qwen AI</h3><p>Syntax, formula বা ছোট requirement-এর দ্রুত check।</p><div class="tags"><span>Fast Response</span><span>Quick Validation</span></div></div>
+      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">06</span></div><h3>Arena AI</h3><p>একই requirement বিভিন্ন model কীভাবে solve করে compare।</p><div class="tags"><span>Direct Mode</span><span>MAX Variant</span><span>Planning</span></div></div>
+      <div class="tool" data-cat="design" data-reveal><div class="top"><span class="tcat">Design</span><span class="tnum">07</span></div><h3>Stitch AI</h3><p>মাথার idea visual format-এ convert করুন।</p><div class="tags"><span>User Flow</span><span>Journey Map</span><span>Product Thinking</span></div></div>
+      <div class="tool" data-cat="design" data-reveal><div class="top"><span class="tcat">Design</span><span class="tnum">08</span></div><h3>Figma AI</h3><p>Stitch-concept-কে professional design-এ রূপান্তর।</p><div class="tags"><span>UI/UX</span><span>Dashboard Design</span><span>Prototyping</span></div></div>
+      <div class="tool" data-cat="design" data-reveal><div class="top"><span class="tcat">Design</span><span class="tnum">09</span></div><h3>Meigen AI</h3><p>Custom image prompt ও creative asset তৈরি।</p><div class="tags"><span>Image Prompts</span><span>Marketing Assets</span></div></div>
+      <div class="tool" data-cat="design" data-reveal><div class="top"><span class="tcat">Design</span><span class="tnum">10</span></div><h3>Canva AI</h3><p>Management presentation ও process flow ভিজ্যুয়ালি present।</p><div class="tags"><span>Reports</span><span>Visual Docs</span><span>Social Content</span></div></div>
+      <div class="tool" data-cat="dev" data-reveal><div class="top"><span class="tcat">Dev</span><span class="tnum">11</span></div><h3>GitHub Copilot</h3><p>Daily coding, SQL ও automation scripts-এর জন্য।</p><div class="tags"><span>SQL Writing</span><span>Scripts</span><span>Code Completion</span></div></div>
+      <div class="tool" data-cat="dev" data-reveal><div class="top"><span class="tcat">Dev</span><span class="tnum">12</span></div><h3>Cursor AI</h3><p>Multiple files analyse ও large project maintain।</p><div class="tags"><span>Refactoring</span><span>Database Scripts</span></div></div>
+      <div class="tool" data-cat="dev" data-reveal><div class="top"><span class="tcat">Dev</span><span class="tnum">13</span></div><h3>Windsurf AI</h3><p>Proof-of-concept ও development দ্রুত complete।</p><div class="tags"><span>End-to-End Coding</span><span>Rapid Prototyping</span></div></div>
+      <div class="tool" data-cat="dev" data-reveal><div class="top"><span class="tcat">Dev</span><span class="tnum">14</span></div><h3>Perplexity AI</h3><p>Trusted sources সহ research ও tech comparison।</p><div class="tags"><span>Latest Info</span><span>Docs Reference</span></div></div>
+      <div class="tool" data-cat="data" data-reveal><div class="top"><span class="tcat">Data</span><span class="tnum">15</span></div><h3>Julius AI</h3><p>Raw data analyse ও visualization।</p><div class="tags"><span>Excel/CSV</span><span>Quick Reporting</span></div></div>
+      <div class="tool" data-cat="data" data-reveal><div class="top"><span class="tcat">Data</span><span class="tnum">16</span></div><h3>Power BI Copilot</h3><p>Management dashboard ও reporting insights।</p><div class="tags"><span>KPI Review</span><span>Data Insights</span></div></div>
+      <div class="tool" data-cat="data" data-reveal><div class="top"><span class="tcat">Data</span><span class="tnum">17</span></div><h3>Tableau Pulse AI</h3><p>Business performance ও trend detection।</p><div class="tags"><span>Business Analytics</span><span>KPI Monitoring</span></div></div>
+      <div class="tool" data-cat="meeting" data-reveal><div class="top"><span class="tcat">Meeting</span><span class="tnum">18</span></div><h3>Otter AI</h3><p>Recording থেকে notes ও action items।</p><div class="tags"><span>Transcription</span><span>Action Extraction</span></div></div>
+      <div class="tool" data-cat="meeting" data-reveal><div class="top"><span class="tcat">Meeting</span><span class="tnum">19</span></div><h3>Fireflies AI</h3><p>Meeting discussion automatic summarize।</p><div class="tags"><span>Follow-Up Tasks</span><span>Collaboration</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORKFLOWS ===== -->
+<section id="workflows">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div>
+        <span class="kicker">03 · Workflows</span>
+        <h2>টিমের ৬টি Recommended Workflow</h2>
+      </div>
+      <p>কোন কাজে কোন tool-এর sequence — production-ready patterns।</p>
+    </div>
+    <div class="flows">
+      <div class="flow" data-reveal><h3>Query Optimization</h3><div class="chain"><span>Requirement</span><i>→</i><span>ChatGPT</span><i>→</i><span>DeepSeek</span><i>→</i><span>Validation</span><i>→</i><span class="goal">Production</span></div></div>
+      <div class="flow" data-reveal><h3>Problem Solving</h3><div class="chain"><span>Problem</span><i>→</i><span>DeepSeek</span><i>→</i><span>Claude</span><i>→</i><span>ChatGPT Verify</span><i>→</i><span class="goal">Solution</span></div></div>
+      <div class="flow" data-reveal><h3>Documentation</h3><div class="chain"><span>Requirement</span><i>→</i><span>ChatGPT</span><i>→</i><span>Claude</span><i>→</i><span>Arena Review</span><i>→</i><span class="goal">Final Doc</span></div></div>
+      <div class="flow" data-reveal><h3>Research</h3><div class="chain"><span>References</span><i>→</i><span>NotebookLM</span><i>→</i><span>Gemini</span><i>→</i><span>Perplexity</span><i>→</i><span class="goal">Final Analysis</span></div></div>
+      <div class="flow" data-reveal><h3>Dashboard & Analytics</h3><div class="chain"><span>Raw Data</span><i>→</i><span>Julius AI</span><i>→</i><span>Power BI Copilot</span><i>→</i><span class="goal">Dashboard</span></div></div>
+      <div class="flow" data-reveal><h3>Visual Planning</h3><div class="chain"><span>Idea</span><i>→</i><span>Stitch AI</span><i>→</i><span>Figma AI</span><i>→</i><span>Canva AI</span><i>→</i><span class="goal">Presentation</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RULES ===== -->
+<section id="rules">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div>
+        <span class="kicker">04 · Golden Rules</span>
+        <h2>Always Follow</h2>
+      </div>
+      <p>AI ecosystem-এর প্রতিটি ব্যবহারে এই নিয়মগুলো চিরকাল প্রযোজ্য।</p>
+    </div>
+    <div class="rules">
+      <div class="rule" data-reveal><span class="ck">✓</span><div><div class="rt">AI is an assistant, not the final decision maker</div><div class="rs">সিদ্ধান্তের মালিক সর্বদা টিম মেম্বার।</div></div></div>
+      <div class="rule" data-reveal><span class="ck">✓</span><div><div class="rt">Every SQL query must be tested before production</div><div class="rs">Production-এ deploy-এর আগে বাধ্যতামূলক validation।</div></div></div>
+      <div class="rule" data-reveal><span class="ck">✓</span><div><div class="rt">Cross-check critical outputs with multiple AI tools</div><div class="rs">Multiple model verification → higher confidence।</div></div></div>
+      <div class="rule" data-reveal><span class="ck no">✕</span><div><div class="rt">Never share secrets</div><div class="rs">Database Passwords, API Keys, Production Credentials, Sensitive Client Data।</div></div></div>
+      <div class="rule" data-reveal><span class="ck">✓</span><div><div class="rt">Business logic validated by responsible member</div><div class="rs">Responsible person-এর sign-off অপরিহার্য।</div></div></div>
+      <div class="rule" data-reveal><span class="ck">✓</span><div><div class="rt">AI documentation reviewed before sharing</div><div class="rs">Publish-এর আগে human review বাধ্যতামূলক।</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<div style="padding:8px 0 72px">
+  <div class="cta-band">
+    <div class="wrap">
+      <div>
+        <h2>পুরো গাইড এক জায়গায়</h2>
+        <p>Claude-এর ২৫ সেটিংস থেকে টিমের AI ecosystem — সব ডকুমেন্ট ও visual guide এখন dashboard hub-এ connected।</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn" href="claude-guide.html">Visual Guide →</a>
+        <a class="btn ghost" href="COMBINED-GUIDE.md">Combined MD</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap foot">
+    <div class="brand"><span class="mark">AI</span> Utilization Hub</div>
+    <div class="mono">index.html · claude-guide.html · COMBINED-GUIDE.md · Page1.md · Page2.md</div>
+    <div><a href="#">Back to top ↑</a></div>
+  </div>
+</footer>
+
+<button id="topbtn" aria-label="Back to top">↑</button>
+
+<script>
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.1,rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll("[data-reveal]").forEach(el=>io.observe(el));
+
+  const btns=document.querySelectorAll(".fbtn");
+  const tools=document.querySelectorAll("#toolgrid .tool");
+  btns.forEach(b=>b.addEventListener("click",()=>{
+    btns.forEach(x=>x.classList.remove("active"));b.classList.add("active");
+    const f=b.dataset.f;
+    tools.forEach(t=>{
+      const show=f==="all"||t.dataset.cat===f;
+      t.classList.toggle("hide",!show);
+      if(show){t.style.animation="none";void t.offsetWidth;t.style.animation="fade .4s ease";}
+    });
+  }));
+
+  const tb=document.getElementById("topbtn");
+  window.addEventListener("scroll",()=>tb.classList.toggle("show",window.scrollY>500),{passive:true});
+  tb.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+</script>
+</body>
+</html>
