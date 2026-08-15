@@ -75,11 +75,6 @@
   .hero h1{font-family:var(--font-disp);font-weight:800;font-size:clamp(34px,6vw,56px);line-height:1.1;letter-spacing:-1px;max-width:860px;margin-top:22px;animation:rise .7s .15s both}
   .hero h1 em{font-style:italic;color:var(--teal)}
   .hero p.lead{margin-top:20px;color:var(--ink-soft);font-size:19px;max-width:700px;font-weight:300;animation:rise .7s .25s both}
-  .hero-stats{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;animation:rise .7s .35s both}
-  .stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 22px;min-width:132px;transition:all .3s}
-  .stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:rgba(217,122,31,.4)}
-  .stat b{display:block;font-family:var(--font-disp);font-size:30px;color:var(--teal);font-weight:800;line-height:1}
-  .stat span{font-size:13.5px;color:var(--muted);font-weight:500}
   @keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 
   /* ---------- Memories wall ---------- */
@@ -192,12 +187,6 @@
   <div class="wrap">
     <span class="badge"><span class="dot"></span> Database Team Memories</span>
     <h1>আমাদের <em>Memories</em> — এক ফ্রেমে</h1>
-    <div class="hero-stats">
-      <div class="stat"><b data-count="5">0</b><span>Memory Posts</span></div>
-      <div class="stat"><b data-count="31">0</b><span>Auto Photos</span></div>
-      <div class="stat"><b>Auto</b><span>Caption Fetch</span></div>
-      <div class="stat"><b>Live</b><span>LinkedIn Sync</span></div>
-    </div>
   </div>
 </section>
 
@@ -396,10 +385,6 @@
   burger.addEventListener("click",()=>{mmenu.classList.add("open");document.body.style.overflow="hidden"});
   document.getElementById("mmenuClose").addEventListener("click",()=>{mmenu.classList.remove("open");document.body.style.overflow=""});
   mmenu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{mmenu.classList.remove("open");document.body.style.overflow=""}));
-
-  const counters=document.querySelectorAll("[data-count]");
-  const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target,target=+el.dataset.count,dur=1100,start=performance.now();const tick=(now)=>{const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,3);el.textContent=Math.round(target*ease);if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick);cio.unobserve(el)}}),{threshold:.6});
-  counters.forEach(el=>cio.observe(el));
 
   document.querySelectorAll(".m-post").forEach(post=>{
     const track=post.querySelector(".m-track");
