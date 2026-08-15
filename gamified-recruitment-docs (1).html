@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gamified Recruitment — System &amp; Database Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<style>
+:root{
+  --bg:#faf6ee;
+  --bg-soft:#f1ead9;
+  --paper:#fffdf7;
+  --paper-2:#f7f1e3;
+  --ink:#231b10;
+  --ink-soft:#574b38;
+  --muted:#8b7c63;
+  --amber:#d97a1f;
+  --amber-2:#f2b134;
+  --teal:#1f7a5c;
+  --blue:#3b6fb6;
+  --orange:#e0522a;
+  --red:#c4453c;
+  --purple:#8a5fb6;
+  --line:rgba(35,27,16,.14);
+  --line-strong:rgba(35,27,16,.3);
+  --accent:#d97a1f;
+  --accent-soft:rgba(217,122,31,.1);
+  --accent2:#1f7a5c;
+  --accent2-soft:rgba(31,122,92,.1);
+  --warn:#e0522a;
+  --warn-soft:rgba(224,82,42,.1);
+  --danger:#c4453c;
+  --danger-soft:rgba(196,69,60,.1);
+  --success:#1f7a5c;
+  --success-soft:rgba(31,122,92,.12);
+  --font-display:'Fraunces',serif;
+  --font-body:'Hind Siliguri',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+  --sidebar-w:308px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+::selection{background:var(--amber);color:#fff;}
+body{
+  margin:0;
+  background:
+    radial-gradient(ellipse 900px 500px at 85% -10%, rgba(242,177,52,.22), transparent 60%),
+    radial-gradient(ellipse 700px 400px at -5% 20%, rgba(31,122,92,.12), transparent 55%),
+    var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--teal);text-decoration:none;}
+a:hover{text-decoration:underline;}
+code{
+  font-family:var(--font-mono);
+  background:var(--paper-2);
+  border:1px solid var(--line);
+  padding:.12em .45em;
+  border-radius:5px;
+  font-size:.85em;
+  color:var(--ink);
+}
+h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:-.01em;margin:0 0 .4em;color:var(--ink);}
+p{margin:.4em 0 1em;color:var(--ink-soft);}
+
+/* ---------- scroll progress ---------- */
+#progress{
+  position:fixed;top:0;left:0;height:3px;width:0%;
+  background:linear-gradient(90deg,var(--teal),var(--amber));
+  z-index:999;transition:width .1s linear;
+}
+
+/* ---------- topbar (mobile) ---------- */
+#topbar{
+  display:none;
+  position:sticky;top:0;z-index:50;
+  align-items:center;gap:.75rem;
+  padding:.85rem 1rem;
+  background:rgba(250,246,238,.9);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+#topbar .brand{font-family:var(--font-display);font-weight:700;font-size:1rem;}
+#menuBtn{
+  margin-left:auto;background:var(--paper);border:1px solid var(--line-strong);
+  color:var(--ink);border-radius:8px;padding:.45rem .6rem;cursor:pointer;
+  font-size:1rem;
+}
+
+/* ---------- layout ---------- */
+#shell{display:flex;min-height:100vh;}
+
+/* ---------- sidebar ---------- */
+#sidebar{
+  width:var(--sidebar-w);flex:0 0 var(--sidebar-w);
+  position:sticky;top:0;align-self:flex-start;height:100vh;
+  overflow-y:auto;
+  background:linear-gradient(180deg,var(--paper),var(--bg-soft));
+  border-right:1px solid var(--line-strong);
+  padding:1.4rem 1.1rem 3rem;
+  scrollbar-width:thin;scrollbar-color:#c9b98f transparent;
+}
+#sidebar::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb{background:#c9b98f;border-radius:3px;}
+
+.brand-block{display:flex;align-items:center;gap:.6rem;margin-bottom:1.2rem;padding:0 .3rem;}
+.brand-mark{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,var(--amber),var(--amber-2));
+  display:flex;align-items:center;justify-content:center;font-size:1.15rem;
+  box-shadow:0 0 0 1px rgba(255,255,255,.35) inset, 0 6px 18px -6px rgba(217,122,31,.6);
+  flex:0 0 auto;
+}
+.brand-text{line-height:1.2;}
+.brand-text .t1{font-family:var(--font-display);font-weight:700;font-size:.95rem;color:var(--ink);}
+.brand-text .t2{font-size:.68rem;color:var(--muted);font-family:var(--font-mono);letter-spacing:.03em;}
+.brand-link{
+  display:inline-flex;align-items:center;gap:.4rem;font-size:.7rem;color:var(--amber);
+  font-family:var(--font-mono);font-weight:600;margin:0 .3rem .8rem;
+}
+
+#navSearch{
+  width:100%;background:var(--paper);border:1px solid var(--line-strong);
+  color:var(--ink);border-radius:9px;padding:.55rem .7rem;font-size:.8rem;
+  font-family:var(--font-mono);margin-bottom:1rem;outline:none;
+}
+#navSearch:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--accent-soft);}
+#navSearch::placeholder{color:var(--muted);}
+
+.nav-group{margin-bottom:.3rem;}
+.nav-group-title{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted);
+  padding:.75rem .5rem .35rem;
+}
+.nav-list{list-style:none;margin:0;padding:0;}
+.nav-list a{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.4rem .55rem;border-radius:7px;
+  color:var(--ink-soft);font-size:.83rem;
+  border-left:2px solid transparent;
+  transition:background .15s,color .15s,border-color .15s;
+}
+.nav-list a:hover{background:var(--paper-2);color:var(--ink);text-decoration:none;}
+.nav-list a.active{
+  background:var(--accent-soft);color:var(--amber);border-left:2px solid var(--amber);
+  font-weight:600;
+}
+.nav-list.sub{padding-left:.7rem;border-left:1px solid var(--line-strong);margin-left:.5rem;}
+.nav-list.sub a{font-size:.76rem;}
+.nav-emoji{font-size:.85em;width:1.1em;text-align:center;flex:0 0 auto;}
+
+/* ---------- main ---------- */
+#main{flex:1;min-width:0;padding:0;}
+.hero{
+  padding:5rem 4.2vw 4rem;
+  border-bottom:1px solid var(--line);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(560px 320px at 88% 10%, rgba(242,177,52,.18), transparent 70%),
+    radial-gradient(420px 260px at 10% 90%, rgba(31,122,92,.12), transparent 70%);
+  pointer-events:none;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;
+  color:var(--teal);background:var(--accent2-soft);
+  border:1px solid rgba(31,122,92,.3);padding:.32rem .7rem;border-radius:999px;
+  margin-bottom:1.2rem;
+}
+.hero h1{font-size:clamp(2rem,4.2vw,3.1rem);max-width:20ch;position:relative;font-weight:800;}
+.hero .sub{font-size:1.05rem;max-width:62ch;position:relative;}
+.hero-stats{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem;position:relative;}
+.hstat{
+  background:var(--paper);border:1px solid var(--line-strong);border-radius:12px;
+  padding:.85rem 1.1rem;min-width:118px;
+  box-shadow:0 12px 28px -18px rgba(35,27,16,.28);
+}
+.hstat b{display:block;font-family:var(--font-display);font-size:1.35rem;color:var(--amber);font-weight:800;}
+.hstat span{font-size:.72rem;color:var(--muted);font-family:var(--font-mono);}
+
+.section{padding:3.4rem 4.2vw;border-bottom:1px solid var(--line);scroll-margin-top:1rem;}
+.section:nth-child(even){background:linear-gradient(180deg,transparent, rgba(241,234,217,.55) 45%, transparent);}
+.section-head{margin-bottom:1.8rem;max-width:80ch;}
+.section-kicker{
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;
+  color:var(--teal);text-transform:uppercase;margin-bottom:.5rem;font-weight:600;
+}
+.section h2{font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:800;}
+.section h3{font-size:1.18rem;margin-top:2.2rem;color:var(--ink);font-weight:700;}
+.section h4{font-size:.95rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;font-family:var(--font-mono);}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ---------- terminal-style diagram card (signature element) ---------- */
+.term{
+  background:var(--paper);border:1px solid var(--line-strong);border-radius:12px;
+  overflow:hidden;margin:1.3rem 0 1.8rem;
+  box-shadow:0 20px 40px -26px rgba(35,27,16,.4);
+}
+.term-bar{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.55rem .8rem;background:var(--bg-soft);border-bottom:1px solid var(--line);
+}
+.term-dot{width:10px;height:10px;border-radius:50%;}
+.term-dot.r{background:#fb7185;}
+.term-dot.y{background:#f5a524;}
+.term-dot.g{background:#34d399;}
+.term-title{
+  margin-left:.5rem;font-family:var(--font-mono);font-size:.72rem;color:var(--muted);
+}
+.term-title .cursor{display:inline-block;width:6px;height:12px;background:var(--amber);
+  margin-left:6px;vertical-align:-2px;animation:blink 1.1s steps(1) infinite;}
+@keyframes blink{50%{opacity:0;}}
+.term pre{
+  margin:0;padding:1.1rem 1.3rem;overflow-x:auto;
+  font-family:var(--font-mono);font-size:.74rem;line-height:1.55;color:var(--ink);
+  white-space:pre;
+}
+.term pre::-webkit-scrollbar{height:8px;}
+.term pre::-webkit-scrollbar-thumb{background:#c9b98f;border-radius:4px;}
+
+/* ---------- tables ---------- */
+.table-wrap{overflow-x:auto;margin:1rem 0 1.6rem;border:1px solid var(--line-strong);border-radius:12px;background:var(--paper);}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.85rem;}
+thead th{
+  text-align:left;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--teal);background:var(--bg-soft);
+  padding:.7rem .9rem;border-bottom:1px solid var(--line-strong);white-space:nowrap;
+}
+tbody td{padding:.62rem .9rem;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:rgba(217,122,31,.06);}
+tbody td:first-child{color:var(--muted);font-family:var(--font-mono);font-size:.78rem;}
+.schema-table td:nth-child(2) code{color:var(--ink);}
+
+/* key pills */
+.key{
+  display:inline-flex;align-items:center;gap:.3rem;
+  font-family:var(--font-mono);font-size:.68rem;font-weight:600;
+  padding:.15rem .5rem;border-radius:6px;letter-spacing:.03em;white-space:nowrap;
+}
+.k-pk{background:var(--amber-2);color:#7a4a12;border:1px solid rgba(217,122,31,.45);}
+.k-fk{background:var(--teal);color:#eafff5;border:1px solid rgba(31,122,92,.5);}
+.k-time{background:var(--paper-2);color:var(--muted);border:1px solid var(--line);}
+.k-del{background:var(--danger-soft);color:var(--red);border:1px solid rgba(196,69,60,.4);}
+.k-meta{background:var(--paper-2);color:var(--ink-soft);border:1px solid var(--line);}
+.k-sec{background:var(--warn-soft);color:var(--orange);border:1px solid rgba(224,82,42,.4);}
+.k-score{background:var(--success-soft);color:var(--teal);border:1px solid rgba(31,122,92,.4);}
+.k-link{background:var(--paper-2);color:var(--teal);border:1px solid var(--line);}
+.warnflag{color:var(--orange);font-weight:600;}
+
+/* generic cards / grids */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.9rem;margin:1rem 0 1.6rem;}
+.card{
+  background:var(--paper);border:1px solid var(--line-strong);border-radius:12px;padding:1.05rem 1.15rem;
+  transition:transform .18s ease,border-color .18s ease;
+  box-shadow:0 12px 28px -20px rgba(35,27,16,.28);
+}
+.card:hover{transform:translateY(-3px);border-color:rgba(217,122,31,.5);box-shadow:0 16px 32px -20px rgba(35,27,16,.38);}
+.card .ico{font-size:1.35rem;}
+.card h4{margin:.55rem 0 .3rem;color:var(--ink);font-family:var(--font-display);font-size:.95rem;letter-spacing:0;text-transform:none;font-weight:700;}
+.card p{margin:0;font-size:.83rem;color:var(--ink-soft);}
+
+.pill-row{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.4rem;}
+.pill{
+  font-family:var(--font-mono);font-size:.74rem;background:var(--paper);
+  border:1px solid var(--line-strong);border-radius:999px;padding:.32rem .8rem;color:var(--ink-soft);
+}
+
+blockquote{
+  margin:1.1rem 0;padding:.9rem 1.15rem;background:var(--paper);
+  border-left:3px solid var(--teal);border-radius:0 10px 10px 0;color:var(--ink-soft);
+  box-shadow:0 10px 24px -20px rgba(35,27,16,.3);
+}
+blockquote p{margin:0;}
+
+.owner-tag{
+  display:inline-block;font-family:var(--font-mono);font-size:.72rem;
+  background:var(--bg-soft);border:1px solid var(--line-strong);color:var(--teal);
+  padding:.25rem .65rem;border-radius:7px;margin-bottom:.6rem;font-weight:600;
+}
+
+/* table sub-nav chips for schema tables */
+.chip-nav{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 2rem;}
+.chip-nav a{
+  font-family:var(--font-mono);font-size:.73rem;background:var(--paper);
+  border:1px solid var(--line-strong);padding:.4rem .75rem;border-radius:8px;color:var(--ink-soft);
+}
+.chip-nav a:hover{border-color:var(--amber);color:var(--amber);text-decoration:none;}
+
+/* schema entity block */
+.entity{
+  border:1px solid var(--line-strong);border-radius:16px;background:linear-gradient(180deg,var(--paper),var(--bg-soft));
+  padding:1.8rem 1.9rem;margin:2.2rem 0;scroll-margin-top:1.2rem;
+  position:relative;overflow:hidden;
+  box-shadow:0 22px 48px -28px rgba(35,27,16,.4);
+}
+.entity::before{
+  content:"";position:absolute;top:-40%;right:-10%;width:280px;height:280px;
+  background:radial-gradient(circle, rgba(242,177,52,.14), transparent 70%);pointer-events:none;
+}
+.entity-head{display:flex;align-items:center;gap:.9rem;margin-bottom:.4rem;position:relative;}
+.entity-num{
+  font-family:var(--font-mono);color:var(--muted);font-size:.78rem;background:var(--paper);
+  border:1px solid var(--line-strong);border-radius:8px;padding:.25rem .55rem;
+}
+.entity-emoji{font-size:1.6rem;}
+.entity h3{margin:0;font-size:1.35rem;font-weight:800;}
+.entity h3 code{font-size:.85em;}
+.desc-quote{position:relative;}
+
+.impact-note{font-size:.78rem;color:var(--muted);font-family:var(--font-mono);margin:.3rem 0 1.1rem;}
+
+/* connections list */
+.conn-list{list-style:none;margin:.4rem 0 1.2rem;padding:0;display:flex;flex-wrap:wrap;gap:.5rem;}
+.conn-list li{
+  font-family:var(--font-mono);font-size:.76rem;background:var(--paper-2);
+  border:1px solid var(--line-strong);border-radius:8px;padding:.4rem .7rem;
+}
+
+/* summary dashboard */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.9rem;}
+.dash-card{
+  background:var(--paper);border:1px solid var(--line-strong);border-radius:14px;padding:1.1rem 1.2rem;
+  position:relative;overflow:hidden;
+  box-shadow:0 12px 28px -20px rgba(35,27,16,.3);
+}
+.dash-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),var(--amber-2),transparent);}
+.dash-card b{display:block;font-family:var(--font-display);font-size:1.6rem;color:var(--amber);font-weight:800;margin-bottom:.15rem;}
+.dash-card span{font-size:.76rem;color:var(--ink-soft);}
+
+/* checklist */
+.chk-list{list-style:none;margin:0 0 1.4rem;padding:0;}
+.chk-list li{
+  display:flex;gap:.6rem;padding:.42rem 0;border-bottom:1px dashed var(--line);
+  font-size:.87rem;color:var(--ink-soft);align-items:flex-start;
+}
+.chk-list li:last-child{border-bottom:none;}
+.chk-box{
+  flex:0 0 auto;width:16px;height:16px;border-radius:5px;margin-top:.18rem;
+  border:1px solid var(--teal);background:var(--accent2-soft);
+  display:flex;align-items:center;justify-content:center;font-size:.62rem;color:var(--teal);font-weight:700;
+}
+.chk-list code{white-space:nowrap;}
+.chk-sub{margin-left:1.6rem;}
+
+/* takeaways */
+.take-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.9rem;}
+.take{
+  background:var(--paper);border:1px solid var(--line-strong);border-left:3px solid var(--teal);
+  border-radius:0 12px 12px 0;padding:1rem 1.15rem;font-size:.87rem;color:var(--ink-soft);
+  box-shadow:0 10px 24px -20px rgba(35,27,16,.3);
+}
+.take b{color:var(--teal);display:block;margin-bottom:.2rem;font-family:var(--font-display);font-size:.9rem;}
+
+.mermaid-wrap{
+  background:var(--paper);border:1px solid var(--line-strong);border-radius:14px;padding:1.4rem;
+  margin:1.4rem 0 1.8rem;overflow-x:auto;
+  box-shadow:0 18px 40px -28px rgba(35,27,16,.4);
+}
+
+footer{
+  padding:2.6rem 4.2vw 3.4rem;color:var(--muted);font-size:.8rem;font-family:var(--font-mono);
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;
+}
+footer a{color:var(--teal);}
+
+#toTop{
+  position:fixed;bottom:1.6rem;right:1.6rem;width:44px;height:44px;border-radius:50%;
+  background:var(--amber);border:1px solid var(--amber);color:#fff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .2s;z-index:60;
+  box-shadow:0 8px 24px -10px rgba(217,122,31,.7);
+}
+#toTop.show{opacity:1;pointer-events:auto;}
+#toTop:hover{transform:translateY(-3px);}
+
+#sidebarBackdrop{display:none;}
+
+@media (max-width:980px){
+  #topbar{display:flex;}
+  #sidebar{
+    position:fixed;left:0;top:0;height:100vh;z-index:80;
+    transform:translateX(-104%);transition:transform .25s ease;
+    box-shadow:20px 0 60px -20px rgba(35,27,16,.35);
+  }
+  #sidebar.open{transform:translateX(0);}
+  #sidebarBackdrop{
+    display:none;position:fixed;inset:0;background:rgba(35,27,16,.4);z-index:70;
+  }
+  #sidebarBackdrop.show{display:block;}
+  .hero{padding:3rem 5.5vw 2.6rem;}
+  .section{padding:2.4rem 5.5vw;}
+  .entity{padding:1.3rem 1.2rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div id="topbar">
+  <div class="brand">🎮 Gamified Recruitment Docs</div>
+  <button id="menuBtn" aria-label="Toggle navigation">☰ Menu</button>
+</div>
+<div id="sidebarBackdrop"></div>
+
+<div id="shell">
+  <!-- ================= SIDEBAR ================= -->
+  <nav id="sidebar">
+    <div class="brand-block">
+      <div class="brand-mark">🎮</div>
+      <div class="brand-text">
+        <div class="t1">Gamified Recruitment</div>
+        <div class="t2">DB &amp; SYSTEM DOCS · v4.0</div>
+      </div>
+    </div>
+    <a class="brand-link" href="index.html">‹ কাজকর্ম শিখ · Main Hub</a>
+
+    <input id="navSearch" type="text" placeholder="Filter sections…">
+
+    <div class="nav-group">
+      <div class="nav-group-title">Start</div>
+      <ul class="nav-list">
+        <li><a href="#overview"><span class="nav-emoji">🌐</span>Overview &amp; Visualization</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">2 · Business &amp; System Flow</div>
+      <ul class="nav-list">
+        <li><a href="#flow-overview"><span class="nav-emoji">🔄</span>Visual Flow Overview</a></li>
+        <li><a href="#p1"><span class="nav-emoji">🤝</span>P1 · Client Acquisition</a></li>
+        <li><a href="#p2"><span class="nav-emoji">📝</span>P2 · Exam Planning</a></li>
+        <li><a href="#p3"><span class="nav-emoji">⚙️</span>P3 · Program Setup</a></li>
+        <li><a href="#p4"><span class="nav-emoji">🕐</span>P4 · Exam Window Behavior</a></li>
+        <li><a href="#p5"><span class="nav-emoji">🔍</span>P5 · Pre-Exam Verification</a></li>
+        <li><a href="#p6"><span class="nav-emoji">▶️</span>P6 · Exam Start</a></li>
+        <li><a href="#p7"><span class="nav-emoji">🛡️</span>P7 · Anti-Cheat Monitoring</a></li>
+        <li><a href="#p8"><span class="nav-emoji">📤</span>P8 · Exam Submission</a></li>
+        <li><a href="#p9"><span class="nav-emoji">📦</span>P9 · Data Consolidation</a></li>
+        <li><a href="#p10"><span class="nav-emoji">📊</span>P10 · Report Generation</a></li>
+        <li><a href="#p11"><span class="nav-emoji">✅</span>P11 · Client Review &amp; Closure</a></li>
+        <li><a href="#violations"><span class="nav-emoji">⚡</span>Violation Rules Summary</a></li>
+        <li><a href="#biz-db-map"><span class="nav-emoji">🗺️</span>Flow ↔ DB Mapping</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">3 · ER Diagram</div>
+      <ul class="nav-list">
+        <li><a href="#er-diagram"><span class="nav-emoji">🗺️</span>Conceptual ER Diagram</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">4 · Schema Definitions</div>
+      <ul class="nav-list sub">
+        <li><a href="#tbl-companies"><span class="nav-emoji">🏢</span>companies</a></li>
+        <li><a href="#tbl-interviewprograms"><span class="nav-emoji">📋</span>interviewprograms</a></li>
+        <li><a href="#tbl-rounds"><span class="nav-emoji">🔄</span>rounds</a></li>
+        <li><a href="#tbl-questions"><span class="nav-emoji">❓</span>questions</a></li>
+        <li><a href="#tbl-roundquestions"><span class="nav-emoji">🔗</span>roundquestions</a></li>
+        <li><a href="#tbl-options"><span class="nav-emoji">✅</span>options</a></li>
+        <li><a href="#tbl-dialogue_lines"><span class="nav-emoji">🎭</span>dialogue_lines</a></li>
+        <li><a href="#tbl-candidates"><span class="nav-emoji">👤</span>candidates</a></li>
+        <li><a href="#tbl-candidateprograms"><span class="nav-emoji">📝</span>candidateprograms</a></li>
+        <li><a href="#tbl-candidaterounds"><span class="nav-emoji">🎮</span>candidaterounds</a></li>
+        <li><a href="#tbl-candidateanswers"><span class="nav-emoji">📊</span>candidateanswers</a></li>
+        <li><a href="#tbl-anticheat"><span class="nav-emoji">🛡️</span>anticheat</a></li>
+        <li><a href="#tbl-one_click_tokens"><span class="nav-emoji">🔗</span>one_click_tokens</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">5 · Interconnections</div>
+      <ul class="nav-list">
+        <li><a href="#topology"><span class="nav-emoji">🕸️</span>Full System Topology</a></li>
+        <li><a href="#conn-count"><span class="nav-emoji">📊</span>Connection Count</a></li>
+        <li><a href="#rel-categories"><span class="nav-emoji">🧩</span>Relationship Categories</a></li>
+        <li><a href="#query-paths"><span class="nav-emoji">🔍</span>Key Query Paths</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">6 · Completion Checklist</div>
+      <ul class="nav-list">
+        <li><a href="#chk-integrity"><span class="nav-emoji">📋</span>Data Integrity &amp; Constraints</a></li>
+        <li><a href="#chk-index"><span class="nav-emoji">📇</span>Indexing Strategy</a></li>
+        <li><a href="#chk-softdelete"><span class="nav-emoji">🗑️</span>Soft Delete</a></li>
+        <li><a href="#chk-perf"><span class="nav-emoji">⚡</span>Performance</a></li>
+        <li><a href="#chk-security"><span class="nav-emoji">🔒</span>Security</a></li>
+        <li><a href="#chk-datatype"><span class="nav-emoji">📝</span>Data Type Review</a></li>
+        <li><a href="#chk-testing"><span class="nav-emoji">🧪</span>Testing &amp; Validation</a></li>
+        <li><a href="#chk-ops"><span class="nav-emoji">📦</span>Operational Readiness</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Wrap-up</div>
+      <ul class="nav-list">
+        <li><a href="#dashboard"><span class="nav-emoji">🏁</span>Summary Dashboard</a></li>
+        <li><a href="#takeaways"><span class="nav-emoji">📌</span>Key Takeaways</a></li>
+        <li><a href="#quicklinks"><span class="nav-emoji">📊</span>Quick Links</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN ================= -->
+  <main id="main">
+
+    <header class="hero">
+      <div class="eyebrow">📄 v4.0 · Complete · Schema <code>gamified_recruitment_v2_replica</code></div>
+      <h1>Gamified Recruitment Platform</h1>
+      <p class="sub">Complete database &amp; system documentation — from candidate journey and end-to-end business flow, to full schema definitions, table interconnections, and a production-readiness checklist.</p>
+      <div class="hero-stats">
+        <div class="hstat"><b>12</b><span>TABLES</span></div>
+        <div class="hstat"><b>21</b><span>RELATIONSHIPS</span></div>
+        <div class="hstat"><b>136+</b><span>COLUMNS</span></div>
+        <div class="hstat"><b>11</b><span>BUSINESS PHASES</span></div>
+        <div class="hstat"><b>100%</b><span>SOFT-DELETE COVERAGE</span></div>
+      </div>
+    </header>
+
+    <!-- ============ 1. OVERVIEW ============ -->
+    <section class="section" id="overview" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">1 · Project Overview &amp; Visualization</div>
+        <h2>🌐 What Is Gamified Recruitment?</h2>
+        <p>Gamified Recruitment is a platform that transforms the traditional hiring pipeline into an <strong>interactive, game-like experience</strong>. Instead of boring forms and static tests, candidates progress through structured <strong>interview programs</strong> composed of multiple <strong>rounds</strong>, each containing <strong>questions</strong> that may include scenarios, dialogues, timed challenges, and weighted scoring.</p>
+      </div>
+
+      <h3 class="reveal">🧠 High-Level Business Logic</h3>
+      <div class="term reveal">
+        <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">business_logic.flow<span class="cursor"></span></span></div>
+        <pre>🏢 Company
+  └──► 📋 Creates Interview Program(s)
+         └──► 🔄 Defines Rounds (ordered stages)
+                └──► ❓ Assigns Questions to Rounds
+                       ├──► 🎭 Dialogue-based (with dialogue_lines)
+                       ├──► ✅ MCQ-based (with options &amp; weightage)
+                       └──► 📝 Open-ended / Other types
+
+👤 Candidate
+  ├──► 📝 Registers &amp; Enrolls in Program(s)
+  ├──► 🔗 (or) Receives One-Click Token for quick access
+  ├──► 🎮 Enters Round → Answers Questions
+  ├──► 📊 Answers are scored (auto or weighted)
+  └──► 🛡️ Anti-cheat monitors IP, screen &amp; webcam recordings</pre>
+      </div>
+
+      <h3 class="reveal">🔄 Candidate Journey Flow</h3>
+      <div class="term reveal">
+        <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">candidate_journey.log<span class="cursor"></span></span></div>
+        <pre>👤 Candidate Signs Up
+      │
+      ▼
+┌──────────────┐     ┌─────────────────────┐
+│  📝 Register │────►│ 📋 Enroll in Program │
+│ (candidates) │     │ (candidateprograms)  │
+└──────────────┘     └──────────┬──────────┘
+                                 │
+                   ┌─────────────┴──────────────┐
+                   ▼                             ▼
+         ┌──────────────┐             ┌──────────────────┐
+         │ 🔗 One-Click │             │ 🎮 Enter Round    │
+         │   Token      │────────────►│(candidaterounds)  │
+         │(one_click_   │             └────────┬──────────┘
+         │  tokens)     │                      │
+         └──────────────┘                      ▼
+                                  ┌─────────────────────┐
+                                  │ ❓ Answer Questions  │
+                                  │ (candidateanswers)   │
+                                  └────────┬────────────┘
+                                           │
+                            ┌──────────────┴──────────────┐
+                            ▼                              ▼
+                  ┌──────────────────┐         ┌───────────────────┐
+                  │ 🛡️ Anti-Cheat    │         │ 📊 Score &amp; Review │
+                  │   Monitoring     │         │   (score in       │
+                  │  (anticheat)     │         │  candidateanswers)│
+                  └──────────────────┘         └───────────────────┘</pre>
+      </div>
+
+      <h3 class="reveal">🎯 Core Domain Concepts</h3>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Emoji</th><th>Concept</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>🏢</td><td><strong>Company</strong></td><td>The hiring organization that creates programs</td></tr>
+            <tr><td>📋</td><td><strong>Interview Program</strong></td><td>A complete hiring workflow with start/end dates and status</td></tr>
+            <tr><td>🔄</td><td><strong>Round</strong></td><td>An ordered stage within a program (e.g., Aptitude → Technical → HR)</td></tr>
+            <tr><td>❓</td><td><strong>Question</strong></td><td>A challenge within a round — can be MCQ, dialogue, scenario-based, timed</td></tr>
+            <tr><td>🎭</td><td><strong>Dialogue Line</strong></td><td>A conversational line within a dialogue-type question</td></tr>
+            <tr><td>✅</td><td><strong>Option</strong></td><td>An answer choice for MCQ-type questions with correctness &amp; weightage</td></tr>
+            <tr><td>👤</td><td><strong>Candidate</strong></td><td>A person applying through the platform</td></tr>
+            <tr><td>📝</td><td><strong>Candidate Answer</strong></td><td>A candidate's response to a question, with score</td></tr>
+            <tr><td>🛡️</td><td><strong>Anti-Cheat</strong></td><td>Integrity monitoring via IP, screen recording, and webcam</td></tr>
+            <tr><td>🔗</td><td><strong>One-Click Token</strong></td><td>A quick-access link for candidates to jump into a specific round</td></tr>
+            <tr><td>🔗</td><td><strong>Round Questions</strong></td><td>The many-to-many bridge linking questions to rounds (with ordering)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 2. BUSINESS FLOW ============ -->
+    <section class="section" id="flow-overview" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2 · Business &amp; System Flow</div>
+        <h2>💼 End-to-End Platform Flow</h2>
+        <blockquote><p>📖 This section explains <strong>end to end</strong> how the online exam platform works — from onboarding a client to closing out an exam cycle.</p></blockquote>
+      </div>
+
+      <h3 class="reveal">🔄 2.1 — Visual Flow Overview</h3>
+      <div class="term reveal">
+        <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">platform_flow.sh<span class="cursor"></span></span></div>
+        <pre>[🤝 Client Acquisition]
+        │
+        ▼
+[📝 Exam Planning] ──(sample Qs approved)──► [📋 Final Questions Prepared]
+        │
+        ▼
+[⚙️ Program Setup: Rounds + Candidates + Pass/Fail Criteria]
+        │
+        ▼
+[🔗 Unique Link Generated per Candidate]
+        │
+        ▼
+[🔍 Pre-Window: System Checks] ──(fix permissions)──► [✅ Ready]
+        │
+        ▼
+═══ 🟢 EXAM WINDOW OPENS (same time for all candidates) ═══
+        │
+        ▼
+[▶️ Start Quiz] ──► [🔒 Link Consumed] ──► [🎥 Recording Begins]
+        │
+        ▼
+[📝 Exam In Progress] ──(violation detected)──► [⚠️ Warning / Flag]
+        │                                              │
+        │                                    (3rd strike or unresolved)
+        ▼                                              ▼
+[✋ Manual Submission]                      [⚡ Auto-Submission]
+        │                                   (final, no retake)
+        │                                              │
+        └──────────────────┬───────────────────────────┘
+                            ▼
+             [📦 Data Consolidated: Answers + Recordings + Event Log]
+                            │
+                            ▼
+             [📊 Raw Report | 📋 Summary Report | 🛡️ Cheating Report]
+                            │
+                            ▼
+             [👁️ Client Review] ──(if needed)──► [📑 Reports Consolidated]
+                            │
+                            ▼
+             [✅ Client Affirms] ──► [🔄 Next Exam Cycle Planned]</pre>
+      </div>
+    </section>
+
+    <section class="section" id="p1" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.2 · Phase 1</div>
+        <h2>🤝 Client Acquisition &amp; Contract</h2>
+        <span class="owner-tag">👥 Owner: Client + Us</span>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Step</th><th>Action</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>1️⃣</td><td>🏢 Client Onboarding</td><td>Client is onboarded; we lock in exam volume per year</td></tr>
+            <tr><td>2️⃣</td><td>👥 Candidate Count</td><td>Client provides number of candidates to test</td></tr>
+            <tr><td>3️⃣</td><td>💰 Pricing Quote</td><td>Per-candidate rate offered across pricing packages</td></tr>
+            <tr><td>4️⃣</td><td>🔒 Deal Locked</td><td>Terms and pricing finalized</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="reveal">📍 <strong>DB Impact:</strong> New row in <code>companies</code></p>
+    </section>
+
+    <section class="section" id="p2" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.3 · Phase 2</div>
+        <h2>📝 Exam Planning</h2>
+        <span class="owner-tag">👥 Owner: Client + Us</span>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Step</th><th>Action</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>1️⃣</td><td>📅 Exam Date</td><td>Client provides preferred exam date</td></tr>
+            <tr><td>2️⃣</td><td>🎯 Role &amp; Subject</td><td>Client specifies role and subject</td></tr>
+            <tr><td>3️⃣</td><td>📋 Sample Questions</td><td>We prepare and share sample questions</td></tr>
+            <tr><td>4️⃣</td><td>✅ Approval</td><td>Once approved, we prepare final question set</td></tr>
+            <tr><td>5️⃣</td><td>👤 Candidate Info</td><td>Client shares: name, email, phone</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pill-row reveal">
+        <span class="pill">📍 questions rows created</span>
+        <span class="pill">📍 options rows created (MCQ)</span>
+        <span class="pill">📍 dialogue_lines rows created</span>
+        <span class="pill">📍 candidates rows created</span>
+      </div>
+    </section>
+
+    <section class="section" id="p3" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.4 · Phase 3</div>
+        <h2>⚙️ Program Setup</h2>
+        <span class="owner-tag">👥 Owner: Us</span>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Step</th><th>Action</th><th>DB Table</th></tr></thead>
+          <tbody>
+            <tr><td>1️⃣</td><td>📋 Create Program</td><td><code>interviewprograms</code></td></tr>
+            <tr><td>2️⃣</td><td>🔄 Create Rounds</td><td><code>rounds</code></td></tr>
+            <tr><td>3️⃣</td><td>👤 Assign Candidates</td><td><code>candidateprograms</code>, <code>candidaterounds</code></td></tr>
+            <tr><td>4️⃣</td><td>🔀 Distribute Sets</td><td><code>roundquestions</code></td></tr>
+            <tr><td>5️⃣</td><td>📊 Define Pass/Fail</td><td><code>interviewprograms</code> / <code>rounds</code></td></tr>
+            <tr><td>6️⃣</td><td>🔗 Generate Links</td><td><code>one_click_tokens</code></td></tr>
+            <tr><td>7️⃣</td><td>📧 Distribute Links</td><td><code>one_click_tokens.email</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <blockquote class="reveal"><p>⚠️ <strong>Key Rules:</strong> Link accessible <strong>before exam</strong> for system checks only. The <strong>"Start Exam" button only activates</strong> during the exam window.</p></blockquote>
+    </section>
+
+    <section class="section" id="p4" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.5 · Phase 4</div>
+        <h2>🕐 Exam Window Behavior</h2>
+        <span class="owner-tag">👥 Owner: Us</span>
+      </div>
+      <h4 class="reveal">🔗 Link Lifecycle States</h4>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>State</th><th>Icon</th><th>Meaning</th><th>DB Column</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Active</strong></td><td>🟢</td><td>Link generated, not yet started</td><td><code>is_used = false</code>, <code>is_started = false</code></td></tr>
+            <tr><td><strong>Used</strong></td><td>🟡</td><td>Clicked "Start Quiz" — link consumed</td><td><code>is_used = true</code>, <code>used_at = timestamp</code></td></tr>
+            <tr><td><strong>Expired</strong></td><td>🔴</td><td>Window closed, never started</td><td><code>expires_at &lt; NOW()</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h4 class="reveal">📋 Scenarios</h4>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Scenario</th><th>What Happens</th></tr></thead>
+          <tbody>
+            <tr><td>🔍 <strong>Before window</strong></td><td>System checks only (camera, mic, browser, speed, full-screen). Start <strong>disabled</strong></td></tr>
+            <tr><td>🔧 <strong>Check fails</strong></td><td>Candidate can retry — <strong>not a violation</strong> (exam hasn't started)</td></tr>
+            <tr><td>▶️ <strong>During window</strong></td><td>Start button active. Candidates begin anytime</td></tr>
+            <tr><td>🔴 <strong>Window closes before start</strong></td><td>Link expires, permanently inaccessible. Marked <strong>absent</strong></td></tr>
+            <tr><td>⏱️ <strong>Starts near end</strong></td><td>Exam <strong>force-submitted</strong> when window closes. <strong>Hard boundary</strong></td></tr>
+            <tr><td>🔄 <strong>Multiple rounds</strong></td><td>All rounds open <strong>simultaneously</strong> for all candidates</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="p5" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.6 · Phase 5</div>
+        <h2>🔍 Pre-Exam Verification</h2>
+        <span class="owner-tag">👥 Owner: Us (Enforced on Candidates)</span>
+        <p>When candidate clicks <strong>"Start Quiz"</strong>, the system enforces a permission gate:</p>
+      </div>
+      <div class="term reveal">
+        <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">permission_gate.sh<span class="cursor"></span></span></div>
+        <pre>            PRE-EXAM PERMISSION GATE
+
+   ▶️ "Start Quiz" clicked
+         │
+         ▼
+   ┌─────────────┐   ┌─────────────┐   ┌──────────┐
+   │ 📷 Camera   │   │ 🎤 Micro-   │   │ 🖥️ Full- │
+   │   access    │   │   phone     │   │  screen  │
+   │  granted?   │   │  granted?   │   │  mode?   │
+   └──────┬──────┘   └──────┬──────┘   └────┬─────┘
+          │                 │                │
+     ✅ Yes            ✅ Yes           ✅ Yes
+          │                 │                │
+          └────────────┬────┴────────────────┘
+                       ▼
+              ✅ ALL PASSED → Exam Begins
+
+          ❌ ANY DENIED → ⛔ Blocked
+              "Please grant access to proceed"</pre>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Check</th><th>Required</th><th>If Denied</th></tr></thead>
+          <tbody>
+            <tr><td>📷 Camera access</td><td>✅ Yes</td><td>⛔ Blocked — prompted to grant</td></tr>
+            <tr><td>🎤 Microphone access</td><td>✅ Yes</td><td>⛔ Blocked — prompted to grant</td></tr>
+            <tr><td>🖥️ Full-screen mode</td><td>✅ Yes</td><td>⛔ Blocked — must enter full-screen</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="p6" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.7 · Phase 6</div>
+        <h2>▶️ Exam Start &amp; Link Consumption</h2>
+        <span class="owner-tag">👥 Owner: Us</span>
+        <p>On <strong>"Start Quiz"</strong> click:</p>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Action</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td>🔗 <strong>Link Status</strong></td><td>Changes to <strong>Used</strong> — cannot reopen</td></tr>
+            <tr><td>🎥 <strong>Screen Recording</strong></td><td>Begins immediately</td></tr>
+            <tr><td>📹 <strong>Webcam Recording</strong></td><td>Begins immediately</td></tr>
+            <tr><td>⏱️ <strong>Timestamp Logged</strong></td><td>Session start recorded</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pill-row reveal">
+        <span class="pill">📍 one_click_tokens.is_used = true</span>
+        <span class="pill">📍 one_click_tokens.used_at = NOW()</span>
+        <span class="pill">📍 candidaterounds.round_start_time = NOW()</span>
+        <span class="pill">📍 anticheat record created</span>
+      </div>
+    </section>
+
+    <section class="section" id="p7" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.8 · Phase 7</div>
+        <h2>🛡️ Anti-Cheat Real-Time Monitoring</h2>
+        <span class="owner-tag">👥 Owner: Us</span>
+      </div>
+
+      <h4 class="reveal">A. 🖱️ Tab / Window Switch Detection</h4>
+      <p class="reveal">System tracks tab-switch and window-blur events.</p>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Violation #</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>1st &amp; 2nd</td><td>⚠️ Warning displayed</td></tr>
+            <tr><td>3rd</td><td>🔒 Exam auto-submitted immediately</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="reveal"><strong>Auto-Submit Outcome:</strong> current answers locked; session tagged <em>auto-submitted — tab violation</em>; recording saved.</p>
+
+      <h4 class="reveal">B. 🖥️ Full-Screen Exit Detection</h4>
+      <p class="reveal">System detects when candidate exits full-screen. Same <strong>3-warning rule</strong> applies.</p>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Violation #</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>1st &amp; 2nd</td><td>⚠️ Warning; must re-enter full-screen</td></tr>
+            <tr><td>3rd</td><td>🔒 Exam auto-submitted</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 class="reveal">C. 📹 Camera / Mic Drop Detection</h4>
+      <div class="card-grid reveal">
+        <div class="card"><div class="ico">📉</div><h4>Feed drops</h4><p>Webcam feed drops or microphone is revoked.</p></div>
+        <div class="card"><div class="ico">🚩</div><h4>Session flagged</h4><p>System flags the session automatically.</p></div>
+        <div class="card"><div class="ico">🔁</div><h4>Re-grant &amp; resume</h4><p>Candidate is prompted to re-grant permissions. Exam does <strong>not</strong> auto-submit — the session pauses functionally and resumes when access is restored.</p></div>
+      </div>
+
+      <h4 class="reveal">D. 🔒 Question Navigation Lock</h4>
+      <div class="pill-row reveal">
+        <span class="pill">✋ No back navigation allowed</span>
+        <span class="pill">➡️ "Next" moves forward only</span>
+        <span class="pill">❌ Cannot skip and return</span>
+      </div>
+
+      <h4 class="reveal">E. 📊 Continuous Recording</h4>
+      <p class="reveal">Screen &amp; webcam recording runs the <strong>entire duration</strong>. All events are <strong>timestamped and synced</strong> with recordings, enabling <strong>cross-verification during audit</strong>.</p>
+      <div class="pill-row reveal">
+        <span class="pill">Question displayed</span>
+        <span class="pill">Answer submitted</span>
+        <span class="pill">Warning issued</span>
+        <span class="pill">Violation triggered</span>
+      </div>
+    </section>
+
+    <section class="section" id="p8" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.9 · Phase 8</div>
+        <h2>📤 Exam Submission</h2>
+        <span class="owner-tag">👥 Owner: Us</span>
+      </div>
+      <h4 class="reveal">Submission Types</h4>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Type</th><th>Trigger</th><th>Icon</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Manual</strong></td><td>Candidate completes before time expires</td><td>✋</td></tr>
+            <tr><td><strong>Auto — Time expired</strong></td><td>Exam duration ends</td><td>⏱️</td></tr>
+            <tr><td><strong>Auto — Window closed</strong></td><td>Exam window closes (force submit)</td><td>🔴</td></tr>
+            <tr><td><strong>Auto — Tab violation</strong></td><td>3rd tab-switch violation</td><td>🔀</td></tr>
+            <tr><td><strong>Auto — Full-screen violation</strong></td><td>3rd full-screen exit violation</td><td>🖥️</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h4 class="reveal">On Submission</h4>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Action</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td>🔒 <strong>Answers Locked</strong></td><td>Finalized and saved</td></tr>
+            <tr><td>🎥 <strong>Recordings</strong></td><td>Finalized and uploaded</td></tr>
+            <tr><td>📊 <strong>Session Tagged</strong></td><td>With submission type (manual/auto — reason)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <blockquote class="reveal"><p>⚠️ <strong>Auto-submission is FINAL</strong> — no retake for violations or window closure.</p></blockquote>
+      <div class="pill-row reveal">
+        <span class="pill">📍 candidateanswers finalized (score, completed_at)</span>
+        <span class="pill">📍 candidaterounds.round_end_time = NOW()</span>
+        <span class="pill">📍 anticheat updated with recording URLs</span>
+        <span class="pill">📍 one_click_tokens.is_used = true</span>
+      </div>
+    </section>
+
+    <section class="section" id="p9" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.10 · Phase 9</div>
+        <h2>📦 Post-Exam Data Consolidation</h2>
+        <span class="owner-tag">👥 Owner: Us</span>
+        <p>All session data linked under the <strong>candidate's ID</strong>:</p>
+      </div>
+      <div class="term reveal">
+        <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">consolidation.log<span class="cursor"></span></span></div>
+        <pre>           📦 POST-EXAM DATA CONSOLIDATION
+
+   👤 candidate_id links everything:
+
+   ┌───────────────────────┐
+   │ 📊 candidateanswers   │ ◄── All answers
+   │   • question_id       │
+   │   • answer            │
+   │   • score             │
+   │   • started_at        │
+   │   • completed_at      │
+   └───────────────────────┘
+
+   ┌───────────────────────┐
+   │ 🛡️ anticheat          │ ◄── Recordings &amp; IP
+   │   • screen_record_url │
+   │   • webcam_record_url │
+   │   • ip_address        │
+   └───────────────────────┘
+
+   ┌───────────────────────┐
+   │ 📋 Event Log          │ ◄── All violations
+   │   • tab switches      │
+   │   • full-screen exits │
+   │   • permission drops  │
+   │   • warnings issued   │
+   └───────────────────────┘
+
+   RAW DATA SOURCE for reporting</pre>
+      </div>
+    </section>
+
+    <section class="section" id="p10" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.11 · Phase 10</div>
+        <h2>📊 Report Generation</h2>
+        <span class="owner-tag">👥 Owner: Us</span>
+        <p>Once the exam window closes for <strong>all candidates</strong>, three reports are generated:</p>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Report</th><th>Icon</th><th>Contents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Raw Report</strong></td><td>📊</td><td>All answers to all questions + total mark</td></tr>
+            <tr><td><strong>Summary Report</strong></td><td>📋</td><td>Mark per competency, overall mark, recording links, cheating %</td></tr>
+            <tr><td><strong>Cheating Report</strong></td><td>🛡️</td><td>Anti-cheat metrics, violations, flags, warnings, cheating %</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="reveal"><strong>Pass/fail outcome</strong> applied based on criteria defined in Phase 3.</p>
+    </section>
+
+    <section class="section" id="p11" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.12 · Phase 11</div>
+        <h2>✅ Client Review &amp; Closure</h2>
+        <span class="owner-tag">👥 Owner: Client + Us</span>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Step</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>1️⃣</td><td>📧 Reports shared with client</td></tr>
+            <tr><td>2️⃣</td><td>🔍 If requested, consolidated per requirements</td></tr>
+            <tr><td>3️⃣</td><td>✅ Client affirms reports; cycle <strong>closed</strong></td></tr>
+            <tr><td>4️⃣</td><td>🔄 Process moves to <strong>next cycle</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="violations" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.13</div>
+        <h2>⚡ Violation Rules Summary</h2>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Trigger</th><th>Icon</th><th>Rule</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tab switch</strong></td><td>🔀</td><td>3-strike</td><td>⚠️ Warning ×2 → ⚡ Auto-submit on 3rd</td></tr>
+            <tr><td><strong>Full-screen exit</strong></td><td>🖥️</td><td>3-strike</td><td>⚠️ Warning ×2 → ⚡ Auto-submit on 3rd</td></tr>
+            <tr><td><strong>Camera/mic drop</strong></td><td>📷</td><td>Flag + re-permission</td><td>🚩 Session flagged, candidate must reconnect</td></tr>
+            <tr><td><strong>Exam window closes</strong></td><td>🔴</td><td>Hard cutoff</td><td>⚡ Force-submit regardless of time remaining</td></tr>
+            <tr><td><strong>Time runs out</strong></td><td>⏱️</td><td>Hard cutoff</td><td>⚡ Auto-submit</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="biz-db-map" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">2.14</div>
+        <h2>🗺️ Business Flow ↔ Database Mapping</h2>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Phase</th><th>Business Action</th><th>Primary DB Tables Affected</th></tr></thead>
+          <tbody>
+            <tr><td>1️⃣</td><td>Client Acquisition</td><td><code>companies</code></td></tr>
+            <tr><td>2️⃣</td><td>Exam Planning</td><td><code>questions</code>, <code>options</code>, <code>dialogue_lines</code>, <code>candidates</code></td></tr>
+            <tr><td>3️⃣</td><td>Program Setup</td><td><code>interviewprograms</code>, <code>rounds</code>, <code>roundquestions</code>, <code>candidateprograms</code>, <code>candidaterounds</code>, <code>one_click_tokens</code></td></tr>
+            <tr><td>4️⃣</td><td>Exam Window</td><td><code>one_click_tokens</code> (state changes)</td></tr>
+            <tr><td>5️⃣</td><td>Pre-Exam Verification</td><td>System-level (no DB write)</td></tr>
+            <tr><td>6️⃣</td><td>Exam Start</td><td><code>one_click_tokens</code>, <code>candidaterounds</code>, <code>anticheat</code></td></tr>
+            <tr><td>7️⃣</td><td>Anti-Cheat Monitoring</td><td><code>anticheat</code> (continuous recording)</td></tr>
+            <tr><td>8️⃣</td><td>Exam Submission</td><td><code>candidateanswers</code>, <code>candidaterounds</code>, <code>anticheat</code></td></tr>
+            <tr><td>9️⃣</td><td>Data Consolidation</td><td>All tables read via <code>candidate_id</code> joins</td></tr>
+            <tr><td>🔟</td><td>Report Generation</td><td><code>candidateanswers</code>, <code>anticheat</code>, <code>questions</code>, <code>options</code></td></tr>
+            <tr><td>1️⃣1️⃣</td><td>Client Review &amp; Closure</td><td><code>interviewprograms</code> (status update)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 3. ER DIAGRAM ============ -->
+    <section class="section" id="er-diagram" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">3 · Conceptual ER Diagram</div>
+        <h2>🗺️ Entity Relationship Diagram</h2>
+        <blockquote><p>💡 Rendered live below via Mermaid.js. Scroll/drag to explore — all 12 tables and 21 relationships are shown exactly as modeled.</p></blockquote>
+      </div>
+      <div class="mermaid-wrap reveal">
+        <pre class="mermaid">
+erDiagram
+    companies {
+        int4 company_id PK
+        text company_name
+        text company_address
+        text company_website
+        text company_contact_email
+        text industry
+        int4 number_of_employees
+        timestamptz created_at
+        timestamptz updated_at
+        bool is_deleted
+    }
+    interviewprograms {
+        int4 program_id PK
+        int4 company_id FK
+        text program_name
+        text program_description
+        timestamptz program_start_date
+        timestamptz program_end_date
+        timestamptz created_at
+        timestamptz updated_at
+        bool is_deleted
+        text status
+    }
+    rounds {
+        int4 round_id PK
+        int4 program_id FK
+        text round_name
+        int4 round_order
+        timestamptz start_date
+        timestamptz end_date
+        text round_description
+        timestamptz created_at
+        timestamptz updated_at
+        bool is_deleted
+        int4 extra_time_minutes
+    }
+    questions {
+        float8 question_id PK
+        int4 company_id FK
+        int4 round_id FK
+        int4 question_order
+        text content_type
+        text question_text
+        text question_type
+        int4 time_frame_seconds
+        int4 points
+        text question_level
+        text scenario
+        bool is_weightage_based
+        bool is_timed
+        text character
+        timestamptz created_at
+        timestamptz updated_at
+        bool is_deleted
+        text_array question_images
+        bool restrict_tab_switch
+    }
+    roundquestions {
+        int4 id PK
+        int4 round_id FK
+        int4 company_id FK
+        float8 question_id FK
+        int4 question_order
+        timestamptz created_at
+        timestamptz updated_at
+        bool is_deleted
+    }
+    options {
+        int4 option_id PK
+        float8 question_id FK
+        text option_text
+        bool is_correct
+        int4 weightage
+        timestamptz created_at
+        timestamptz updated_at
+        bool is_deleted
+    }
+    dialogue_lines {
+        float8 parent_question_id FK
+        int4 line_order
+        text character
+        text dialogue_text
+        timestamptz created_at
+        timestamptz updated_at
+        bool is_deleted
+        text dialogue_state
+    }
+    candidates {
+        int4 candidate_id PK
+        text email
+        text first_name
+        text last_name
+        text phone_number
+        bool is_registered
+        int4 yoe
+        text job_role
+        text password
+        timestamptz created_at
+        timestamptz updated_at
+        bool is_deleted
+    }
+    candidateprograms {
+        int4 candidate_id FK
+        int4 program_id FK
+        bool is_deleted
+        timestamptz created_at
+        timestamptz updated_at
+    }
+    candidaterounds {
+        int4 candidate_id FK
+        int4 round_id FK
+        timestamptz round_start_time
+        timestamptz round_end_time
+        timestamptz created_at
+        timestamptz updated_at
+        bool is_deleted
+    }
+    candidateanswers {
+        int4 id PK
+        int4 candidate_id FK
+        int4 round_id FK
+        int4 question_id FK
+        text question_type
+        text answer
+        int4 score
+        timestamptz started_at
+        timestamptz completed_at
+        timestamptz created_at
+        timestamptz updated_at
+        bool is_deleted
+    }
+    anticheat {
+        int4 id PK
+        int4 candidate_id FK
+        int4 round_id FK
+        text ip_address
+        text screen_record_url
+        text webcam_record_url
+        timestamptz created_at
+        timestamptz updated_at
+        bool is_deleted
+    }
+    one_click_tokens {
+        int4 token_id PK
+        varchar token_hash
+        int4 candidate_id FK
+        int4 program_id FK
+        int4 round_id FK
+        varchar email
+        int4 session_duration_minutes
+        timestamptz expires_at
+        timestamptz used_at
+        bool is_used
+        timestamptz created_at
+        inet ip_address
+        text user_agent
+        varchar created_by
+        int4 usage_count
+        bool is_started
+    }
+    companies ||--o{ interviewprograms : owns
+    companies ||--o{ questions : owns
+    companies ||--o{ roundquestions : scopes
+    interviewprograms ||--o{ rounds : contains
+    interviewprograms ||--o{ candidateprograms : enrolls
+    interviewprograms ||--o{ one_click_tokens : targets
+    rounds ||--o{ questions : contains_direct
+    rounds ||--o{ roundquestions : bridges
+    rounds ||--o{ candidaterounds : hosts
+    rounds ||--o{ candidateanswers : contextualizes
+    rounds ||--o{ anticheat : monitors
+    rounds ||--o{ one_click_tokens : targets
+    questions ||--o{ options : has
+    questions ||--o{ dialogue_lines : has
+    questions ||--o{ roundquestions : bridges
+    questions ||--o{ candidateanswers : contains
+    candidates ||--o{ candidateprograms : enrolls
+    candidates ||--o{ candidaterounds : participates
+    candidates ||--o{ candidateanswers : submits
+    candidates ||--o{ anticheat : monitored
+    candidates ||--o{ one_click_tokens : receives
+        </pre>
+      </div>
+      <p class="reveal" style="font-size:.78rem;color:var(--text-faint);font-family:var(--font-mono);">Note: <code>question_images</code> is shown as <code>text_array</code> above (Mermaid-safe alias for Postgres <code>_text</code>).</p>
+    </section>
+
+    <!-- ============ 4. SCHEMA DEFINITIONS ============ -->
+    <section class="section" id="schema-intro" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">4 · Schema Definitions</div>
+        <h2>📊 Schema: <code>gamified_recruitment_v2_replica</code></h2>
+        <blockquote><p>12 tables organized into 5 categories: <strong>Root Entities</strong> (2), <strong>Content Entities</strong> (3), <strong>Content Details</strong> (2), <strong>Junction Tables</strong> (3), <strong>Activity Tables</strong> (3).</p></blockquote>
+      </div>
+      <div class="chip-nav reveal">
+        <a href="#tbl-companies">🏢 companies</a>
+        <a href="#tbl-interviewprograms">📋 interviewprograms</a>
+        <a href="#tbl-rounds">🔄 rounds</a>
+        <a href="#tbl-questions">❓ questions</a>
+        <a href="#tbl-roundquestions">🔗 roundquestions</a>
+        <a href="#tbl-options">✅ options</a>
+        <a href="#tbl-dialogue_lines">🎭 dialogue_lines</a>
+        <a href="#tbl-candidates">👤 candidates</a>
+        <a href="#tbl-candidateprograms">📝 candidateprograms</a>
+        <a href="#tbl-candidaterounds">🎮 candidaterounds</a>
+        <a href="#tbl-candidateanswers">📊 candidateanswers</a>
+        <a href="#tbl-anticheat">🛡️ anticheat</a>
+        <a href="#tbl-one_click_tokens">🔗 one_click_tokens</a>
+      </div>
+
+      <!-- 4.1 companies -->
+      <div class="entity reveal" id="tbl-companies">
+        <div class="entity-head"><span class="entity-num">4.1</span><span class="entity-emoji">🏢</span><h3><code>companies</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 The <strong>root organization entity</strong>. Each company is a hiring organization that creates programs, questions, and manages candidates. This is the top of the hierarchy.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>A company registers on the platform, and all their content (programs, questions, candidates) is scoped under their <code>company_id</code>. Multi-tenancy is achieved through this FK relationship.</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>All owned programs, questions, and relationships orphaned (cascade)</td></tr>
+          <tr><td>🟢 Multi-tenancy</td><td>Core to isolating different customers</td></tr>
+          <tr><td>🟡 Access control</td><td>All queries filter by <code>company_id</code> for security</td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (3 outgoing)</h4>
+        <ul class="conn-list"><li>📋 interviewprograms (1:N)</li><li>❓ questions (1:N)</li><li>🔗 roundquestions (1:N)</li></ul>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>company_id</code></td><td><code>int4</code></td><td><span class="key k-pk">🔑 PK</span></td><td>Unique identifier</td></tr>
+            <tr><td>2</td><td><code>company_name</code></td><td><code>text</code></td><td></td><td>Official company name</td></tr>
+            <tr><td>3</td><td><code>company_address</code></td><td><code>text</code></td><td></td><td>Registered address</td></tr>
+            <tr><td>4</td><td><code>company_website</code></td><td><code>text</code></td><td></td><td>Website URL</td></tr>
+            <tr><td>5</td><td><code>company_contact_email</code></td><td><code>text</code></td><td></td><td>Primary contact email</td></tr>
+            <tr><td>6</td><td><code>industry</code></td><td><code>text</code></td><td></td><td>Industry classification (e.g., IT, Finance)</td></tr>
+            <tr><td>7</td><td><code>number_of_employees</code></td><td><code>int4</code></td><td></td><td>Headcount</td></tr>
+            <tr><td>8</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Record creation timestamp</td></tr>
+            <tr><td>9</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>10</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- 4.2 interviewprograms -->
+      <div class="entity reveal" id="tbl-interviewprograms">
+        <div class="entity-head"><span class="entity-num">4.2</span><span class="entity-emoji">📋</span><h3><code>interviewprograms</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 A <strong>hiring workflow</strong> created by a company. Each program is a complete hiring initiative with multiple rounds, a candidate pool, and pass/fail criteria.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>A company creates a program for a specific role/department. The program has a start date, end date, and status (active, archived, planning). Candidates enroll in programs via <code>candidateprograms</code>. Rounds within the program are ordered and executed in sequence.</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>All enrolled candidates, rounds, and tokens lose structure</td></tr>
+          <tr><td>🟢 Program lifecycle</td><td><code>status</code> field tracks: planning → active → archived</td></tr>
+          <tr><td>🟡 Timing control</td><td><code>program_start_date</code> and <code>program_end_date</code> define availability</td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (3 outgoing)</h4>
+        <ul class="conn-list"><li>🔄 rounds (1:N)</li><li>📝 candidateprograms (1:N)</li><li>🔗 one_click_tokens (1:N)</li></ul>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>program_id</code></td><td><code>int4</code></td><td><span class="key k-pk">🔑 PK</span></td><td>Unique identifier</td></tr>
+            <tr><td>2</td><td><code>company_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-companies"><code>companies</code></a></td><td>Parent company</td></tr>
+            <tr><td>3</td><td><code>program_name</code></td><td><code>text</code></td><td></td><td>Name (e.g., "Senior Engineer Hiring 2025")</td></tr>
+            <tr><td>4</td><td><code>program_description</code></td><td><code>text</code></td><td></td><td>Detailed description</td></tr>
+            <tr><td>5</td><td><code>program_start_date</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Program availability start</td></tr>
+            <tr><td>6</td><td><code>program_end_date</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Program availability end</td></tr>
+            <tr><td>7</td><td><code>status</code></td><td><code>text</code></td><td><span class="key k-meta">📌</span></td><td>Status: planning, active, archived, closed</td></tr>
+            <tr><td>8</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Record creation timestamp</td></tr>
+            <tr><td>9</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>10</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- 4.3 rounds -->
+      <div class="entity reveal" id="tbl-rounds">
+        <div class="entity-head"><span class="entity-num">4.3</span><span class="entity-emoji">🔄</span><h3><code>rounds</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 An <strong>ordered stage</strong> within a program. A program has multiple rounds (e.g., Aptitude → Technical → HR), and rounds contain the actual questions candidates answer.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>Each program contains ordered rounds. <code>round_order</code> determines sequence. Each round has a start/end date defining when it's available. Candidates progress through rounds, answering questions and being monitored for integrity. <code>extra_time_minutes</code> supports accommodations.</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>All assigned questions, candidate participation, answers, and monitoring data orphaned</td></tr>
+          <tr><td>🟢 Sequencing</td><td><code>round_order</code> enforces strict progression</td></tr>
+          <tr><td>🟡 Timing</td><td><code>start_date</code> and <code>end_date</code> define exam window</td></tr>
+          <tr><td>🟠 Most connected</td><td>7 direct connections (highest in system)</td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (7 total: 1 incoming, 6 outgoing)</h4>
+        <div class="term">
+          <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">rounds.connections<span class="cursor"></span></span></div>
+          <pre>Incoming: 📋 interviewprograms (1:N)
+
+Outgoing:
+├── ❓ questions (1:N)
+├── 🔗 roundquestions (1:N)
+├── 🎮 candidaterounds (1:N)
+├── 📊 candidateanswers (1:N)
+├── 🛡️ anticheat (1:N)
+└── 🔗 one_click_tokens (1:N)</pre>
+        </div>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>round_id</code></td><td><code>int4</code></td><td><span class="key k-pk">🔑 PK</span></td><td>Unique identifier</td></tr>
+            <tr><td>2</td><td><code>program_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-interviewprograms"><code>interviewprograms</code></a></td><td>Parent program</td></tr>
+            <tr><td>3</td><td><code>round_name</code></td><td><code>text</code></td><td></td><td>Name (e.g., "Aptitude Test")</td></tr>
+            <tr><td>4</td><td><code>round_order</code></td><td><code>int4</code></td><td><span class="key k-meta">📌</span></td><td>Sequence within program</td></tr>
+            <tr><td>5</td><td><code>start_date</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Round availability start</td></tr>
+            <tr><td>6</td><td><code>end_date</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Round availability end</td></tr>
+            <tr><td>7</td><td><code>round_description</code></td><td><code>text</code></td><td></td><td>Description</td></tr>
+            <tr><td>8</td><td><code>extra_time_minutes</code></td><td><code>int4</code></td><td><span class="key k-meta">📌</span></td><td>Time accommodations</td></tr>
+            <tr><td>9</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Record creation timestamp</td></tr>
+            <tr><td>10</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>11</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- 4.4 questions -->
+      <div class="entity reveal" id="tbl-questions">
+        <div class="entity-head"><span class="entity-num">4.4</span><span class="entity-emoji">❓</span><h3><code>questions</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 The <strong>core content entity</strong>. A question is the actual challenge a candidate faces. Questions can be MCQs, dialogues, scenarios, timed/untimed, with images, and tab-switch restrictions.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>A company creates questions assigned to rounds. Each question has a <code>question_type</code> (MCQ, dialogue, open-ended, etc.). For MCQ, child <code>options</code> define choices. For dialogue, child <code>dialogue_lines</code> create conversation. <code>is_weightage_based</code> switches between simple and weighted scoring. <code>restrict_tab_switch</code> integrates with anti-cheat.</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>Options, dialogue lines, assignments, and answers break</td></tr>
+          <tr><td>🟢 Content richness</td><td>Supports 5+ types, images, scenarios, timing</td></tr>
+          <tr><td>🟡 Scoring engine</td><td><code>points</code> and <code>is_weightage_based</code> drive scoring</td></tr>
+          <tr><td>⚠️ Data type concern</td><td class="warnflag"><code>question_id</code> is <code>float8</code> — unusual for PKs, causes precision issues</td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (6 total: 2 incoming, 4 outgoing)</h4>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>question_id</code></td><td><code>float8</code></td><td><span class="key k-pk">🔑 PK</span></td><td>Unique identifier <span class="warnflag">⚠️ Float PK</span></td></tr>
+            <tr><td>2</td><td><code>company_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-companies"><code>companies</code></a></td><td>Owner company</td></tr>
+            <tr><td>3</td><td><code>round_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-rounds"><code>rounds</code></a></td><td>Direct round association</td></tr>
+            <tr><td>4</td><td><code>question_order</code></td><td><code>int4</code></td><td><span class="key k-meta">📌</span></td><td>Display order</td></tr>
+            <tr><td>5</td><td><code>content_type</code></td><td><code>text</code></td><td></td><td>Format: text, image, mixed</td></tr>
+            <tr><td>6</td><td><code>question_text</code></td><td><code>text</code></td><td></td><td>Question content</td></tr>
+            <tr><td>7</td><td><code>question_type</code></td><td><code>text</code></td><td><span class="key k-meta">📌</span></td><td>Type: MCQ, dialogue, open-ended, scenario</td></tr>
+            <tr><td>8</td><td><code>time_frame_seconds</code></td><td><code>int4</code></td><td></td><td>Time limit (if timed)</td></tr>
+            <tr><td>9</td><td><code>points</code></td><td><code>int4</code></td><td></td><td>Maximum points</td></tr>
+            <tr><td>10</td><td><code>question_level</code></td><td><code>text</code></td><td></td><td>Difficulty: easy, medium, hard</td></tr>
+            <tr><td>11</td><td><code>scenario</code></td><td><code>text</code></td><td></td><td>Scenario/context</td></tr>
+            <tr><td>12</td><td><code>is_weightage_based</code></td><td><code>bool</code></td><td><span class="key k-meta">📌</span></td><td>Use option weightage for scoring</td></tr>
+            <tr><td>13</td><td><code>is_timed</code></td><td><code>bool</code></td><td><span class="key k-meta">📌</span></td><td>Has time constraint</td></tr>
+            <tr><td>14</td><td><code>character</code></td><td><code>text</code></td><td></td><td>Character name (dialogue/scenario)</td></tr>
+            <tr><td>15</td><td><code>question_images</code></td><td><code>_text</code></td><td></td><td>Array of image URLs</td></tr>
+            <tr><td>16</td><td><code>restrict_tab_switch</code></td><td><code>bool</code></td><td><span class="key k-meta">📌</span></td><td>Trigger anti-cheat on tab switch</td></tr>
+            <tr><td>17</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Record creation timestamp</td></tr>
+            <tr><td>18</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>19</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- 4.5 roundquestions -->
+      <div class="entity reveal" id="tbl-roundquestions">
+        <div class="entity-head"><span class="entity-num">4.5</span><span class="entity-emoji">🔗</span><h3><code>roundquestions</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 A <strong>bridge/junction table</strong> creating many-to-many between rounds and questions. Allows same question reused across rounds with <strong>independent ordering</strong> per round.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>When admin assigns question to round, a row is created here. <code>question_order</code> can differ from <code>questions.question_order</code>, allowing per-round customization.</p>
+        <blockquote><p>💡 <strong>Why exists when <code>questions</code> has <code>round_id</code>?</strong> Direct <code>questions.round_id</code> is the "home round". <code>roundquestions</code> allows the <strong>same question in multiple rounds</strong> with different ordering.</p></blockquote>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>Question disappears from that round's list</td></tr>
+          <tr><td>🟢 Reusability</td><td>Enables question bank sharing across rounds</td></tr>
+          <tr><td>🟡 Order override</td><td><code>question_order</code> overrides <code>questions.question_order</code></td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (3 incoming)</h4>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>id</code></td><td><code>int4</code></td><td><span class="key k-pk">🔑 PK</span></td><td>Unique identifier</td></tr>
+            <tr><td>2</td><td><code>round_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-rounds"><code>rounds</code></a></td><td>Associated round</td></tr>
+            <tr><td>3</td><td><code>company_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-companies"><code>companies</code></a></td><td>Scoping company</td></tr>
+            <tr><td>4</td><td><code>question_id</code></td><td><code>float8</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-questions"><code>questions</code></a></td><td>Associated question</td></tr>
+            <tr><td>5</td><td><code>question_order</code></td><td><code>int4</code></td><td><span class="key k-meta">📌</span></td><td>Display order within round</td></tr>
+            <tr><td>6</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Record creation timestamp</td></tr>
+            <tr><td>7</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>8</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- 4.6 options -->
+      <div class="entity reveal" id="tbl-options">
+        <div class="entity-head"><span class="entity-num">4.6</span><span class="entity-emoji">✅</span><h3><code>options</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 <strong>Answer choices</strong> for MCQ questions. Each option indicates correctness and carries weightage for weighted scoring.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>For <code>question_type = 'MCQ'</code>, multiple option rows are inserted. <code>is_correct</code> marks the right answer. When <code>is_weightage_based = true</code>, the <code>weightage</code> value is used instead of simple correct/incorrect — enabling partial credit (e.g., Best=10pts, Good=5pts, Wrong=0pts).</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>MCQ becomes unanswerable</td></tr>
+          <tr><td>🟢 Scoring</td><td>Drives auto-scoring for MCQ</td></tr>
+          <tr><td>🟡 Weighted scoring</td><td><code>weightage</code> enables nuanced gamified scoring</td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (1 incoming)</h4>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>option_id</code></td><td><code>int4</code></td><td><span class="key k-pk">🔑 PK</span></td><td>Unique identifier</td></tr>
+            <tr><td>2</td><td><code>question_id</code></td><td><code>float8</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-questions"><code>questions</code></a></td><td>Parent question</td></tr>
+            <tr><td>3</td><td><code>option_text</code></td><td><code>text</code></td><td></td><td>Answer choice text</td></tr>
+            <tr><td>4</td><td><code>is_correct</code></td><td><code>bool</code></td><td><span class="key k-meta">📌</span></td><td>Whether correct answer</td></tr>
+            <tr><td>5</td><td><code>weightage</code></td><td><code>int4</code></td><td><span class="key k-meta">📌</span></td><td>Score weight for weighted questions</td></tr>
+            <tr><td>6</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Record creation timestamp</td></tr>
+            <tr><td>7</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>8</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- 4.7 dialogue_lines -->
+      <div class="entity reveal" id="tbl-dialogue_lines">
+        <div class="entity-head"><span class="entity-num">4.7</span><span class="entity-emoji">🎭</span><h3><code>dialogue_lines</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 <strong>Individual lines of conversation</strong> within dialogue-type questions. Creates an interactive story-driven experience — like visual novel/RPG dialogue.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>For <code>question_type = 'dialogue'</code>, multiple <code>dialogue_lines</code> rows exist with sequential <code>line_order</code>. Each has a <code>character</code> (speaker) and <code>dialogue_text</code> (speech). <code>dialogue_state</code> tracks phase (intro, question, conclusion) for different UI rendering.</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>Dialogue loses narrative content</td></tr>
+          <tr><td>🟢 Gamification</td><td>Heart of the "gamified" experience</td></tr>
+          <tr><td>🟡 Ordering</td><td><code>line_order</code> must be sequential for proper rendering</td></tr>
+          <tr><td>⚠️ No explicit PK</td><td>Uses composite <code>(parent_question_id, line_order)</code></td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (1 incoming)</h4>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>parent_question_id</code></td><td><code>float8</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-questions"><code>questions</code></a></td><td>Parent dialogue question</td></tr>
+            <tr><td>2</td><td><code>line_order</code></td><td><code>int4</code></td><td><span class="key k-meta">📌</span></td><td>Sequence of dialogue line</td></tr>
+            <tr><td>3</td><td><code>character</code></td><td><code>text</code></td><td></td><td>Character speaking</td></tr>
+            <tr><td>4</td><td><code>dialogue_text</code></td><td><code>text</code></td><td></td><td>Spoken text content</td></tr>
+            <tr><td>5</td><td><code>dialogue_state</code></td><td><code>text</code></td><td><span class="key k-meta">📌</span></td><td>State: intro, question, conclusion</td></tr>
+            <tr><td>6</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Record creation timestamp</td></tr>
+            <tr><td>7</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>8</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- 4.8 candidates -->
+      <div class="entity reveal" id="tbl-candidates">
+        <div class="entity-head"><span class="entity-num">4.8</span><span class="entity-emoji">👤</span><h3><code>candidates</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 <strong>People applying for jobs</strong>. User entity — candidates register, enroll in programs, take rounds, answer questions, and are monitored for integrity.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>Candidate creates account with email/password. <code>is_registered</code> flag distinguishes partial profiles (via token) from full registration. <code>yoe</code> and <code>job_role</code> support filtering/matching. <code>candidate_id</code> cascades into 5 activity tables.</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>All enrollments, answers, anti-cheat data, tokens orphaned</td></tr>
+          <tr><td>🟢 Central entity</td><td>Second most connected (after <code>rounds</code>)</td></tr>
+          <tr><td>🟡 Authentication</td><td><code>email</code> + <code>password</code> power login</td></tr>
+          <tr><td>⚠️ Security</td><td><code>password</code> must be hashed; <code>email</code> and <code>phone</code> are PII</td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (5 outgoing)</h4>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>candidate_id</code></td><td><code>int4</code></td><td><span class="key k-pk">🔑 PK</span></td><td>Unique identifier</td></tr>
+            <tr><td>2</td><td><code>email</code></td><td><code>text</code></td><td><span class="key k-meta">📌</span></td><td>Email (should be unique)</td></tr>
+            <tr><td>3</td><td><code>first_name</code></td><td><code>text</code></td><td></td><td>First name</td></tr>
+            <tr><td>4</td><td><code>last_name</code></td><td><code>text</code></td><td></td><td>Last name</td></tr>
+            <tr><td>5</td><td><code>phone_number</code></td><td><code>text</code></td><td></td><td>Contact number</td></tr>
+            <tr><td>6</td><td><code>is_registered</code></td><td><code>bool</code></td><td><span class="key k-meta">📌</span></td><td>Full registration complete</td></tr>
+            <tr><td>7</td><td><code>yoe</code></td><td><code>int4</code></td><td></td><td>Years of experience</td></tr>
+            <tr><td>8</td><td><code>job_role</code></td><td><code>text</code></td><td></td><td>Target job role</td></tr>
+            <tr><td>9</td><td><code>password</code></td><td><code>text</code></td><td><span class="key k-sec">🔐</span></td><td>Hashed password</td></tr>
+            <tr><td>10</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Record creation timestamp</td></tr>
+            <tr><td>11</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>12</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- 4.9 candidateprograms -->
+      <div class="entity reveal" id="tbl-candidateprograms">
+        <div class="entity-head"><span class="entity-num">4.9</span><span class="entity-emoji">📝</span><h3><code>candidateprograms</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 <strong>Enrollment table</strong> — many-to-many bridge between candidates and programs. When a candidate signs up for a hiring program, a row is created here.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>When candidate clicks "Apply" or is invited to a program, a <code>candidateprograms</code> row links them. This is a prerequisite for accessing any round. The system checks this table before allowing round entry.</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>Candidate loses entire program access</td></tr>
+          <tr><td>🟢 Access control</td><td>Gatekeeper — no enrollment = no access</td></tr>
+          <tr><td>⚠️ No surrogate PK</td><td>Uses composite <code>(candidate_id, program_id)</code></td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (2 incoming)</h4>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>candidate_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-candidates"><code>candidates</code></a></td><td>Enrolled candidate</td></tr>
+            <tr><td>2</td><td><code>program_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-interviewprograms"><code>interviewprograms</code></a></td><td>Enrolled program</td></tr>
+            <tr><td>3</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Enrollment timestamp</td></tr>
+            <tr><td>4</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>5</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- 4.10 candidaterounds -->
+      <div class="entity reveal" id="tbl-candidaterounds">
+        <div class="entity-head"><span class="entity-num">4.10</span><span class="entity-emoji">🎮</span><h3><code>candidaterounds</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 <strong>Round participation tracker</strong> — records when a candidate starts/finishes a round. Many-to-many bridge between candidates and rounds, enriched with timing.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>When candidate enters a round, a <code>candidaterounds</code> row is created with <code>round_start_time = NOW()</code>. When the round ends (manual submission or auto-submit), <code>round_end_time</code> is set. This enables tracking of session duration, progression, and timing validations.</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>Loss of timing data, session tracking</td></tr>
+          <tr><td>🟢 Session tracking</td><td>Enables duration calculation</td></tr>
+          <tr><td>🟡 Progression</td><td>Links candidates to specific rounds</td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (2 incoming)</h4>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>candidate_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-candidates"><code>candidates</code></a></td><td>Participating candidate</td></tr>
+            <tr><td>2</td><td><code>round_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-rounds"><code>rounds</code></a></td><td>Participated round</td></tr>
+            <tr><td>3</td><td><code>round_start_time</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>When candidate started round</td></tr>
+            <tr><td>4</td><td><code>round_end_time</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>When candidate finished/submitted</td></tr>
+            <tr><td>5</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Record creation timestamp</td></tr>
+            <tr><td>6</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>7</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- 4.11 candidateanswers -->
+      <div class="entity reveal" id="tbl-candidateanswers">
+        <div class="entity-head"><span class="entity-num">4.11</span><span class="entity-emoji">📊</span><h3><code>candidateanswers</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 <strong>Candidate responses</strong> to questions. Records every answer submitted, the score awarded, and timestamps. Core activity table for exam results.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>When candidate submits an answer to a question, a row is created with <code>answer</code> (text/JSON), <code>question_type</code>, and initially <code>score = NULL</code>. The auto-scoring engine populates <code>score</code>. On question start, <code>started_at</code> is logged; on completion, <code>completed_at</code> is logged. Used for result generation and cheating detection.</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>Loss of all exam answers and scores</td></tr>
+          <tr><td>🟢 Scoring</td><td>Directly linked to grading pipeline</td></tr>
+          <tr><td>🟡 Audit trail</td><td>Timestamps enable forensic analysis</td></tr>
+          <tr><td>🔍 Large table</td><td>Expect millions of rows; needs indexing &amp; partitioning</td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (3 incoming)</h4>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>id</code></td><td><code>int4</code></td><td><span class="key k-pk">🔑 PK</span></td><td>Unique identifier</td></tr>
+            <tr><td>2</td><td><code>candidate_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-candidates"><code>candidates</code></a></td><td>Answering candidate</td></tr>
+            <tr><td>3</td><td><code>round_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-rounds"><code>rounds</code></a></td><td>Round context</td></tr>
+            <tr><td>4</td><td><code>question_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-questions"><code>questions</code></a></td><td>Question answered</td></tr>
+            <tr><td>5</td><td><code>question_type</code></td><td><code>text</code></td><td></td><td>Type: MCQ, dialogue, open-ended</td></tr>
+            <tr><td>6</td><td><code>answer</code></td><td><code>text</code></td><td></td><td>Submitted answer (text/JSON)</td></tr>
+            <tr><td>7</td><td><code>score</code></td><td><code>int4</code></td><td><span class="key k-score">📊</span></td><td>Points awarded</td></tr>
+            <tr><td>8</td><td><code>started_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>When candidate started question</td></tr>
+            <tr><td>9</td><td><code>completed_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>When candidate submitted answer</td></tr>
+            <tr><td>10</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Record creation timestamp</td></tr>
+            <tr><td>11</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>12</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+        <p class="impact-note">⚠️ Note: <code>candidateanswers.question_id</code> is <code>int4</code> while <code>questions.question_id</code> is <code>float8</code> — a known type mismatch (see §6.6).</p>
+      </div>
+
+      <!-- 4.12 anticheat -->
+      <div class="entity reveal" id="tbl-anticheat">
+        <div class="entity-head"><span class="entity-num">4.12</span><span class="entity-emoji">🛡️</span><h3><code>anticheat</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 <strong>Integrity monitoring record</strong> — captures IP, screen recording, webcam recording, and event logs for anti-cheating. One record per candidate per round session.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>When candidate starts exam (round), an <code>anticheat</code> row is created with <code>ip_address</code> and session context. As the exam progresses, violations are recorded (external event log). On submission, <code>screen_record_url</code> and <code>webcam_record_url</code> are populated. Used for post-exam cheating review.</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>Loss of recordings and monitoring evidence</td></tr>
+          <tr><td>🟢 Integrity</td><td>Core to ensuring exam validity</td></tr>
+          <tr><td>🟡 Recording storage</td><td>URLs point to cloud storage (S3, etc.)</td></tr>
+          <tr><td>📹 Large data</td><td>Video files require external storage</td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (2 incoming)</h4>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>id</code></td><td><code>int4</code></td><td><span class="key k-pk">🔑 PK</span></td><td>Unique identifier</td></tr>
+            <tr><td>2</td><td><code>candidate_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-candidates"><code>candidates</code></a></td><td>Monitored candidate</td></tr>
+            <tr><td>3</td><td><code>round_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-rounds"><code>rounds</code></a></td><td>Round monitored</td></tr>
+            <tr><td>4</td><td><code>ip_address</code></td><td><code>text</code></td><td><span class="key k-meta">📌</span></td><td>Candidate's IP at session start</td></tr>
+            <tr><td>5</td><td><code>screen_record_url</code></td><td><code>text</code></td><td><span class="key k-link">🔗</span></td><td>URL to screen recording (S3, etc.)</td></tr>
+            <tr><td>6</td><td><code>webcam_record_url</code></td><td><code>text</code></td><td><span class="key k-link">🔗</span></td><td>URL to webcam recording (S3, etc.)</td></tr>
+            <tr><td>7</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Record creation timestamp</td></tr>
+            <tr><td>8</td><td><code>updated_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Last update timestamp</td></tr>
+            <tr><td>9</td><td><code>is_deleted</code></td><td><code>bool</code></td><td><span class="key k-del">🗑️</span></td><td>Soft delete flag</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+
+      <!-- 4.13 one_click_tokens -->
+      <div class="entity reveal" id="tbl-one_click_tokens">
+        <div class="entity-head"><span class="entity-num">4.13</span><span class="entity-emoji">🔗</span><h3><code>one_click_tokens</code></h3></div>
+        <blockquote class="desc-quote"><p>📖 <strong>Quick-access tokens</strong> sent to candidates. A single-use or multi-use token that allows candidates to enter a program/round without full registration. Enables frictionless onboarding.</p></blockquote>
+        <h4>🔄 How It Works</h4>
+        <p>Admin creates a token linking candidate, program, and round. Token is hashed with SHA-256 for security. Email can be sent directly. Candidate clicks link, enters exam if token valid (<code>is_used = false</code> and <code>expires_at &gt; NOW()</code>). On click, token is marked <code>is_used = true</code> and <code>used_at</code> is set.</p>
+        <h4>💥 Impact on System</h4>
+        <div class="table-wrap"><table><thead><tr><th>Impact Area</th><th>Description</th></tr></thead><tbody>
+          <tr><td>🔴 If deleted</td><td>Candidates lose quick-access entry point</td></tr>
+          <tr><td>🟢 Frictionless</td><td>Skip registration for speedy access</td></tr>
+          <tr><td>🟡 Token expiry</td><td>Prevents long-lived access</td></tr>
+          <tr><td>⚠️ Security</td><td><code>token_hash</code> never exposed; only hashed value stored</td></tr>
+        </tbody></table></div>
+        <h4>🔌 Direct Connections (3 incoming)</h4>
+        <h4>📋 Schema Table</h4>
+        <div class="table-wrap">
+          <table class="schema-table"><thead><tr><th>#</th><th>Column Name</th><th>Data Type</th><th>Key</th><th>Description</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>token_id</code></td><td><code>int4</code></td><td><span class="key k-pk">🔑 PK</span></td><td>Unique identifier</td></tr>
+            <tr><td>2</td><td><code>token_hash</code></td><td><code>varchar(255)</code></td><td><span class="key k-sec">🔐</span></td><td>SHA-256 hashed token (unique)</td></tr>
+            <tr><td>3</td><td><code>candidate_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-candidates"><code>candidates</code></a></td><td>Token recipient</td></tr>
+            <tr><td>4</td><td><code>program_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-interviewprograms"><code>interviewprograms</code></a></td><td>Target program</td></tr>
+            <tr><td>5</td><td><code>round_id</code></td><td><code>int4</code></td><td><span class="key k-fk">🔗 FK</span> → <a href="#tbl-rounds"><code>rounds</code></a></td><td>Target round</td></tr>
+            <tr><td>6</td><td><code>email</code></td><td><code>varchar(255)</code></td><td></td><td>Email for token delivery</td></tr>
+            <tr><td>7</td><td><code>session_duration_minutes</code></td><td><code>int4</code></td><td><span class="key k-meta">📌</span></td><td>Allowed session length</td></tr>
+            <tr><td>8</td><td><code>expires_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Token expiration time</td></tr>
+            <tr><td>9</td><td><code>used_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>When token was consumed</td></tr>
+            <tr><td>10</td><td><code>is_used</code></td><td><code>bool</code></td><td><span class="key k-meta">📌</span></td><td>Whether token consumed</td></tr>
+            <tr><td>11</td><td><code>is_started</code></td><td><code>bool</code></td><td><span class="key k-meta">📌</span></td><td>Whether exam started</td></tr>
+            <tr><td>12</td><td><code>created_at</code></td><td><code>timestamptz</code></td><td><span class="key k-time">🕐</span></td><td>Token creation time</td></tr>
+            <tr><td>13</td><td><code>ip_address</code></td><td><code>inet</code></td><td><span class="key k-meta">📌</span></td><td>IP at usage (if applicable)</td></tr>
+            <tr><td>14</td><td><code>user_agent</code></td><td><code>text</code></td><td></td><td>Browser/device info</td></tr>
+            <tr><td>15</td><td><code>created_by</code></td><td><code>varchar(100)</code></td><td></td><td>Admin who created token</td></tr>
+            <tr><td>16</td><td><code>usage_count</code></td><td><code>int4</code></td><td><span class="key k-meta">📌</span></td><td>Times used (multi-use tokens)</td></tr>
+          </tbody></table>
+        </div>
+        <p class="impact-note">ℹ️ Note: unlike the other 12 tables, <code>one_click_tokens</code> has no <code>is_deleted</code> column in this schema.</p>
+      </div>
+    </section>
+
+    <!-- ============ 5. INTERCONNECTIONS ============ -->
+    <section class="section" id="topology" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">5 · Table Interconnections — Full Visibility Map</div>
+        <h2>🕸️ 5.1 — Complete System Topology</h2>
+      </div>
+      <div class="term reveal">
+        <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">topology.map<span class="cursor"></span></span></div>
+        <pre>                     FULL DATABASE TOPOLOGY
+
+   LAYER 1 (Root)      🏢 companies
+                        │  │  │
+                     ┌──┘  │  └──────────┐
+                     ▼     ▼              ▼
+   LAYER 2        📋 interview  ❓ questions  🔗 roundquestions
+   (Content)       programs    │  │  │         ▲  ▲
+                      │        │  │  │         │  │
+                      ▼        │  │  └─────────┘  │
+   LAYER 3        🔄 rounds ──┘  │               │
+   (Rounds)         │ │ │ │      │               │
+                    │ │ │ └──────┼───────────────┘
+                    │ │ │        │
+                    │ │ │   ┌────┴────┐
+                    │ │ │   ▼         ▼
+   LAYER 4        │ │ │  ✅ options  🎭 dialogue_lines
+   (Content       │ │ │
+    Details)      │ │ │
+                  │ │ │
+   ─ ─ ─ ─ ─ ─ ─│─│─│─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
+                  │ │ │       👤 candidates
+   LAYER 5        │ │ │        │  │  │  │  │
+   (Candidate     │ │ │   ┌────┘  │  │  │  └────┐
+    Activity)     │ │ │   ▼       │  │  ▼       ▼
+                  │ │ └► 📝 cand-  │  │ 🛡️anti- 🔗 one_click_
+                  │ │    programs  │  │  cheat    tokens
+                  │ │             │  │
+                  │ └──────────► 🎮 candidaterounds
+                  │              │
+                  └────────────► 📊 candidateanswers</pre>
+      </div>
+    </section>
+
+    <section class="section" id="conn-count" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">5.2</div>
+        <h2>📊 Connection Count Per Table</h2>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Rank</th><th>Table</th><th>Incoming</th><th>Outgoing</th><th>Total</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td>🥇</td><td>🔄 <code>rounds</code></td><td>1</td><td>6</td><td><strong>7</strong></td><td>Hub of all activity</td></tr>
+            <tr><td>🥈</td><td>❓ <code>questions</code></td><td>2</td><td>4</td><td><strong>6</strong></td><td>Core content node</td></tr>
+            <tr><td>🥉</td><td>👤 <code>candidates</code></td><td>0</td><td>5</td><td><strong>5</strong></td><td>Central user entity</td></tr>
+            <tr><td>4</td><td>📋 <code>interviewprograms</code></td><td>1</td><td>3</td><td><strong>4</strong></td><td>Program container</td></tr>
+            <tr><td>5</td><td>🏢 <code>companies</code></td><td>0</td><td>3</td><td><strong>3</strong></td><td>Root entity</td></tr>
+            <tr><td>6-8</td><td>📊 <code>candidateanswers</code>, 🔗 <code>one_click_tokens</code>, 🔗 <code>roundquestions</code></td><td>3</td><td>0</td><td><strong>3</strong></td><td>Collectors/Bridges</td></tr>
+            <tr><td>9</td><td>🛡️ <code>anticheat</code></td><td>2</td><td>0</td><td><strong>2</strong></td><td>Monitoring</td></tr>
+            <tr><td>10-11</td><td>📝 <code>candidateprograms</code>, 🎮 <code>candidaterounds</code></td><td>2</td><td>0</td><td><strong>2</strong></td><td>Bridges</td></tr>
+            <tr><td>12-13</td><td>✅ <code>options</code>, 🎭 <code>dialogue_lines</code></td><td>1</td><td>0</td><td><strong>1</strong></td><td>Leaf content</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="rel-categories" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">5.3</div>
+        <h2>🧩 Relationship Categories</h2>
+      </div>
+
+      <h3 class="reveal">🟢 Category A: Content Hierarchy</h3>
+      <div class="term reveal">
+        <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">category_a.tree<span class="cursor"></span></span></div>
+        <pre>🏢 companies
+  └──► 📋 interviewprograms
+        └──► 🔄 rounds
+              ├──► ❓ questions (direct)
+              └──► 🔗 roundquestions
+                     └──► ❓ questions (many-to-many)
+
+❓ questions
+  ├──► ✅ options (MCQ choices)
+  └──► 🎭 dialogue_lines (Dialogue scripts)</pre>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>From</th><th>→</th><th>To</th><th>FK</th><th>Type</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>🏢 companies</td><td>→</td><td>📋 interviewprograms</td><td><code>company_id</code></td><td>1:N</td><td>Company owns programs</td></tr>
+            <tr><td>📋 interviewprograms</td><td>→</td><td>🔄 rounds</td><td><code>program_id</code></td><td>1:N</td><td>Program contains rounds</td></tr>
+            <tr><td>🏢 companies</td><td>→</td><td>❓ questions</td><td><code>company_id</code></td><td>1:N</td><td>Company owns questions</td></tr>
+            <tr><td>🔄 rounds</td><td>→</td><td>❓ questions</td><td><code>round_id</code></td><td>1:N</td><td>Direct assignment</td></tr>
+            <tr><td>🔄 rounds</td><td>→</td><td>🔗 roundquestions</td><td><code>round_id</code></td><td>1:N</td><td>Bridge assignment</td></tr>
+            <tr><td>🏢 companies</td><td>→</td><td>🔗 roundquestions</td><td><code>company_id</code></td><td>1:N</td><td>Company scoping</td></tr>
+            <tr><td>❓ questions</td><td>→</td><td>🔗 roundquestions</td><td><code>question_id</code></td><td>1:N</td><td>Bridge side</td></tr>
+            <tr><td>❓ questions</td><td>→</td><td>✅ options</td><td><code>question_id</code></td><td>1:N</td><td>MCQ choices</td></tr>
+            <tr><td>❓ questions</td><td>→</td><td>🎭 dialogue_lines</td><td><code>parent_question_id</code></td><td>1:N</td><td>Dialogue content</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="reveal">🔵 Category B: Candidate Activity</h3>
+      <div class="term reveal">
+        <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">category_b.tree<span class="cursor"></span></span></div>
+        <pre>👤 candidates
+  ├──► 📝 candidateprograms ◄──── 📋 interviewprograms
+  ├──► 🎮 candidaterounds ◄──── 🔄 rounds
+  ├──► 📊 candidateanswers ◄──── 🔄 rounds + ❓ questions
+  ├──► 🛡️ anticheat ◄──── 🔄 rounds
+  └──► 🔗 one_click_tokens ◄──── 📋 interviewprograms + 🔄 rounds</pre>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>From</th><th>→</th><th>To</th><th>FK</th><th>Type</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>👤 candidates</td><td>→</td><td>📝 candidateprograms</td><td><code>candidate_id</code></td><td>1:N</td><td>Enrollment</td></tr>
+            <tr><td>📋 interviewprograms</td><td>→</td><td>📝 candidateprograms</td><td><code>program_id</code></td><td>1:N</td><td>Which program</td></tr>
+            <tr><td>👤 candidates</td><td>→</td><td>🎮 candidaterounds</td><td><code>candidate_id</code></td><td>1:N</td><td>Participation</td></tr>
+            <tr><td>🔄 rounds</td><td>→</td><td>🎮 candidaterounds</td><td><code>round_id</code></td><td>1:N</td><td>Which round</td></tr>
+            <tr><td>👤 candidates</td><td>→</td><td>📊 candidateanswers</td><td><code>candidate_id</code></td><td>1:N</td><td>Submissions</td></tr>
+            <tr><td>🔄 rounds</td><td>→</td><td>📊 candidateanswers</td><td><code>round_id</code></td><td>1:N</td><td>Round context</td></tr>
+            <tr><td>❓ questions</td><td>→</td><td>📊 candidateanswers</td><td><code>question_id</code></td><td>1:N</td><td>Question context</td></tr>
+            <tr><td>👤 candidates</td><td>→</td><td>🛡️ anticheat</td><td><code>candidate_id</code></td><td>1:N</td><td>Monitoring</td></tr>
+            <tr><td>🔄 rounds</td><td>→</td><td>🛡️ anticheat</td><td><code>round_id</code></td><td>1:N</td><td>Round monitoring</td></tr>
+            <tr><td>👤 candidates</td><td>→</td><td>🔗 one_click_tokens</td><td><code>candidate_id</code></td><td>1:N</td><td>Token recipient</td></tr>
+            <tr><td>📋 interviewprograms</td><td>→</td><td>🔗 one_click_tokens</td><td><code>program_id</code></td><td>1:N</td><td>Token program</td></tr>
+            <tr><td>🔄 rounds</td><td>→</td><td>🔗 one_click_tokens</td><td><code>round_id</code></td><td>1:N</td><td>Token round</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="query-paths" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">5.4</div>
+        <h2>🔍 Key Query Paths</h2>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Business Question</th><th>Query Path (Tables Joined)</th></tr></thead>
+          <tbody>
+            <tr><td>📊 "Get all answers for a candidate in a program"</td><td><code>candidates</code> → <code>candidateprograms</code> → <code>interviewprograms</code> → <code>rounds</code> → <code>candidateanswers</code></td></tr>
+            <tr><td>📋 "Get all questions for a round (ordered)"</td><td><code>rounds</code> → <code>roundquestions</code> → <code>questions</code> (ORDER BY <code>question_order</code>)</td></tr>
+            <tr><td>🎭 "Get full dialogue for a question"</td><td><code>questions</code> → <code>dialogue_lines</code> (ORDER BY <code>line_order</code>)</td></tr>
+            <tr><td>✅ "Get options for an MCQ question"</td><td><code>questions</code> → <code>options</code></td></tr>
+            <tr><td>🛡️ "Review anti-cheat for a candidate"</td><td><code>candidates</code> → <code>anticheat</code> (filter by <code>round_id</code>)</td></tr>
+            <tr><td>📊 "Total score for a candidate in a round"</td><td><code>candidateanswers</code> (GROUP BY <code>candidate_id, round_id</code>, SUM <code>score</code>)</td></tr>
+            <tr><td>🔗 "Validate one-click token"</td><td><code>one_click_tokens</code> (WHERE <code>token_hash</code> AND <code>is_used = false</code> AND <code>expires_at &gt; NOW()</code>)</td></tr>
+            <tr><td>🏢 "All active programs for a company"</td><td><code>companies</code> → <code>interviewprograms</code> (WHERE <code>status = 'active'</code>)</td></tr>
+            <tr><td>👤 "Candidate's full journey"</td><td><code>candidates</code> → <code>candidateprograms</code> → <code>candidaterounds</code> → <code>candidateanswers</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 6. CHECKLIST ============ -->
+    <section class="section" id="chk-integrity" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">6 · Project Completion Checklist</div>
+        <h2>📋 6.1 — Data Integrity &amp; Constraints</h2>
+      </div>
+
+      <h4 class="reveal">✅ Foreign Key Relationships — All FKs properly defined</h4>
+      <ul class="chk-list reveal">
+        <li><span class="chk-box">✓</span><span><code>companies.company_id</code> — Used by 3 tables</span></li>
+        <li><span class="chk-box">✓</span><span><code>interviewprograms.program_id</code> → <code>companies.company_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>rounds.program_id</code> → <code>interviewprograms.program_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>questions.company_id</code> → <code>companies.company_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>questions.round_id</code> → <code>rounds.round_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>roundquestions.round_id</code> → <code>rounds.round_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>roundquestions.company_id</code> → <code>companies.company_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>roundquestions.question_id</code> → <code>questions.question_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>options.question_id</code> → <code>questions.question_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>dialogue_lines.parent_question_id</code> → <code>questions.question_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>candidateprograms.candidate_id</code> → <code>candidates.candidate_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>candidateprograms.program_id</code> → <code>interviewprograms.program_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>candidaterounds.candidate_id</code> → <code>candidates.candidate_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>candidaterounds.round_id</code> → <code>rounds.round_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>candidateanswers.candidate_id</code> → <code>candidates.candidate_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>candidateanswers.round_id</code> → <code>rounds.round_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>candidateanswers.question_id</code> → <code>questions.question_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>anticheat.candidate_id</code> → <code>candidates.candidate_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>anticheat.round_id</code> → <code>rounds.round_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>one_click_tokens.candidate_id</code> → <code>candidates.candidate_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>one_click_tokens.program_id</code> → <code>interviewprograms.program_id</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>one_click_tokens.round_id</code> → <code>rounds.round_id</code></span></li>
+      </ul>
+
+      <h4 class="reveal">✅ Unique Constraints</h4>
+      <ul class="chk-list reveal">
+        <li><span class="chk-box">✓</span><span><code>candidates.email</code> — should be <code>UNIQUE</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>one_click_tokens.token_hash</code> — should be <code>UNIQUE</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>companies.company_contact_email</code> — consider <code>UNIQUE</code></span></li>
+      </ul>
+
+      <h4 class="reveal">✅ NOT NULL Constraints</h4>
+      <p class="reveal">Critical columns (emails, names, FKs) should be <code>NOT NULL</code>.</p>
+
+      <h4 class="reveal">✅ CHECK Constraints</h4>
+      <ul class="chk-list reveal">
+        <li><span class="chk-box">✓</span><span><code>rounds.round_order &gt;= 1</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>questions.points &gt;= 0</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>questions.time_frame_seconds &gt;= 0</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>options.weightage &gt;= 0</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>candidateanswers.score &gt;= 0</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>one_click_tokens.usage_count &gt;= 0</code></span></li>
+      </ul>
+    </section>
+
+    <section class="section" id="chk-index" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">6.2</div>
+        <h2>📇 Indexing Strategy</h2>
+      </div>
+      <h4 class="reveal">🔍 Primary Key Indexes</h4>
+      <p class="reveal">Automatically created (verify).</p>
+
+      <h4 class="reveal">🔍 Foreign Key Indexes — Create on ALL FK columns</h4>
+      <ul class="chk-list reveal">
+        <li><span class="chk-box">✓</span><span><code>interviewprograms(company_id)</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>rounds(program_id)</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>questions(company_id)</code>, <code>questions(round_id)</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>roundquestions(round_id)</code>, <code>roundquestions(question_id)</code>, <code>roundquestions(company_id)</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>options(question_id)</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>dialogue_lines(parent_question_id)</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>candidateprograms(candidate_id)</code>, <code>candidateprograms(program_id)</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>candidaterounds(candidate_id)</code>, <code>candidaterounds(round_id)</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>candidateanswers(candidate_id)</code>, <code>candidateanswers(round_id)</code>, <code>candidateanswers(question_id)</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>anticheat(candidate_id)</code>, <code>anticheat(round_id)</code></span></li>
+        <li><span class="chk-box">✓</span><span><code>one_click_tokens(candidate_id)</code>, <code>one_click_tokens(program_id)</code>, <code>one_click_tokens(round_id)</code></span></li>
+      </ul>
+
+      <h4 class="reveal">🔍 Lookup Indexes</h4>
+      <ul class="chk-list reveal">
+        <li><span class="chk-box">✓</span><span><code>candidates(email)</code> — login/search</span></li>
+        <li><span class="chk-box">✓</span><span><code>one_click_tokens(token_hash)</code> — token lookup</span></li>
+        <li><span class="chk-box">✓</span><span><code>interviewprograms(status)</code> — filter by status</span></li>
+        <li><span class="chk-box">✓</span><span><code>one_click_tokens(is_used, expires_at)</code> — find valid tokens</span></li>
+      </ul>
+
+      <h4 class="reveal">🔍 Composite Indexes</h4>
+      <ul class="chk-list reveal">
+        <li><span class="chk-box">✓</span><span><code>candidateanswers(candidate_id, round_id)</code> — all answers per session</span></li>
+        <li><span class="chk-box">✓</span><span><code>anticheat(candidate_id, round_id)</code> — monitoring per session</span></li>
+        <li><span class="chk-box">✓</span><span><code>roundquestions(round_id, question_order)</code> — ordered retrieval</span></li>
+        <li><span class="chk-box">✓</span><span><code>dialogue_lines(parent_question_id, line_order)</code> — ordered dialogue</span></li>
+      </ul>
+    </section>
+
+    <section class="section" id="chk-softdelete" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">6.3</div>
+        <h2>🗑️ Soft Delete Implementation</h2>
+      </div>
+      <ul class="chk-list reveal">
+        <li><span class="chk-box">✓</span><span>All 12 tables have <code>is_deleted</code> column</span></li>
+        <li><span class="chk-box">✓</span><span>Default: <code>is_deleted DEFAULT false</code></span></li>
+        <li><span class="chk-box">✓</span><span>Application <strong>always</strong> filters: <code>WHERE is_deleted = false</code></span></li>
+      </ul>
+      <div class="term reveal">
+        <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">views.sql<span class="cursor"></span></span></div>
+        <pre>-- Create views for cleaner queries
+CREATE VIEW active_candidates AS
+  SELECT * FROM candidates WHERE is_deleted = false;
+
+-- Partial indexes on is_deleted = false
+CREATE INDEX idx_candidates_active ON candidates(candidate_id)
+  WHERE is_deleted = false;</pre>
+      </div>
+    </section>
+
+    <section class="section" id="chk-perf" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">6.4</div>
+        <h2>⚡ Performance &amp; Optimization</h2>
+      </div>
+      <ul class="chk-list reveal">
+        <li><span class="chk-box">✓</span><span>📊 <strong>ANALYZE</strong> — Run after initial data load</span></li>
+        <li><span class="chk-box">✓</span><span>📊 <strong>VACUUM</strong> — Confirm autovacuum enabled</span></li>
+        <li><span class="chk-box">✓</span><span>📊 <strong>Connection pooling</strong> — Use PgBouncer</span></li>
+        <li><span class="chk-box">✓</span><span>📊 <strong>Query optimization</strong> — Review slow query logs</span></li>
+        <li><span class="chk-box">✓</span><span>📊 <strong>Partitioning</strong> — Consider for <code>candidateanswers</code> if &gt; 10M rows</span></li>
+      </ul>
+    </section>
+
+    <section class="section" id="chk-security" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">6.5</div>
+        <h2>🔒 Security</h2>
+      </div>
+      <ul class="chk-list reveal">
+        <li><span class="chk-box">✓</span><span>🔐 <code>candidates.password</code> — Bcrypt/Argon2 hashing</span></li>
+        <li><span class="chk-box">✓</span><span>🔐 <code>one_click_tokens.token_hash</code> — SHA-256 hashing</span></li>
+        <li><span class="chk-box">✓</span><span>🔐 <strong>Row-Level Security (RLS)</strong> — Multi-tenant isolation</span></li>
+        <li><span class="chk-box">✓</span><span>🔐 <strong>Database roles</strong> — Separate read/write</span></li>
+        <li><span class="chk-box">✓</span><span>🔐 <code>screen_record_url</code>, <code>webcam_record_url</code> — Signed/expiring URLs</span></li>
+        <li><span class="chk-box">✓</span><span>🔐 <strong>PII Audit</strong> — GDPR compliance</span></li>
+      </ul>
+    </section>
+
+    <section class="section" id="chk-datatype" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">6.6</div>
+        <h2>📝 Data Type Review</h2>
+      </div>
+      <div class="card-grid reveal">
+        <div class="card">
+          <div class="ico">⚠️</div>
+          <h4><code>question_id</code> is <code>float8</code></h4>
+          <p>Unusual for a PK — floating-point equality issues, index performance degradation, inconsistency with other PKs. <strong>Consider migrating to</strong> <code>int4</code>/<code>int8</code>/<code>uuid</code>.</p>
+        </div>
+        <div class="card">
+          <div class="ico">⚠️</div>
+          <h4>Type mismatch</h4>
+          <p><code>candidateanswers.question_id</code> is <code>int4</code> but <code>questions.question_id</code> is <code>float8</code> — causes casting issues in JOINs. <strong>Align types.</strong></p>
+        </div>
+        <div class="card">
+          <div class="ico">⚠️</div>
+          <h4><code>question_images</code> is <code>_text</code> (array)</h4>
+          <p>Consider a separate table if complex querying is needed.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="chk-testing" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">6.7</div>
+        <h2>🧪 Testing &amp; Validation</h2>
+      </div>
+      <ul class="chk-list reveal">
+        <li><span class="chk-box">✓</span><span>🧪 Seed data scripts for all 12 tables</span></li>
+        <li><span class="chk-box">✓</span><span>🧪 Test FK cascade behaviors (<code>ON DELETE</code>, <code>ON UPDATE</code>)</span></li>
+        <li><span class="chk-box">✓</span><span>🧪 Test soft delete doesn't break FKs</span></li>
+        <li><span class="chk-box">✓</span><span>🧪 Load test with expected concurrent candidates</span></li>
+        <li><span class="chk-box">✓</span><span>🧪 Verify <code>one_click_tokens</code> expiration logic</span></li>
+        <li><span class="chk-box">✓</span><span>🧪 Test anti-cheat record creation flow</span></li>
+      </ul>
+    </section>
+
+    <section class="section" id="chk-ops" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">6.8</div>
+        <h2>📦 Operational Readiness</h2>
+      </div>
+      <ul class="chk-list reveal">
+        <li><span class="chk-box">✓</span><span>📋 Database migration scripts (up/down)</span></li>
+        <li><span class="chk-box">✓</span><span>📋 Backup strategy (point-in-time recovery)</span></li>
+        <li><span class="chk-box">✓</span><span>📋 Monitoring &amp; alerting (connections, disk, latency)</span></li>
+        <li><span class="chk-box">✓</span><span>📋 Documentation ✔️</span></li>
+        <li><span class="chk-box">✓</span><span>📋 Runbook for common operations</span></li>
+      </ul>
+    </section>
+
+    <!-- ============ WRAP-UP ============ -->
+    <section class="section" id="dashboard" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">Summary</div>
+        <h2>🏁 Summary Dashboard</h2>
+      </div>
+      <div class="dash-grid reveal">
+        <div class="dash-card"><b>12</b><span>📊 Total Tables</span></div>
+        <div class="dash-card"><b>2</b><span>🏢 Root Entities</span></div>
+        <div class="dash-card"><b>3</b><span>📋 Content Entities</span></div>
+        <div class="dash-card"><b>2</b><span>📎 Content Details</span></div>
+        <div class="dash-card"><b>3</b><span>🔗 Junction/Bridge Tables</span></div>
+        <div class="dash-card"><b>2</b><span>📝 Activity/Transaction Tables</span></div>
+        <div class="dash-card"><b>21</b><span>🔗 Total Relationships</span></div>
+        <div class="dash-card"><b>rounds</b><span>🔗 Most Connected (7 connections)</span></div>
+        <div class="dash-card"><b>100%</b><span>🗑️ Soft Delete Coverage (12/12)</span></div>
+        <div class="dash-card"><b>100%</b><span>🕐 Audit Trail Coverage</span></div>
+        <div class="dash-card"><b>136+</b><span>📊 Total Columns</span></div>
+        <div class="dash-card"><b>11</b><span>💼 Business Phases</span></div>
+        <div class="dash-card"><b>5</b><span>🛡️ Anti-Cheat Triggers</span></div>
+        <div class="dash-card"><b>2</b><span>⚠️ Known Issues (float8 PK, FK type mismatch)</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="takeaways" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">Wrap-up</div>
+        <h2>📌 Key Takeaways</h2>
+      </div>
+      <div class="take-grid reveal">
+        <div class="take"><b>✅ Comprehensive Coverage</b>12 interconnected tables covering all hiring stages</div>
+        <div class="take"><b>✅ Gamification Support</b>Dialogue lines, scenarios, weighted scoring</div>
+        <div class="take"><b>✅ Integrity Monitoring</b>Real-time anti-cheat with screen/webcam recording</div>
+        <div class="take"><b>✅ Soft Deletes</b>100% coverage for GDPR compliance</div>
+        <div class="take"><b>✅ Multi-Tenancy</b>Company-scoped data isolation</div>
+        <div class="take"><b>✅ Scalability Ready</b>Indexed for performance, ready for partitioning</div>
+        <div class="take"><b>✅ Well-Defined Flow</b>Clear mapping between business phases and database</div>
+      </div>
+    </section>
+
+    <section class="section" id="quicklinks" data-section>
+      <div class="section-head reveal">
+        <div class="section-kicker">Reference</div>
+        <h2>📊 Quick Links</h2>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Phase</th><th>Tables</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>1️⃣ Acquisition</td><td><code>companies</code></td><td>Client onboarding</td></tr>
+            <tr><td>2️⃣ Planning</td><td><code>questions</code>, <code>options</code>, <code>dialogue_lines</code>, <code>candidates</code></td><td>Content &amp; candidate prep</td></tr>
+            <tr><td>3️⃣ Setup</td><td><code>interviewprograms</code>, <code>rounds</code>, <code>candidateprograms</code>, <code>candidaterounds</code>, <code>one_click_tokens</code></td><td>Program structure</td></tr>
+            <tr><td>4️⃣-7️⃣ Exam</td><td><code>candidateanswers</code>, <code>anticheat</code></td><td>Execution &amp; monitoring</td></tr>
+            <tr><td>8️⃣-11️⃣ Closure</td><td>All tables read</td><td>Reporting &amp; archival</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <div>📄 Document Version: <strong>4.0 (Complete)</strong> · 📅 Last Updated: 2025 · 👤 Author: Database Architecture Team</div>
+      <div>🎯 Schema: <code>gamified_recruitment_v2_replica</code> · 📌 Status: ✅ Production Ready</div>
+      <div><a href="index.html">কাজকর্ম শিখ · Main Hub</a></div>
+    </footer>
+
+  </main>
+</div>
+
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+// ---------- mermaid ----------
+mermaid.initialize({
+  startOnLoad:true,
+  theme:'base',
+  themeVariables:{
+    background:'#fffdf7',
+    primaryColor:'#f7f1e3',
+    primaryTextColor:'#231b10',
+    primaryBorderColor:'#d97a1f',
+    lineColor:'#1f7a5c',
+    secondaryColor:'#f1ead9',
+    tertiaryColor:'#f7f1e3',
+    clusterBkg:'#fffdf7',
+    clusterBorder:'#8b7c63',
+    fontFamily:'IBM Plex Mono, monospace',
+    fontSize:'12px'
+  },
+  er:{ useMaxWidth:true }
+});
+
+// ---------- scroll progress ----------
+const progressEl = document.getElementById('progress');
+function updateProgress(){
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  progressEl.style.width = scrolled + '%';
+}
+document.addEventListener('scroll', updateProgress, {passive:true});
+updateProgress();
+
+// ---------- reveal on scroll ----------
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+},{threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+revealEls.forEach(el=>io.observe(el));
+
+// ---------- scrollspy ----------
+const navLinks = Array.from(document.querySelectorAll('#sidebar .nav-list a'));
+const sections = Array.from(document.querySelectorAll('[data-section], .entity[id]'));
+const linkMap = {};
+navLinks.forEach(a=>{ linkMap[a.getAttribute('href').slice(1)] = a; });
+
+const spy = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id = entry.target.id;
+    const link = linkMap[id];
+    if(!link) return;
+    if(entry.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      link.classList.add('active');
+    }
+  });
+},{ rootMargin:'-15% 0px -70% 0px', threshold:0 });
+sections.forEach(s=>{ if(s.id) spy.observe(s); });
+
+// ---------- mobile sidebar ----------
+const sidebar = document.getElementById('sidebar');
+const menuBtn = document.getElementById('menuBtn');
+const backdrop = document.getElementById('sidebarBackdrop');
+function closeSidebar(){ sidebar.classList.remove('open'); backdrop.classList.remove('show'); }
+menuBtn?.addEventListener('click', ()=>{
+  sidebar.classList.toggle('open');
+  backdrop.classList.toggle('show');
+});
+backdrop.addEventListener('click', closeSidebar);
+navLinks.forEach(a=>a.addEventListener('click', ()=>{ if(window.innerWidth<=980) closeSidebar(); }));
+
+// ---------- nav search filter ----------
+const navSearch = document.getElementById('navSearch');
+navSearch.addEventListener('input', ()=>{
+  const q = navSearch.value.trim().toLowerCase();
+  document.querySelectorAll('.nav-group').forEach(group=>{
+    let anyVisible = false;
+    group.querySelectorAll('.nav-list li').forEach(li=>{
+      const text = li.textContent.toLowerCase();
+      const match = text.includes(q);
+      li.style.display = match ? '' : 'none';
+      if(match) anyVisible = true;
+    });
+    group.style.display = anyVisible ? '' : 'none';
+  });
+});
+
+// ---------- back to top ----------
+const toTop = document.getElementById('toTop');
+document.addEventListener('scroll', ()=>{
+  toTop.classList.toggle('show', window.scrollY > 600);
+},{passive:true});
+toTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+</script>
+</body>
+</html>
