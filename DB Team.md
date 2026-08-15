@@ -10,3 +10,13 @@ designation:  Data Analyst
 
 3.Md Ahsamul Haque 
 ref: ahsam.png
+Designation: Junior Data Analyst
+
+4.Shajib Kumar Shaha
+ref :sajib.png
+Designation: Jr. Database Engineer
+
+5.Tahima 
+ref : avadar
+Dsignation: ML Engineer
+

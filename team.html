@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Database Team — কাজকর্ম শিখ</title>
+<meta name="description" content="কাজকর্ম শিখ · Database Team — সিনিয়র ডেটা অ্যানালিস্ট থেকে ML ইঞ্জিনিয়ার, পুরো টিম এক পেজে।">
+<meta name="theme-color" content="#faf6ee">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf6ee;
+    --bg-soft:#f1ead9;
+    --paper:#fffdf7;
+    --paper-2:#f7f1e3;
+    --ink:#231b10;
+    --ink-soft:#574b38;
+    --muted:#8b7c63;
+    --amber:#d97a1f;
+    --amber-2:#f2b134;
+    --teal:#1f7a5c;
+    --blue:#3b6fb6;
+    --purple:#8a5fb6;
+    --red:#c4453c;
+    --line:rgba(35,27,16,.14);
+    --line-strong:rgba(35,27,16,.3);
+    --radius:18px;
+    --shadow:0 26px 60px -30px rgba(35,27,16,.35);
+    --shadow-sm:0 12px 28px -16px rgba(35,27,16,.28);
+    --font-body:"Hind Siliguri",sans-serif;
+    --font-disp:"Fraunces",serif;
+    --font-mono:"IBM Plex Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:78px}
+  body{
+    font-family:var(--font-body);background:var(--bg);color:var(--ink);
+    line-height:1.8;font-size:16.5px;overflow-x:hidden;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:1240px;margin:0 auto;padding:0 26px}
+  .mono{font-family:var(--font-mono)}
+  .en{font-weight:600;color:var(--ink)}
+  a{color:inherit}
+
+  /* ---------- Topbar ---------- */
+  .top{position:sticky;top:0;z-index:100;background:rgba(250,246,238,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;text-decoration:none;color:var(--ink)}
+  .brand .mark{width:32px;height:32px;border-radius:10px;background:var(--amber);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:15px;box-shadow:0 6px 16px -6px rgba(217,122,31,.6)}
+  nav.topnav{display:flex;gap:4px;align-items:center}
+  nav.topnav a{color:var(--ink-soft);text-decoration:none;font-size:14.5px;font-weight:500;padding:8px 14px;border-radius:999px;transition:all .2s}
+  nav.topnav a:hover{color:var(--ink);background:var(--paper-2)}
+  nav.topnav a.go{background:var(--amber);color:#fff;font-weight:600;box-shadow:0 8px 20px -10px rgba(217,122,31,.7)}
+  nav.topnav a.go:hover{transform:translateY(-1px)}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;padding:84px 0 64px;overflow:hidden;text-align:center}
+  .hero::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(760px 380px at 78% -8%,rgba(242,177,52,.25),transparent 60%),
+      radial-gradient(640px 360px at 6% 12%,rgba(31,122,92,.16),transparent 55%);
+  }
+  .hero .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;pointer-events:none;animation:drift 14s ease-in-out infinite}
+  .hero .blob.b1{width:300px;height:300px;background:rgba(242,177,52,.45);top:-80px;right:6%}
+  .hero .blob.b2{width:240px;height:240px;background:rgba(31,122,92,.4);bottom:-60px;left:3%;animation-delay:-7s}
+  @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-20px)}}
+  .hero .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:600;position:relative;animation:rise .7s .05s both}
+  .hero .eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(217,122,31,.5);animation:ping 2s infinite}
+  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(217,122,31,.5)}70%{box-shadow:0 0 0 12px rgba(217,122,31,0)}100%{box-shadow:0 0 0 0 rgba(217,122,31,0)}}
+  .hero h1{font-family:var(--font-disp);font-weight:800;font-size:clamp(38px,6vw,64px);line-height:1.06;letter-spacing:-1.5px;margin-top:20px;max-width:820px;margin-inline:auto;position:relative;animation:rise .7s .12s both}
+  .hero h1 .hl{color:var(--amber);font-style:italic;position:relative;white-space:nowrap}
+  .hero h1 .hl::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:8px;background:rgba(242,177,52,.35);z-index:-1;border-radius:4px}
+  .hero .sub{max-width:620px;color:var(--ink-soft);font-size:18.5px;font-weight:300;margin:22px auto 0;position:relative;animation:rise .7s .22s both}
+  .hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:48px;position:relative;animation:rise .7s .32s both;max-width:900px;margin-inline:auto}
+  .cell{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;position:relative;overflow:hidden;transition:all .3s}
+  .cell:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);border-color:rgba(217,122,31,.4)}
+  .cell::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),var(--amber-2),transparent)}
+  .cell .n{font-family:var(--font-disp);font-size:38px;font-weight:800;color:var(--amber);line-height:1}
+  .cell .l{font-size:13px;color:var(--muted);margin-top:8px;font-weight:500}
+
+  @keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+  /* ---------- Hierarchy flow ---------- */
+  .hierarchy{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;padding:20px 0 4px;animation:rise .7s .42s both}
+  .h-node{font-family:var(--font-mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:600;padding:8px 16px;border-radius:999px;border:1px solid var(--line-strong);color:var(--ink-soft);background:var(--paper)}
+  .h-node.senior{background:var(--amber);color:#fff;border-color:var(--amber);box-shadow:0 8px 20px -10px rgba(217,122,31,.7)}
+  .h-arrow{font-family:var(--font-mono);color:var(--amber);font-weight:700;animation:arrowmove 2.4s ease-in-out infinite}
+  @keyframes arrowmove{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(4px);opacity:1}}
+
+  /* ---------- Sections ---------- */
+  section{padding:72px 0}
+  .sec-head{text-align:center;max-width:640px;margin:0 auto 44px}
+  .sec-head .kicker{font-family:var(--font-mono);font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:600;display:block;margin-bottom:8px}
+  .sec-head h2{font-family:var(--font-disp);font-weight:800;font-size:clamp(28px,4.5vw,44px);letter-spacing:-1px;line-height:1.08}
+  .sec-head p{color:var(--muted);font-weight:300;font-size:16px;margin-top:10px}
+
+  /* ---------- Team grid ---------- */
+  .team{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+  .member{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:all .35s;position:relative}
+  .member:hover{transform:translateY(-8px);border-color:rgba(217,122,31,.45);box-shadow:var(--shadow)}
+  .member .rank{position:absolute;top:14px;left:14px;z-index:3;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:1px;background:rgba(255,253,247,.92);backdrop-filter:blur(6px);border:1px solid var(--line-strong);color:var(--ink);padding:3px 10px;border-radius:999px}
+  .member .photo{position:relative;aspect-ratio:4/4.4;overflow:hidden;background:var(--bg-soft)}
+  .member .photo img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .5s ease}
+  .member:hover .photo img{transform:scale(1.06)}
+  .member .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(35,27,16,.45));opacity:0;transition:opacity .35s}
+  .member:hover .photo::after{opacity:1}
+  .member .photo .avatar{width:100%;height:100%;display:grid;place-items:center;font-family:var(--font-disp);font-weight:800;font-size:96px;color:rgba(255,255,255,.95);background:linear-gradient(150deg,var(--purple),var(--teal));letter-spacing:-2px}
+  .member .body{padding:20px 20px 22px;display:flex;flex-direction:column;flex:1}
+  .member .body h3{font-family:var(--font-disp);font-size:22px;font-weight:800;line-height:1.2}
+  .member .body .role{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin-top:10px;font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.5px;color:#fff;padding:5px 12px;border-radius:999px}
+  .member .body .role.senior{background:var(--amber);box-shadow:0 8px 18px -8px rgba(217,122,31,.7)}
+  .member .body .role.mid{background:var(--teal)}
+  .member .body .role.junior{background:var(--blue)}
+  .member .body .role.ml{background:var(--purple)}
+  .member .body p{color:var(--ink-soft);font-size:14.5px;font-weight:300;margin-top:12px;flex:1}
+  .member .body .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .member .body .tags span{font-size:11.5px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--muted);background:var(--bg)}
+
+  /* ---------- About team ---------- */
+  .about{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:26px;align-items:stretch}
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow-sm);transition:all .3s}
+  .panel:hover{border-color:rgba(31,122,92,.4);transform:translateY(-3px)}
+  .panel h3{font-family:var(--font-disp);font-size:24px;font-weight:800;margin-bottom:14px}
+  .panel p{color:var(--ink-soft);font-weight:300}
+  .panel ul{list-style:none;margin-top:6px}
+  .panel li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line);font-size:15px;color:var(--ink)}
+  .panel li:last-child{border-bottom:none}
+  .panel li .ck{font-family:var(--font-mono);font-weight:700;color:var(--teal);flex-shrink:0}
+  .panel li .ck.no{color:var(--red)}
+
+  /* ---------- CTA ---------- */
+  .cta-band{background:linear-gradient(120deg,var(--amber),var(--orange,var(--red)));position:relative;overflow:hidden;border-radius:24px;margin:0 26px;box-shadow:var(--shadow)}
+  .cta-band::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 85% -20%,rgba(255,255,255,.28),transparent 60%)}
+  .cta-band .wrap{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;padding:52px 40px;position:relative}
+  .cta-band h2{font-family:var(--font-disp);font-size:clamp(26px,4.5vw,40px);font-weight:800;color:#fff;letter-spacing:-1px;line-height:1.1}
+  .cta-band p{color:rgba(255,255,255,.9);font-weight:400;margin-top:8px;max-width:520px}
+  .cta-band .btn{background:#fff;color:var(--amber);border-color:#fff;font-weight:700}
+  .cta-band .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:11px 22px;border-radius:999px;text-decoration:none;border:1.5px solid var(--line-strong);background:var(--paper);color:var(--ink);transition:all .25s;cursor:pointer}
+  .btn:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+
+  footer{border-top:1px solid var(--line);margin-top:72px;padding:40px 0 46px}
+  .foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+  .foot .mono{font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+  .foot a{color:var(--muted);text-decoration:none;transition:color .2s}
+  .foot a:hover{color:var(--amber)}
+
+  [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  [data-reveal].in{opacity:1;transform:none}
+  #topbtn{position:fixed;bottom:24px;right:24px;z-index:90;width:48px;height:48px;border-radius:50%;border:none;background:var(--amber);color:#fff;font-size:20px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;box-shadow:0 10px 24px -10px rgba(217,122,31,.8)}
+  #topbtn.show{opacity:1;pointer-events:auto}
+  #topbtn:hover{transform:translateY(-3px)}
+
+  @media (max-width:820px){.about-grid{grid-template-columns:1fr}nav.topnav a:not(.go){display:none}.cta-band{margin:0 14px}}
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<!-- ===== TOPBAR ===== -->
+<header class="top">
+  <div class="wrap topbar">
+    <a class="brand" href="index.html"><span class="mark">ক</span> কাজকর্ম শিখ</a>
+    <nav class="topnav">
+      <a href="index.html#hub">Documents</a>
+      <a href="db-guide.html">AI Tools</a>
+      <a class="go" href="index.html">Home →</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> কাজকর্ম শিখ · Database Team</div>
+    <h1>আমাদের <span class="hl">টিম</span></h1>
+    <p class="sub">ডেটা অ্যানালিস্ট থেকে ML ইঞ্জিনিয়ার — প্রতিটি কাজ, প্রতিটি সিদ্ধান্তে দক্ষতা ও দায়বদ্ধতার ভারসাম্য।</p>
+    <div class="hierarchy">
+      <span class="h-node senior">Senior Data Analyst</span>
+      <i class="h-arrow">↓</i>
+      <span class="h-node">Data Analyst</span>
+      <i class="h-arrow">↓</i>
+      <span class="h-node">Junior Data Analyst</span>
+      <i class="h-arrow">↓</i>
+      <span class="h-node">Jr. Database Engineer</span>
+      <i class="h-arrow">↓</i>
+      <span class="h-node">ML Engineer</span>
+    </div>
+    <div class="hero-stats">
+      <div class="cell"><div class="n" data-count="5">0</div><div class="l">Team Members</div></div>
+      <div class="cell"><div class="n" data-count="5">0</div><div class="l">Roles</div></div>
+      <div class="cell"><div class="n" data-count="19">0</div><div class="l">AI Tools</div></div>
+      <div class="cell"><div class="n" data-count="6">0</div><div class="l">Workflows</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEAM MEMBERS ===== -->
+<section id="members">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">01 · Members</span>
+      <h2>টিম মেম্বারগণ</h2>
+      <p>Senior hierarchy অনুযায়ী — দায়িত্ব থেকে দায়িত্ব, অভিজ্ঞতা থেকে শেখা।</p>
+    </div>
+    <div class="team">
+
+      <article class="member" data-reveal>
+        <span class="rank">#1 · Team Lead</span>
+        <div class="photo"><img src="images/sohan.png" alt="Sohanur Rahman" loading="lazy"></div>
+        <div class="body">
+          <h3>Sohanur Rahman</h3>
+          <span class="role senior">Senior Data Analyst</span>
+          <p>টিম-এর নেতৃত্ব, complex data analysis ও project direction-এর দায়িত্বে। প্রতিটি সিদ্ধান্তের চূড়ান্ত validation করেন।</p>
+          <div class="tags"><span>Leadership</span><span>Advanced Analysis</span><span>Strategy</span></div>
+        </div>
+      </article>
+
+      <article class="member" data-reveal>
+        <span class="rank">#2</span>
+        <div class="photo"><img src="images/Rahat.png" alt="Rahat Maksud Pranto" loading="lazy"></div>
+        <div class="body">
+          <h3>Rahat Maksud Pranto</h3>
+          <span class="role mid">Data Analyst</span>
+          <p>Data analysis, reporting ও insight generation-এ নিয়মিত কাজ। ব্যবসায়িক প্রশ্নকে ডেটা-চালিত উত্তর-এ রূপান্তর করেন।</p>
+          <div class="tags"><span>Reporting</span><span>Insights</span><span>Visualization</span></div>
+        </div>
+      </article>
+
+      <article class="member" data-reveal>
+        <span class="rank">#3</span>
+        <div class="photo"><img src="images/ahsam.png" alt="Md Ahsamul Haque" loading="lazy"></div>
+        <div class="body">
+          <h3>Md Ahsamul Haque</h3>
+          <span class="role junior">Junior Data Analyst</span>
+          <p>Data collection, cleaning ও junior-level analysis task সম্পন্ন করে। শেখার ও নিজেকে প্রমাণের ধাপে।</p>
+          <div class="tags"><span>Data Cleaning</span><span>Collection</span><span>Analysis</span></div>
+        </div>
+      </article>
+
+      <article class="member" data-reveal>
+        <span class="rank">#4</span>
+        <div class="photo"><img src="images/sajib.png" alt="Shajib Kumar Shaha" loading="lazy"></div>
+        <div class="body">
+          <h3>Shajib Kumar Shaha</h3>
+          <span class="role junior">Jr. Database Engineer</span>
+          <p>Database design, query optimization ও maintenance নিশ্চিত করে — ডেটা সঠিকভাবে সাজানো ও দ্রুত accessible রাখে।</p>
+          <div class="tags"><span>Database Design</span><span>SQL</span><span>Optimization</span></div>
+        </div>
+      </article>
+
+      <article class="member" data-reveal>
+        <span class="rank">#5</span>
+        <div class="photo"><div class="avatar">T</div></div>
+        <div class="body">
+          <h3>Tahima</h3>
+          <span class="role ml">ML Engineer</span>
+          <p>Machine learning model development ও deployment-এর কাজে। ডেটা থেকে ভবিষ্যদ্বাণী ও অটোমেশনের দায়িত্বে।</p>
+          <div class="tags"><span>Machine Learning</span><span>Models</span><span>Deployment</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT THE TEAM ===== -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="kicker">02 · About</span>
+      <h2>টিম-এর কথা</h2>
+      <p>একটি দল — আলাদা আলাদা দক্ষতা, একটাই লক্ষ্য।</p>
+    </div>
+    <div class="about-grid">
+      <div class="panel" data-reveal>
+        <h3>কীভাবে আমরা কাজ করি</h3>
+        <p>আমাদের daily workflow AI-driven: সঠিক কাজে সঠিক tool, সবসময় cross-check, এবং production-এর আগে প্রতিটি সিদ্ধান্ত মানবীয় validation।</p>
+        <ul style="margin-top:14px">
+          <li><span class="ck">✓</span> <span>প্রতিটি query production-এর আগে test করা বাধ্যতামূলক</span></li>
+          <li><span class="ck">✓</span> <span>Critical আউটপুট একাধিক AI tool-এ cross-check</span></li>
+          <li><span class="ck">✓</span> <span>সিদ্ধান্তের মালিক সর্বদা responsible টিম মেম্বার</span></li>
+          <li><span class="ck no">✕</span> <span>Secrets কখনো AI tool-এ শেয়ার করা হয় না</span></li>
+        </ul>
+      </div>
+      <div class="panel" data-reveal>
+        <h3>মূল দায়িত্ব</h3>
+        <ul>
+          <li><span class="ck">◆</span> <span>Query Optimization ও Database Management</span></li>
+          <li><span class="ck">◆</span> <span>Reporting, Dashboard ও Analytics</span></li>
+          <li><span class="ck">◆</span> <span>Documentation, BRD ও SOP তৈরি</span></li>
+          <li><span class="ck">◆</span> <span>Machine Learning Model Development</span></li>
+          <li><span class="ck">◆</span> <span>Research ও Latest Technology Tracking</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<div style="padding:8px 0 72px">
+  <div class="cta-band">
+    <div class="wrap">
+      <div>
+        <h2>টিম-এর সাথে কাজ করে শিখুন</h2>
+        <p>Database Team-এর AI ecosystem, workflows ও golden rules — সব এক জায়গায়।</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn" href="db-guide.html">DB Ecosystem →</a>
+        <a class="btn ghost" href="index.html">Main Hub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="index.html"><span class="mark">ক</span> কাজকর্ম শিখ</a>
+    <div class="mono">DB Team.md · images/ · টিম পরিচিতি পেজ</div>
+    <a href="#">Back to top ↑</a>
+  </div>
+</footer>
+
+<button id="topbtn" aria-label="Back to top">↑</button>
+
+<script>
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.1,rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll("[data-reveal]").forEach(el=>io.observe(el));
+
+  const counters=document.querySelectorAll("[data-count]");
+  const cio=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target,target=+el.dataset.count;
+      const dur=1200,start=performance.now();
+      const tick=(now)=>{const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,3);el.textContent=Math.round(target*ease);if(p<1)requestAnimationFrame(tick)};
+      requestAnimationFrame(tick);cio.unobserve(el);
+    }
+  }),{threshold:.6});
+  counters.forEach(el=>cio.observe(el));
+
+  const tb=document.getElementById("topbtn");
+  window.addEventListener("scroll",()=>tb.classList.toggle("show",window.scrollY>500),{passive:true});
+  tb.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+</script>
+</body>
+</html>

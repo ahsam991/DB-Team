@@ -26,6 +26,7 @@
     --teal:#1f7a5c;
     --orange:#e0522a;
     --red:#c4453c;
+    --purple:#8a5fb6;
     --line:rgba(35,27,16,.14);
     --line-strong:rgba(35,27,16,.3);
     --radius:18px;
@@ -176,6 +177,20 @@
   .rule .rt{font-size:15px;font-weight:600}
   .rule .rs{font-size:13px;color:var(--muted);font-weight:300;margin-top:3px}
 
+  /* ---------- Team strip ---------- */
+  .team-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+  .tstrip-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;transition:all .3s}
+  .tstrip-card:hover{transform:translateY(-6px);border-color:rgba(217,122,31,.45);box-shadow:var(--shadow-sm)}
+  .tstrip-card .avatar{width:110px;height:110px;border-radius:50%;overflow:hidden;border:3px solid var(--amber-2);background:var(--bg-soft);display:grid;place-items:center}
+  .tstrip-card .avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}
+  .tstrip-card .avatar .ph{width:100%;height:100%;display:grid;place-items:center;font-family:var(--font-disp);font-weight:800;font-size:44px;color:#fff;background:linear-gradient(150deg,var(--purple,var(--blue)),var(--teal))}
+  .tstrip-card .info h3{font-family:var(--font-disp);font-size:17px;font-weight:800;line-height:1.3}
+  .tstrip-card .info .role{display:inline-block;margin-top:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;color:#fff;padding:3px 10px;border-radius:999px}
+  .tstrip-card .info .role.senior{background:var(--amber)}
+  .tstrip-card .info .role.mid{background:var(--teal)}
+  .tstrip-card .info .role.junior{background:var(--blue)}
+  .tstrip-card .info .role.ml{background:var(--purple)}
+
   /* ---------- CTA ---------- */
   .cta-band{background:linear-gradient(120deg,var(--amber),var(--orange));position:relative;overflow:hidden;border-radius:24px;margin:0 26px;box-shadow:var(--shadow)}
   .cta-band::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 85% -20%,rgba(255,255,255,.28),transparent 60%)}
@@ -216,6 +231,7 @@
     <nav class="topnav">
       <a href="#hub">Documents</a>
       <a href="#part2">AI Tools</a>
+      <a href="#team">Team</a>
       <a href="#workflows">Workflows</a>
       <a href="#rules">Rules</a>
       <a class="go" href="claude-guide.html">Claude Guide →</a>
@@ -312,6 +328,12 @@
         <p>১৯টি AI tool, ৬টি workflow, Golden Rules ও Recommended Stack।</p>
         <div class="meta"><span>Page2.md</span><span class="arr">→</span></div>
       </a>
+      <a class="hub-card" href="team.html" data-reveal>
+        <span class="type html">Team Page</span>
+        <h3>Database Team — আমাদের টিম</h3>
+        <p>ডেটা অ্যানালিস্ট থেকে ML ইঞ্জিনিয়ার — পুরো টিম পরিচিতি সহ।</p>
+        <div class="meta"><span>team.html</span><span class="arr">→</span></div>
+      </a>
     </div>
   </div>
 </section>
@@ -396,12 +418,47 @@
   </div>
 </section>
 
+<!-- ===== DATABASE TEAM ===== -->
+<section id="team" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div>
+        <span class="kicker">04 · Database Team</span>
+        <h2>আমাদের টিম</h2>
+      </div>
+      <p>সিনিয়র ডেটা অ্যানালিস্ট থেকে ML ইঞ্জিনিয়ার — প্রতিটি কাজে দক্ষতা ও দায়বদ্ধতা। <a href="team.html" style="color:var(--amber);text-decoration:none;font-weight:600">সম্পূর্ণ টিম পেজ →</a></p>
+    </div>
+    <div class="team-strip">
+      <a class="tstrip-card" href="team.html" data-reveal>
+        <div class="avatar"><img src="images/sohan.png" alt="Sohanur Rahman" loading="lazy"></div>
+        <div class="info"><h3>Sohanur Rahman</h3><span class="role senior">Senior Data Analyst</span></div>
+      </a>
+      <a class="tstrip-card" href="team.html" data-reveal>
+        <div class="avatar"><img src="images/Rahat.png" alt="Rahat Maksud Pranto" loading="lazy"></div>
+        <div class="info"><h3>Rahat Maksud Pranto</h3><span class="role mid">Data Analyst</span></div>
+      </a>
+      <a class="tstrip-card" href="team.html" data-reveal>
+        <div class="avatar"><img src="images/ahsam.png" alt="Md Ahsamul Haque" loading="lazy"></div>
+        <div class="info"><h3>Md Ahsamul Haque</h3><span class="role junior">Junior Data Analyst</span></div>
+      </a>
+      <a class="tstrip-card" href="team.html" data-reveal>
+        <div class="avatar"><img src="images/sajib.png" alt="Shajib Kumar Shaha" loading="lazy"></div>
+        <div class="info"><h3>Shajib Kumar Shaha</h3><span class="role junior">Jr. Database Engineer</span></div>
+      </a>
+      <a class="tstrip-card" href="team.html" data-reveal>
+        <div class="avatar"><div class="ph">T</div></div>
+        <div class="info"><h3>Tahima</h3><span class="role ml">ML Engineer</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ===== WORKFLOWS ===== -->
 <section id="workflows">
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <div>
-        <span class="kicker">04 · Workflows</span>
+        <span class="kicker">05 · Workflows</span>
         <h2>টিমের ৬টি Recommended Workflow</h2>
       </div>
       <p>কোন কাজে কোন tool-এর sequence — production-ready patterns।</p>
@@ -422,7 +479,7 @@
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <div>
-        <span class="kicker">05 · Golden Rules</span>
+        <span class="kicker">06 · Golden Rules</span>
         <h2>Always Follow</h2>
       </div>
       <p>AI ecosystem-এর প্রতিটি ব্যবহারে এই নিয়মগুলো চিরকাল প্রযোজ্য।</p>
@@ -449,6 +506,7 @@
       <div style="display:flex;gap:12px;flex-wrap:wrap">
         <a class="btn" href="claude-guide.html">Claude Guide →</a>
         <a class="btn ghost" href="db-guide.html">DB Ecosystem</a>
+        <a class="btn ghost" href="team.html">Team</a>
         <a class="btn ghost" href="COMBINED-GUIDE.md">Combined MD</a>
       </div>
     </div>
