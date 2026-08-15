@@ -35,23 +35,25 @@
     </div>
   </div>
 
-  <script src="/authentication/supabase.js"></script>
-  <script src="/authentication/auth.js"></script>
   <script>
     (function () {
       const form = document.getElementById('login-form');
       const submitBtn = document.getElementById('submit-btn');
-      const next = AuthUtils.getNext();
+
+      const params = new URLSearchParams(window.location.search);
+      const next = params.get('next') || '/';
 
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
-        AuthUtils.clearError(form);
+
+        const errorEl = form.querySelector('.form-error');
+        if (errorEl) errorEl.remove();
 
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
 
         if (!email || !password) {
-          AuthUtils.showError(form, 'Please enter your email and password.');
+          showError('Please enter your email and password.');
           return;
         }
 
@@ -59,29 +61,33 @@
         submitBtn.textContent = 'Logging in…';
 
         try {
-          const supabase = await AuthUtils.createSupabaseClient();
-          const { error } = await supabase.auth.signInWithPassword({ email, password });
-          if (error) throw error;
+          const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          const data = await res.json();
 
-          const target = next === '/' ? '/' : next;
-          window.location.href = target;
+          if (!res.ok) throw new Error(data.error || 'Login failed');
+
+          window.location.href = data.redirect || next;
         } catch (err) {
-          let message = 'Login failed. Please try again.';
-          if (err && err.message) {
-            if (/Invalid login credentials/i.test(err.message)) {
-              message = 'Wrong email or password.';
-            } else if (/Email not confirmed/i.test(err.message)) {
-              message = 'Please confirm your email before logging in.';
-            } else {
-              message = err.message;
-            }
-          }
-          AuthUtils.showError(form, message);
+          showError(err.message || 'Login failed. Please try again.');
         } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Login';
         }
       });
+
+      function showError(message) {
+        let el = form.querySelector('.form-error');
+        if (!el) {
+          el = document.createElement('div');
+          el.className = 'form-error';
+          form.prepend(el);
+        }
+        el.textContent = message;
+      }
     })();
   </script>
 </body>
