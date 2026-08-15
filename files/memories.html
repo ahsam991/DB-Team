@@ -81,13 +81,6 @@
   .stat span{font-size:13.5px;color:var(--muted);font-weight:500}
   @keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 
-  /* ---------- Auto-fetch note ---------- */
-  .note{display:flex;align-items:flex-start;gap:14px;background:rgba(31,122,92,.07);border:1px solid rgba(31,122,92,.25);border-left:4px solid var(--teal);border-radius:var(--radius);padding:18px 20px;margin:34px 0 0;font-size:15.5px;color:var(--ink-soft)}
-  .note .n-ic{flex-shrink:0;width:40px;height:40px;border-radius:10px;background:rgba(31,122,92,.12);display:grid;place-items:center;font-size:19px}
-  .note .label{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--teal);text-transform:uppercase;display:block;margin-bottom:4px}
-  .note p{font-weight:300}
-  .note p b{color:var(--ink)}
-
   /* ---------- Memories wall ---------- */
   .wall{padding:40px 0 80px}
   .col-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:24px}
@@ -102,15 +95,25 @@
   .m-head b{font-size:15.5px;font-weight:700;display:block;line-height:1.3}
   .m-head span{font-size:12.5px;color:var(--muted);font-family:var(--font-mono)}
 
-  /* click-to-load post */
-  .m-post{position:relative;cursor:pointer;background:#171512}
-  .m-thumb{width:100%;display:block;aspect-ratio:4/3;object-fit:cover;filter:brightness(.82);transition:filter .3s,transform .6s}
-  .m-post:hover .m-thumb{filter:brightness(.95);transform:scale(1.02)}
-  .m-play{position:absolute;inset:0;display:grid;place-items:center}
-  .m-play .pill{display:inline-flex;align-items:center;gap:10px;background:rgba(250,246,238,.95);color:var(--ink);font-family:var(--font-mono);font-size:13px;font-weight:700;letter-spacing:.5px;padding:12px 22px;border-radius:999px;box-shadow:0 18px 40px -14px rgba(0,0,0,.55);transition:transform .25s}
+  /* photo slider */
+  .m-post{position:relative;overflow:hidden;background:#171512}
+  .m-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+  .m-slide{width:100%;flex:0 0 100%;aspect-ratio:4/3;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}
+  .m-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:38px;height:38px;border-radius:50%;border:none;background:rgba(250,246,238,.94);color:var(--ink);font-size:19px;cursor:pointer;display:grid;place-items:center;box-shadow:0 8px 22px -8px rgba(0,0,0,.6);opacity:0;transition:opacity .25s,transform .2s}
+  .m-post:hover .m-arrow,.m-arrow:focus{opacity:1}
+  .m-arrow:hover{transform:translateY(-50%) scale(1.1)}
+  .m-prev{left:10px}
+  .m-next{right:10px}
+  .m-arrow[hidden]{display:none}
+  .m-dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px;z-index:3}
+  .m-dots button{width:8px;height:8px;border-radius:50%;border:none;padding:0;background:rgba(250,246,238,.45);cursor:pointer;transition:all .2s}
+  .m-dots button.on{background:var(--amber-2);transform:scale(1.3)}
+  .m-dots[hidden]{display:none}
+  .m-count{position:absolute;top:12px;right:12px;z-index:3;background:rgba(23,21,18,.72);color:#fff;font-family:var(--font-mono);font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;backdrop-filter:blur(4px)}
+  .m-play{position:absolute;inset:0;display:grid;place-items:center;z-index:2;pointer-events:none}
+  .m-play .pill{display:inline-flex;align-items:center;gap:10px;background:rgba(250,246,238,.95);color:var(--ink);font-family:var(--font-mono);font-size:13px;font-weight:700;letter-spacing:.5px;padding:12px 22px;border-radius:999px;box-shadow:0 18px 40px -14px rgba(0,0,0,.55);transition:transform .25s;pointer-events:auto;cursor:pointer}
   .m-play .pill .tico{width:34px;height:34px;border-radius:50%;background:var(--amber);color:#fff;display:grid;place-items:center;font-size:15px;flex-shrink:0}
   .m-post:hover .pill{transform:scale(1.05)}
-  .m-post .tcount{position:absolute;top:14px;right:14px;background:rgba(23,21,18,.72);color:#fff;font-family:var(--font-mono);font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;backdrop-filter:blur(4px)}
   .m-caption{padding:16px 18px;font-size:14.5px;color:var(--ink-soft);font-weight:300}
   .m-caption .clabel{font-family:var(--font-mono);font-size:10.5px;font-weight:700;letter-spacing:1.5px;color:var(--amber);text-transform:uppercase;display:block;margin-bottom:4px}
   .m-caption p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
@@ -121,13 +124,6 @@
   .m-foot .li{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:12px;color:var(--blue);text-decoration:none;font-weight:600}
   .m-foot .li:hover{text-decoration:underline}
   .m-foot .count{font-size:12.5px;color:var(--muted)}
-
-  /* ---------- How to add ---------- */
-  .howto{background:var(--paper);border:1px dashed var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin-top:44px}
-  .howto h3{font-family:var(--font-disp);font-size:19px;font-weight:800;margin-bottom:8px;color:var(--amber)}
-  .howto ol{padding-left:20px;color:var(--ink-soft);font-size:15.5px;font-weight:300}
-  .howto li{margin-bottom:6px}
-  .howto code{font-family:var(--font-mono);font-size:13px;background:var(--bg-soft);border:1px solid var(--line);padding:1px 7px;border-radius:6px;color:var(--teal)}
 
   /* ---------- Footer ---------- */
   footer{background:var(--dark);color:#f4efe4;margin-top:70px;padding:36px 0 28px}
@@ -195,25 +191,14 @@
   <div class="wrap">
     <span class="badge"><span class="dot"></span> Database Team Memories</span>
     <h1>আমাদের <em>Memories</em> — এক ফ্রেমে</h1>
-    <p class="lead">Office tour, উৎসব, workshop, birthday celebration — V2 Technologies Database Team-এর সব ছবি ও পোস্ট। প্রতিটা কার্ড LinkedIn post থেকে caption-সহ আসে — ফটো যতগুলোই হোক, সব নিজে থেকেই load হয়।</p>
     <div class="hero-stats">
-      <div class="stat"><b data-count="4">0</b><span>Memory Posts</span></div>
-      <div class="stat"><b data-count="29">0</b><span>Auto Photos</span></div>
+      <div class="stat"><b data-count="5">0</b><span>Memory Posts</span></div>
+      <div class="stat"><b data-count="31">0</b><span>Auto Photos</span></div>
       <div class="stat"><b>Auto</b><span>Caption Fetch</span></div>
       <div class="stat"><b>Live</b><span>LinkedIn Sync</span></div>
     </div>
   </div>
 </section>
-
-<div class="wrap">
-  <div class="note">
-    <span class="n-ic">🪄</span>
-    <div>
-      <span class="label">Auto-fetch</span>
-      <p>প্রতিটি কার্ডের ছবি-প্রিভিউ সবসময় দেখাবে। <b>Load Post</b> চাপলে LinkedIn-এর official embed widget থেকে caption, reaction ও <b>সমস্ত ফটো</b> স্বয়ংক্রিয়ভাবে লোড হয়। নতুন post যোগ করলেই ওয়ালে চলে আসবে।</p>
-    </div>
-  </div>
-</div>
 
 <!-- ===== MEMORIES WALL ===== -->
 <section class="wall">
@@ -221,7 +206,6 @@
     <div class="col-head">
       <div>
         <h2>Team <span>Memories</span></h2>
-        <p>সব পোস্ট তাদের নিজের LinkedIn source থেকে auto-fetch হচ্ছে</p>
       </div>
     </div>
     <div class="masonry" id="wall">
@@ -233,12 +217,22 @@
           <div><b>V2 Technologies Ltd</b><span>Office Tour · JolOJongoler Kabbo</span></div>
         </div>
         <div class="m-post" onclick="loadPost(this,'https://www.linkedin.com/embed/feed/update/urn:li:activity:7488550808767352832')">
-          <img class="m-thumb" src="https://media.licdn.com/dms/image/v2/D5622AQH63qL8C50y0g/feedshare-shrink_800/B56Z.ytRwjG4Ac-/0/1785409641784?e=2147483647&v=beta&t=G45wmhD0PQo88iR6no-8LBpJ5EKel3x7BsDwGD5jaaA" alt="JolOJongoler Kabbo office tour" loading="lazy">
-          <span class="tcount">📷 5</span>
+          <div class="m-track">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQH63qL8C50y0g/feedshare-shrink_800/B56Z.ytRwjG4Ac-/0/1785409641784?e=2147483647&v=beta&t=G45wmhD0PQo88iR6no-8LBpJ5EKel3x7BsDwGD5jaaA" alt="JolOJongoler Kabbo office tour" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQGC67r5H7qrjw/feedshare-shrink_800/B56Z.ytRovKwAc-/0/1785409641655?e=2147483647&v=beta&t=cOQZDCvfGhmaHEg4-2BqCRggqqL3awdQg9wXmfCFLiA" alt="JolOJongoler Kabbo team photo" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQHLwGFIlIbefA/feedshare-shrink_800/B56Z.ytRnJHcAc-/0/1785409641167?e=2147483647&v=beta&t=R2G63vJEYGzwsT2mn770fvCVYYZEc9gEyqGax6rwPeU" alt="JolOJongoler Kabbo scenery" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQH0wm2qu2r5Ag/feedshare-shrink_800/B56Z.ytRnjHUAk-/0/1785409641327?e=2147483647&v=beta&t=PW33Av9E5ZY31MzDkyRHzucxZuRnutb1v3ItPkFAukA" alt="JolOJongoler Kabbo group" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQHWTzb-wj3aZQ/feedshare-shrink_800/B56Z.ytRh4IcAc-/0/1785409640803?e=2147483647&v=beta&t=gbLNUMbK-2wuSYI9yMBCfAPKmWPyMp--hQVlq3eC7No" alt="JolOJongoler Kabbo activity" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQHZEkhx5tiqYw/feedshare-shrink_800/B56Z.ytRhAGgAc-/0/1785409640757?e=2147483647&v=beta&t=g8zpSVQqxT4z2jJyy8IYfMlBMe9WUpY2IZ-H2ckHlWA" alt="JolOJongoler Kabbo moments" loading="lazy">
+          </div>
+          <button class="m-arrow m-prev" aria-label="Previous photo">‹</button>
+          <button class="m-arrow m-next" aria-label="Next photo">›</button>
+          <div class="m-dots"></div>
+          <span class="m-count">1 / 6</span>
           <div class="m-play"><span class="pill"><span class="tico">▶</span> Load Post</span></div>
         </div>
         <div class="m-caption">
-          <span class="clabel">Caption · Auto-fetch</span>
+          <span class="clabel">Caption</span>
           <p>The wait is finally over! Our most-awaited office tour took us to the breathtaking #JolOJongolerKabbo — a perfect escape into nature with the incredible people who make V2 Technologies Ltd. what it is…</p>
         </div>
         <div class="m-foot">
@@ -254,12 +248,32 @@
           <div><b>V2 Technologies Ltd</b><span>3-Day Excel BI Workshop</span></div>
         </div>
         <div class="m-post" onclick="loadPost(this,'https://www.linkedin.com/embed/feed/update/urn:li:activity:7375425087514210304')">
-          <img class="m-thumb" src="https://media.licdn.com/dms/image/v2/D5622AQGyjLtTuTrPdQ/feedshare-shrink_800/B56ZlrGA_WJ4Ag-/0/1758438365931?e=2147483647&v=beta&t=KdQj5KKc7OG2toyO-cfrdWqJdXvqr0PSWQBvke-mXCc" alt="Excel Business Intelligence workshop" loading="lazy">
-          <span class="tcount">📷 16</span>
+          <div class="m-track">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQGyjLtTuTrPdQ/feedshare-shrink_800/B56ZlrGA_WJ4Ag-/0/1758438365931?e=2147483647&v=beta&t=KdQj5KKc7OG2toyO-cfrdWqJdXvqr0PSWQBvke-mXCc" alt="Excel BI workshop group" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQHbB4ZtDUxrsA/feedshare-shrink_800/B56ZlrGA_KI0Ag-/0/1758438365897?e=2147483647&v=beta&t=svQv29i9Lf_9r6zR1BPFrHPxhWTCLu8mHYYabtEGmus" alt="Excel BI workshop session" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQEegPJmgK6cJw/feedshare-shrink_800/B56ZlrGA_pJsAg-/0/1758438365740?e=2147483647&v=beta&t=ryNQnGonbI7QE-cw21BKs8PS6tJCqS0qX8ArnA_NCu4" alt="Excel BI workshop training" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQEe0k9oA0Q-jg/feedshare-shrink_800/B56ZlrGA_uJwAg-/0/1758438365744?e=2147483647&v=beta&t=MBMP0OOgbsBIv-DtTPmWQQKHg1QxDu1w6iNXyOJlp-0" alt="Excel BI workshop participants" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQGmM1V5B-dpKQ/feedshare-shrink_1280/B56ZlrGBAIHkAs-/0/1758438365691?e=2147483647&v=beta&t=15I5uloRHLc9h_dO8j8nsWQoW6iRsCk6jCCVlKOldaE" alt="Excel BI workshop classroom" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQG_-FGGZKxKlA/feedshare-shrink_1280/B56ZlrGA_fIsAs-/0/1758438365666?e=2147483647&v=beta&t=i6L1LENIro2D-9uf-_lJ-0mhCQKtbdnnf-deutPtr_k" alt="Excel BI workshop team" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQH1WcXtZ2GRDA/feedshare-shrink_1280/B56ZlrGA_4IAAw-/0/1758438365588?e=2147483647&v=beta&t=p36akktgX0L35-B6JnI7GKTggiY_yzzmoFvy4XQZ5RQ" alt="Excel BI workshop lecture" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQH4LAdjmIi6ng/feedshare-shrink_1280/B56ZlrGBAXKMAs-/0/1758438365739?e=2147483647&v=beta&t=99TblPMyBtTVRUy7NqiUpF3eDw2HV_q6PAcEKr0licA" alt="Excel BI workshop exercises" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQFoVcFN1UrI3Q/feedshare-shrink_800/B56ZlrGA_nJ0Ag-/0/1758438365618?e=2147483647&v=beta&t=Ttp8gZKrGhybC7NHnpQDUNpQjy4j2Z3Wk4WVagSAAEA" alt="Excel BI workshop discussion" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQFp7Go_ZdIbbA/feedshare-shrink_800/B56ZlrGA_LHAAg-/0/1758438366280?e=2147483647&v=beta&t=wMMZfUg7qJZ2Yy2E4xdQo56qPfEo6iUxPTVkjeflDNE" alt="Excel BI workshop demo" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQF9Getu--_G-g/feedshare-shrink_800/B56ZlrGA_mHkAg-/0/1758438367130?e=2147483647&v=beta&t=mJhvo4C2YFAAUIkwQPvTWwnfRB-FOZ7kzh_Pqcc9VfU" alt="Excel BI workshop break" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQFN9_wm7QNAqw/feedshare-shrink_800/B56ZlrGA_sG4Ag-/0/1758438366254?e=2147483647&v=beta&t=BWOazN-xTTW-3n9Ja0LakLedwDOfWnw3f4Axs4d4Nw4" alt="Excel BI workshop overview" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQG89uQgAFAgzg/feedshare-shrink_800/B56ZlrGA_tJ0Ak-/0/1758438365798?e=2147483647&v=beta&t=OjZh4MNCQJ9E6uKzuMslKTGbyjlc-h10mL8LAgE0RQU" alt="Excel BI workshop charts" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQG9RDGRliQRcg/feedshare-shrink_800/B56ZlrGA_xJ8Ak-/0/1758438366498?e=2147483647&v=beta&t=J2HQVjwWJaCzcO910VRZNbf7JRd3pLI1MvkkUrjmckk" alt="Excel BI workshop dashboard" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQH3QkDHaaVViw/feedshare-shrink_800/B56ZlrGA_0HAAg-/0/1758438367782?e=2147483647&v=beta&t=Om-6JEIr7TBRABB_AMrGQ5G1cZLO-QTcwsOUzdu340k" alt="Excel BI workshop certificate" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQHu-MpnmJMYLQ/feedshare-shrink_800/B56ZlrGA_vJkAg-/0/1758438366006?e=2147483647&v=beta&t=DXj-J9gjYVW_xwejTu5s1gzn2J3PtfkgoGovbHaz5dE" alt="Excel BI workshop finale" loading="lazy">
+          </div>
+          <button class="m-arrow m-prev" aria-label="Previous photo">‹</button>
+          <button class="m-arrow m-next" aria-label="Next photo">›</button>
+          <div class="m-dots"></div>
+          <span class="m-count">1 / 16</span>
           <div class="m-play"><span class="pill"><span class="tico">▶</span> Load Post</span></div>
         </div>
         <div class="m-caption">
-          <span class="clabel">Caption · Auto-fetch</span>
+          <span class="clabel">Caption</span>
           <p>We are delighted to announce the successful completion of our 3-Day In-House Workshop on Excel for Business Intelligence at V2 Technologies Ltd. on 04 September 2025. Our team explored everything from Excel fundamentals to advanced BI techniques…</p>
         </div>
         <div class="m-foot">
@@ -275,12 +289,19 @@
           <div><b>MD AHSAMUL HAQUE</b><span>Birthday thanks to V2 family</span></div>
         </div>
         <div class="m-post" onclick="loadPost(this,'https://www.linkedin.com/embed/feed/update/urn:li:activity:7436346298552713216')">
-          <img class="m-thumb" src="https://media.licdn.com/dms/image/v2/D5622AQEzWVqI7_50_A/feedshare-shrink_800/B56ZzM1jCFIIAc-/0/1772963115541?e=2147483647&v=beta&t=1UWZYzDHIvxBBmiHajyVvLJo1mHypjMVEOAyFOLXdVs" alt="Birthday celebration with the V2 team" loading="lazy">
-          <span class="tcount">📷 3</span>
+          <div class="m-track">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQEzWVqI7_50_A/feedshare-shrink_800/B56ZzM1jCFIIAc-/0/1772963115541?e=2147483647&v=beta&t=1UWZYzDHIvxBBmiHajyVvLJo1mHypjMVEOAyFOLXdVs" alt="Birthday celebration with the V2 team" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQHF0fRsNWMSNw/feedshare-shrink_800/B56ZzM1i5IIsAc-/0/1772963116988?e=2147483647&v=beta&t=zT3PpcR-cwhxDEaAUXXb06A7Mya2kxHLYcRHo906CCE" alt="Birthday cake with the team" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQEzJMV4X8uofA/feedshare-shrink_800/B56ZzM1jFbIkAc-/0/1772963115767?e=2147483647&v=beta&t=pZ3TIFlj9r5_lDPwf-v5qRbEm411p1qyGjlhXjd3A84" alt="Birthday team photo" loading="lazy">
+          </div>
+          <button class="m-arrow m-prev" aria-label="Previous photo">‹</button>
+          <button class="m-arrow m-next" aria-label="Next photo">›</button>
+          <div class="m-dots"></div>
+          <span class="m-count">1 / 3</span>
           <div class="m-play"><span class="pill"><span class="tico">▶</span> Load Post</span></div>
         </div>
         <div class="m-caption">
-          <span class="clabel">Caption · Auto-fetch</span>
+          <span class="clabel">Caption</span>
           <p>Thank you, V2 Technologies Ltd, for the BIRTHDAY wishes! I am truly glad to be a part of this wonderful family. I hope this love and kindness continues to inspire me toward greater success…</p>
         </div>
         <div class="m-foot">
@@ -296,12 +317,21 @@
           <div><b>V2 Technologies Ltd</b><span>Shubho Noboborsho ১৪৩৩</span></div>
         </div>
         <div class="m-post" onclick="loadPost(this,'https://www.linkedin.com/embed/feed/update/urn:li:activity:7451900531297652736')">
-          <img class="m-thumb" src="https://media.licdn.com/dms/image/v2/D5622AQGFo9_o8S6jgA/feedshare-shrink_800/B56Z2p4Cl7HgAc-/0/1776671533712?e=2147483647&v=beta&t=dkjUwpE7kzJ4XvqAn4DCU1eIcmAFbx4KKhxQUdxH9PY" alt="Shubho Noboborsho celebration" loading="lazy">
-          <span class="tcount">📷 5</span>
+          <div class="m-track">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQGFo9_o8S6jgA/feedshare-shrink_800/B56Z2p4Cl7HgAc-/0/1776671533712?e=2147483647&v=beta&t=dkjUwpE7kzJ4XvqAn4DCU1eIcmAFbx4KKhxQUdxH9PY" alt="Shubho Noboborsho celebration" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQESt8e9_31NdA/feedshare-shrink_800/B56Z2p4Ca_HEAc-/0/1776671533081?e=2147483647&v=beta&t=1lJQRW6XBAHqZmQnFYypfbYgxgx7LCGeW0ujpmwrf6o" alt="Shubho Noboborsho team" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQE0eehT6Nw91Q/feedshare-shrink_800/B56Z2p4Ct_HEAc-/0/1776671534241?e=2147483647&v=beta&t=THyb-pqSF3preyRwJoSVaKJ1xk1i12fRxS7gWIv293c" alt="Shubho Noboborsho fun" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQGtm7CGvAqyPA/feedshare-shrink_800/B56Z2p4CetIkAc-/0/1776671533278?e=2147483647&v=beta&t=7IwUE-D-vakRd7O575vFPhI7HfO5OHCcUbdD1teQTT0" alt="Shubho Noboborsho group" loading="lazy">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQGbreOBILscoA/feedshare-shrink_800/B56Z2p4CnbKgAc-/0/1776671533814?e=2147483647&v=beta&t=CPTQLG9dtHSPaDx082PkBe8pvR5eGpc4a1Ji5R3vYJU" alt="Shubho Noboborsho moments" loading="lazy">
+          </div>
+          <button class="m-arrow m-prev" aria-label="Previous photo">‹</button>
+          <button class="m-arrow m-next" aria-label="Next photo">›</button>
+          <div class="m-dots"></div>
+          <span class="m-count">1 / 5</span>
           <div class="m-play"><span class="pill"><span class="tico">▶</span> Load Post</span></div>
         </div>
         <div class="m-caption">
-          <span class="clabel">Caption · Auto-fetch</span>
+          <span class="clabel">Caption</span>
           <p>শুভ নববর্ষ ১৪৩৩ 🌸 নতুন বছরের নতুন সম্ভাবনায় এগিয়ে যাক আমাদের পথচলা।</p>
         </div>
         <div class="m-foot">
@@ -310,16 +340,32 @@
         </div>
       </div>
 
-    </div>
+      <!-- Memory 5 · Career milestone (Md.Ruhul Amin Shazid) -->
+      <div class="m-card">
+        <div class="m-head">
+          <span class="m-ava" style="background:linear-gradient(135deg,#3b6fb6,#8ab4f8)">R</span>
+          <div><b>Md.Ruhul Amin Shazid</b><span>Career milestone · Data Team @ V2</span></div>
+        </div>
+        <div class="m-post" onclick="loadPost(this,'https://www.linkedin.com/embed/feed/update/urn:li:activity:7448625158745006080')">
+          <div class="m-track">
+            <img class="m-slide" src="https://media.licdn.com/dms/image/v2/D5622AQGOnY0VGmg_hQ/feedshare-shrink_800/B56Z17VDC8IoAc-/0/1775890624292?e=2147483647&v=beta&t=Rr5a0XLltKiqLe_TDHilNeq0n8CJWs2up3wpjW7bn8s" alt="Md.Ruhul Amin Shazid career milestone" loading="lazy">
+          </div>
+          <button class="m-arrow m-prev" aria-label="Previous photo">‹</button>
+          <button class="m-arrow m-next" aria-label="Next photo">›</button>
+          <div class="m-dots"></div>
+          <span class="m-count">1 / 1</span>
+          <div class="m-play"><span class="pill"><span class="tico">▶</span> Load Post</span></div>
+        </div>
+        <div class="m-caption">
+          <span class="clabel">Caption</span>
+          <p>Grateful to have started my career journey with the Data Team at V2 Technologies Ltd.; it was truly a meaningful milestone for me. This experience helped shape my professional mindset and gave me a strong sense of responsibility towards my work. 😊</p>
+        </div>
+        <div class="m-foot">
+          <a class="li" href="https://www.linkedin.com/posts/ruhulashazid_grateful-to-have-started-my-career-journey-activity-7448625158745006080-Hy8e" target="_blank" rel="noopener">View on LinkedIn ↗</a>
+          <span class="count">এপ্রিল ২০২৬ · 63 reactions</span>
+        </div>
+      </div>
 
-    <!-- ===== HOW TO ADD ===== -->
-    <div class="howto">
-      <h3>➕ নতুন memory যোগ করার নিয়ম</h3>
-      <ol>
-        <li>LinkedIn-এ post-এর URL থেকে <code>activity-XXXXXXXXXXXX</code> অংশটা (সংখ্যা) নিন।</li>
-        <li>নতুন একটা <code>.m-card</code> ব্লক কপি করুন, <code>activity</code> ID, cover ছবি আর title বদলে দিন।</li>
-        <li>ফটো কতগুলোই হোক — LinkedIn embed সব auto-fetch করে, কিছুই আলাদা করা লাগে না।</li>
-      </ol>
     </div>
   </div>
 </section>
@@ -334,7 +380,7 @@
         <a href="team.html">Team</a>
         <a href="author.html">Author</a>
       </div>
-      <span class="mono">memories.html · v2</span>
+      <span class="mono">memories.html · v3</span>
     </div>
   </div>
 </footer>
@@ -353,6 +399,42 @@
   const counters=document.querySelectorAll("[data-count]");
   const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target,target=+el.dataset.count,dur=1100,start=performance.now();const tick=(now)=>{const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,3);el.textContent=Math.round(target*ease);if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick);cio.unobserve(el)}}),{threshold:.6});
   counters.forEach(el=>cio.observe(el));
+
+  document.querySelectorAll(".m-post").forEach(post=>{
+    const track=post.querySelector(".m-track");
+    if(!track)return;
+    const slides=track.children,n=slides.length;
+    const prev=post.querySelector(".m-prev"),next=post.querySelector(".m-next");
+    const dots=post.querySelector(".m-dots"),count=post.querySelector(".m-count");
+    if(n<=1){
+      prev.hidden=true;next.hidden=true;dots.hidden=true;
+      if(count)count.hidden=true;
+      return;
+    }
+    const dotBtns=[];
+    for(let k=0;k<n;k++){
+      const d=document.createElement("button");
+      d.setAttribute("aria-label","Photo "+(k+1));
+      d.addEventListener("click",e=>{e.stopPropagation();go(k)});
+      dots.appendChild(d);dotBtns.push(d);
+    }
+    let i=0,swiped=false,sx=0;
+    function go(k){
+      i=(k+n)%n;
+      track.style.transform="translateX(-"+(i*100)+"%)";
+      dotBtns.forEach((d,k2)=>d.classList.toggle("on",k2===i));
+      count.textContent=(i+1)+" / "+n;
+    }
+    prev.addEventListener("click",e=>{e.stopPropagation();go(i-1)});
+    next.addEventListener("click",e=>{e.stopPropagation();go(i+1)});
+    track.addEventListener("touchstart",e=>{sx=e.touches[0].clientX;swiped=false},{passive:true});
+    track.addEventListener("touchend",e=>{
+      const dx=e.changedTouches[0].clientX-sx;
+      if(Math.abs(dx)>40){swiped=true;go(i+(dx<0?1:-1));}
+    },{passive:true});
+    track.addEventListener("click",e=>{if(swiped){e.stopPropagation();e.preventDefault();swiped=false;}});
+    go(0);
+  });
 
   function loadPost(btn,src){
     if(btn.dataset.loaded)return;
