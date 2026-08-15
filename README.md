@@ -8,15 +8,28 @@ A static, deployable project (Vercel / Netlify ready) that packages two guides i
 
 ## 📚 What's Inside
 
+### Root
 | File | Type | Description |
 |------|------|-------------|
-| [`index.html`](index.html) | Dashboard / Landing | **Main hub** — document hub, 19-tool AI ecosystem dashboard with category filter, workflows, golden rules |
-| [`claude-guide.html`](claude-guide.html) | Visual Guide | **Part 1** — Page1.md-এর সম্পূর্ণ content স্টাইলিশ, interactive HTML-এ |
-| [`db-guide.html`](db-guide.html) | Visual Guide | **Part 2** — Page2.md-এর সম্পূর্ণ content স্টাইলিশ HTML-এ (১৯টি tool, ৬টি workflow) |
-| [`Page1.md`](Page1.md) | Markdown | **Part 1** — Claude ব্যবহারের ২৫টি সেটিংস ও অভ্যাস (Setup, Speed, Security, Judgment, Advanced) |
-| [`Page2.md`](Page2.md) | Markdown | **Part 2** — Database Team AI Ecosystem: ১৯টি AI tool, ৬টি workflow, Golden Rules, Recommended Stack |
-| [`COMBINED-GUIDE.md`](COMBINED-GUIDE.md) | Markdown | Page1 + Page2 একসাথে (৭৫০+ লাইন) |
+| [`index.html`](index.html) | Dashboard / Landing | **Main hub** — Command Center, Knowledge Map, 19-tool AI Ecosystem, ECRM Knowledge Base, Workflow Engine, Document Library, Team, Author, Video |
 | [`README.md`](README.md) | Docs | This file |
+
+### `files/` — Content (guides, docs, images)
+| File | Type | Description |
+|------|------|-------------|
+| [`files/claude-guide.html`](files/claude-guide.html) | Visual Guide | **Part 1** — Page1.md-এর সম্পূর্ণ content স্টাইলিশ, interactive HTML-এ |
+| [`files/db-guide.html`](files/db-guide.html) | Visual Guide | **Part 2** — Page2.md-এর সম্পূর্ণ content স্টাইলিশ HTML-এ (১৯টি tool, ৬টি workflow) |
+| [`files/ecrm-tutorial.html`](files/ecrm-tutorial.html) | Visual Guide | **ECRM** — business & logic visual guide (from `ecrm_tutorial.md`) |
+| [`files/tutorial.html`](files/tutorial.html) | Tutorial & Tasks | **ECRM Tutorial** — business logic + ৫টি Analytics Problem Solving task, Practice Tasks, Reports |
+| [`files/eCRM_Complete_Documentation.html`](files/eCRM_Complete_Documentation.html) | Documentation | **ECRM Complete Database Reference** — ১৩১ table, ৫ views, ১৪ modules, Knowledge Graph, search |
+| [`files/team.html`](files/team.html) | Team Page | Database Team পরিচিতি পেজ |
+| [`files/author.html`](files/author.html) | Author Page | Author profile + GitHub + Project Presentation video |
+| [`files/Page1.md`](files/Page1.md) | Markdown | **Part 1** — Claude ব্যবহারের ২৫টি সেটিংস ও অভ্যাস |
+| [`files/Page2.md`](files/Page2.md) | Markdown | **Part 2** — Database Team AI Ecosystem |
+| [`files/COMBINED-GUIDE.md`](files/COMBINED-GUIDE.md) | Markdown | Page1 + Page2 একসাথে (৭৫০+ লাইন) |
+| [`files/ecrm_tutorial.md`](files/ecrm_tutorial.md) | Markdown | ECRM business & logic সোর্স (মূল `ecrm-tutorial.html`-এর উৎস) |
+| [`files/author.md`](files/author.md) | Markdown | Author profile সোর্স (এর HTML রূপ → `files/author.html`) |
+| `files/images/` | Assets | Team photos (`ahsam.png`, `Rahat.png`, `sajib.png`, `sohan.png`) |
 
 ---
 
@@ -41,8 +54,8 @@ A static, deployable project (Vercel / Netlify ready) that packages two guides i
 
 ### Local
 ```bash
-open index.html        # main dashboard hub
-open claude-guide.html # visual guide
+open index.html             # main dashboard hub
+open files/claude-guide.html # visual guide
 ```
 
 ### Deploy (Free — Vercel / Netlify)
@@ -87,4 +100,3 @@ python3 -m venv .venv
 ## 📄 License
 
 Built for internal team use — Database Team AI ecosystem documentation.
->>>>>>> 7f4b547 (Add AI Utilization Hub: dashboard landing, Claude 25 settings guide, DB Team AI ecosystem)

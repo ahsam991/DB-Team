@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECRM Tutorial — Business ও Logic | কাজকর্ম শিখ</title>
+<meta name="description" content="কাজকর্ম শিখ · ECRM (Enterprise Consumer Relationship Management) — BAT Bangladesh-এর consumer engagement platform-এর Business ও Logic।">
+<meta property="og:title" content="ECRM Tutorial — Business ও Logic">
+<meta property="og:description" content="ECRM-এর business logic, campaign flow, report manager, user roles ও ৩০টি flow blocks — গভীর ব্যাখ্যা।">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#faf6ee">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf6ee;
+    --bg-soft:#f1ead9;
+    --paper:#fffdf7;
+    --paper-2:#f7f1e3;
+    --ink:#231b10;
+    --ink-soft:#574b38;
+    --muted:#8b7c63;
+    --amber:#d97a1f;
+    --amber-2:#f2b134;
+    --teal:#1f7a5c;
+    --blue:#3b6fb6;
+    --red:#c4453c;
+    --purple:#8a5fb6;
+    --line:rgba(35,27,16,.14);
+    --line-strong:rgba(35,27,16,.3);
+    --radius:16px;
+    --shadow:0 26px 60px -30px rgba(35,27,16,.35);
+    --shadow-sm:0 12px 28px -16px rgba(35,27,16,.28);
+    --font-body:"Hind Siliguri",sans-serif;
+    --font-disp:"Fraunces",serif;
+    --font-mono:"IBM Plex Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{
+    font-family:var(--font-body);background:var(--bg);color:var(--ink);
+    line-height:1.8;font-size:17px;overflow-x:hidden;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  .en{color:var(--ink);font-weight:600}
+  .mono{font-family:var(--font-mono)}
+  a{color:inherit}
+
+  /* ---------- Topbar ---------- */
+  .top{position:sticky;top:0;z-index:100;background:rgba(250,246,238,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;text-decoration:none}
+  .brand .mark{width:32px;height:32px;border-radius:10px;background:var(--amber);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:15px;box-shadow:0 6px 16px -6px rgba(217,122,31,.6)}
+  nav.topnav{display:flex;gap:4px;align-items:center}
+  nav.topnav a{color:var(--ink-soft);text-decoration:none;font-size:14.5px;font-weight:500;padding:8px 14px;border-radius:999px;transition:all .2s}
+  nav.topnav a:hover{color:var(--ink);background:var(--paper-2)}
+  nav.topnav a.go{background:var(--amber);color:#fff;font-weight:600;box-shadow:0 8px 20px -10px rgba(217,122,31,.7)}
+  nav.topnav a.go:hover{transform:translateY(-1px)}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;padding:76px 0 44px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(760px 380px at 78% -8%,rgba(217,122,31,.2),transparent 60%),radial-gradient(640px 360px at 6% 12%,rgba(31,122,92,.14),transparent 55%)}
+  .hero .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.45;pointer-events:none;animation:drift 14s ease-in-out infinite}
+  .hero .blob.b1{width:260px;height:260px;background:rgba(242,177,52,.4);top:-70px;right:8%}
+  .hero .blob.b2{width:220px;height:220px;background:rgba(31,122,92,.35);bottom:-50px;left:4%;animation-delay:-7s}
+  @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-20px)}}
+  .hero .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(217,122,31,.1);color:var(--amber);border:1px solid rgba(217,122,31,.35);padding:6px 14px;border-radius:999px;font-family:var(--font-mono);font-size:13px;font-weight:600;letter-spacing:.5px;animation:rise .7s .05s both}
+  .hero .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(217,122,31,.5);animation:ping 2s infinite}
+  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(217,122,31,.5)}70%{box-shadow:0 0 0 11px rgba(217,122,31,0)}100%{box-shadow:0 0 0 0 rgba(217,122,31,0)}}
+  .hero h1{font-family:var(--font-disp);font-weight:800;font-size:clamp(34px,6vw,56px);line-height:1.12;letter-spacing:-1px;max-width:900px;margin-top:22px;animation:rise .7s .15s both}
+  .hero h1 em{font-style:italic;color:var(--teal)}
+  .hero p.lead{margin-top:20px;color:var(--ink-soft);font-size:19px;max-width:680px;font-weight:300;animation:rise .7s .25s both}
+  .hero-stats{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;animation:rise .7s .35s both}
+  .stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 22px;min-width:132px;transition:all .3s}
+  .stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:rgba(217,122,31,.4)}
+  .stat b{display:block;font-family:var(--font-disp);font-size:30px;color:var(--teal);font-weight:800;line-height:1}
+  .stat span{font-size:13.5px;color:var(--muted);font-weight:500}
+  @keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+  /* ---------- Layout ---------- */
+  .layout{display:grid;grid-template-columns:258px 1fr;gap:40px;padding-bottom:80px}
+
+  /* ---------- Sidebar ---------- */
+  nav.toc{position:sticky;top:82px;align-self:start;background:var(--paper);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px 16px;max-height:calc(100vh - 100px);overflow-y:auto;box-shadow:var(--shadow-sm)}
+  nav.toc h3{font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;font-weight:600}
+  nav.toc a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14.5px;padding:7px 10px;border-radius:8px;border-left:3px solid transparent;transition:all .2s}
+  nav.toc a:hover{color:var(--ink);background:var(--paper-2)}
+  nav.toc a.active{color:var(--amber);border-left-color:var(--amber);background:rgba(217,122,31,.07);font-weight:600}
+  nav.toc .sub{padding-left:16px;font-size:14px}
+
+  /* ---------- Sections ---------- */
+  .part{margin-bottom:56px}
+  .part-head{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+  .part-head .num{flex-shrink:0;width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:22px;font-family:var(--font-mono)}
+  .part-head h2{font-family:var(--font-disp);font-size:clamp(22px,3vw,30px);font-weight:800;line-height:1.2}
+  .part-head p{color:var(--muted);font-size:15px;margin-top:2px}
+  .p1 .num{background:linear-gradient(135deg,var(--amber),var(--amber-2));color:#fff}
+  .p2 .num{background:linear-gradient(135deg,var(--teal),#5fd4a4);color:#fff}
+  .p3 .num{background:linear-gradient(135deg,#3b6fb6,#7cc0ff);color:#fff}
+  .p4 .num{background:linear-gradient(135deg,#8a5fb6,#c4a1f0);color:#fff}
+  .p5 .num{background:linear-gradient(135deg,#c4453c,#ff8c8c);color:#fff}
+  .p6 .num{background:linear-gradient(135deg,#f0a35a,#ffd08c);color:#fff}
+
+  .cards{display:grid;gap:14px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;display:flex;gap:18px;transition:all .3s}
+  .card:hover{transform:translateY(-3px);border-color:rgba(217,122,31,.4);box-shadow:var(--shadow-sm)}
+  .card .idx{flex-shrink:0;font-family:var(--font-mono);font-weight:700;font-size:22px;color:var(--teal);opacity:.9;width:42px;line-height:1.2}
+  .card h3{font-size:20px;font-weight:700;margin-bottom:8px}
+  .card h3 .code{font-family:var(--font-mono);font-size:16px;background:var(--paper-2);border:1px solid var(--line);padding:1px 8px;border-radius:7px;color:var(--amber)}
+  .card p{color:var(--ink-soft);font-size:16px;font-weight:300}
+  .card .tag{display:inline-block;margin-top:12px;font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--amber);background:rgba(217,122,31,.08);border:1px solid rgba(217,122,31,.3);padding:3px 10px;border-radius:999px}
+  .card .tag.teal{color:var(--teal);background:rgba(31,122,92,.08);border-color:rgba(31,122,92,.3)}
+  .card .tag.blue{color:var(--blue);background:rgba(59,111,182,.08);border-color:rgba(59,111,182,.3)}
+  .card .tag.purple{color:var(--purple);background:rgba(138,95,182,.08);border-color:rgba(138,95,182,.3)}
+  .card .tag.red{color:var(--red);background:rgba(196,69,60,.08);border-color:rgba(196,69,60,.3)}
+
+  /* ---------- Chips ---------- */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chips span{font-size:12.5px;font-weight:500;border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--ink-soft);background:var(--bg-soft)}
+
+  /* ---------- Grid cards ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+  .gcard{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px;transition:all .3s;position:relative;overflow:hidden}
+  .gcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),var(--amber-2),transparent)}
+  .gcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);border-color:rgba(217,122,31,.4)}
+  .gcard h4{font-family:var(--font-disp);font-size:19px;font-weight:700;margin-bottom:6px}
+  .gcard p{color:var(--muted);font-size:14.5px;font-weight:300}
+
+  /* ---------- Concept titles ---------- */
+  .concept-title{font-family:var(--font-disp);font-size:21px;font-weight:800;margin:30px 0 12px;display:flex;align-items:center;gap:10px}
+  .concept-title::after{content:"";flex:1;height:1px;background:var(--line-strong)}
+
+  /* ---------- Callouts ---------- */
+  .callout{margin-top:16px;border-left:3px solid var(--teal);background:rgba(31,122,92,.07);border-radius:0 10px 10px 0;padding:14px 18px;font-style:italic;color:var(--ink);font-size:16px}
+  .callout .label{display:block;font-style:normal;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--teal);font-weight:600;margin-bottom:4px}
+  .callout.amber{border-left-color:var(--amber);background:rgba(217,122,31,.07)}
+  .callout.amber .label{color:var(--amber)}
+  .callout.red{border-left-color:var(--red);background:rgba(196,69,60,.07)}
+  .callout.red .label{color:var(--red)}
+
+  /* ---------- Tables ---------- */
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line-strong);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+  table{width:100%;border-collapse:collapse;background:var(--paper);font-size:14.5px;min-width:560px}
+  thead th{font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:1px;text-align:left;background:var(--bg-soft);color:var(--ink-soft);padding:12px 16px;border-bottom:1px solid var(--line-strong)}
+  tbody td{padding:12px 16px;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top}
+  tbody tr{transition:background .2s}
+  tbody tr:hover{background:var(--paper-2)}
+  tbody tr:last-child td{border-bottom:none}
+  td b,td .en{color:var(--ink)}
+
+  /* ---------- Flows ---------- */
+  .flows{display:grid;gap:14px}
+  .flow{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;transition:all .3s}
+  .flow:hover{border-color:rgba(31,122,92,.4);transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+  .flow h3{font-family:var(--font-disp);font-size:20px;font-weight:800;margin-bottom:8px;color:var(--teal)}
+  .flow h4{font-size:16px;font-weight:700;color:var(--ink);margin:14px 0 10px}
+  .flow .chain{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+  .flow .chain span{font-size:13.5px;font-weight:500;border:1px solid var(--line-strong);border-radius:8px;padding:6px 12px;color:var(--ink-soft);background:var(--paper-2);transition:all .2s}
+  .flow .chain span:hover{border-color:var(--amber);color:var(--amber)}
+  .flow .chain span.goal{background:var(--teal);color:#fff;border-color:var(--teal);font-weight:600}
+  .flow .chain span.warn{background:var(--red);color:#fff;border-color:var(--red);font-weight:600}
+  .flow .chain i{font-family:var(--font-mono);font-style:normal;color:var(--amber);font-weight:700;animation:arrowmove 2s ease-in-out infinite}
+  @keyframes arrowmove{0%,100%{transform:translateX(0);opacity:.6}50%{transform:translateX(5px);opacity:1}}
+
+  /* ---------- Steps ---------- */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;counter-reset:step}
+  .step{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;counter-increment:step;position:relative;transition:all .3s}
+  .step:hover{border-color:rgba(217,122,31,.4);transform:translateY(-3px)}
+  .step::before{content:counter(step);position:absolute;top:-10px;left:16px;background:linear-gradient(135deg,var(--amber),var(--amber-2));color:#fff;font-family:var(--font-mono);font-weight:700;font-size:13px;width:26px;height:26px;border-radius:8px;display:grid;place-items:center}
+  .step h4{font-size:15px;margin-bottom:6px;font-weight:700}
+  .step p{font-size:13.5px;color:var(--muted);font-weight:300}
+
+  /* ---------- Closing ---------- */
+  .closing{margin-top:48px;background:linear-gradient(150deg,var(--paper),var(--bg-soft));border:1px solid var(--line-strong);border-radius:var(--radius);padding:40px;text-align:center;box-shadow:var(--shadow-sm)}
+  .closing h2{font-family:var(--font-disp);font-size:28px;font-weight:800;margin-bottom:14px}
+  .closing p{color:var(--ink-soft);max-width:760px;margin:0 auto 12px;font-weight:300}
+  .closing .key{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}
+  .closing .key span{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:8px 18px;font-size:15px;font-weight:500}
+  .closing .key span b{color:var(--amber)}
+
+  footer{border-top:1px solid var(--line);padding:28px 0 40px;text-align:center;color:var(--muted);font-size:14px}
+  footer a{color:var(--amber);text-decoration:none}
+
+  /* ---------- Back to top ---------- */
+  #top{position:fixed;bottom:24px;right:24px;z-index:90;width:48px;height:48px;border-radius:50%;border:none;background:var(--amber);color:#fff;font-size:20px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;box-shadow:0 10px 24px -10px rgba(217,122,31,.8);font-family:var(--font-mono)}
+  #top.show{opacity:1;pointer-events:auto}
+  #top:hover{transform:translateY(-3px)}
+
+  [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  [data-reveal].in{opacity:1;transform:none}
+
+  @media (max-width:900px){.layout{grid-template-columns:1fr}nav.toc{position:static;max-height:none;display:none}.hero{padding:52px 0 32px}}
+  @media (max-width:560px){body{font-size:16px}.card{padding:20px}.card .idx{font-size:18px;width:32px}.hero h1{font-size:34px}}
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap topbar">
+    <a class="brand" href="../index.html"><span class="mark">ক</span> কাজকর্ম শিখ</a>
+    <nav class="topnav">
+      <a href="../index.html#hub">Documents</a>
+      <a href="team.html">Team</a>
+      <a href="db-guide.html">DB Guide</a>
+      <a href="claude-guide.html">Claude Guide</a>
+      <a class="go" href="../index.html">Home →</a>
+    </nav>
+  </div>
+</header>
+
+<header class="hero">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="wrap">
+    <div class="badge"><span class="dot"></span> BATB · Consumer Engagement Platform · Business & Logic</div>
+    <h1>ECRM <em>Tutorial</em> — Business ও Logic</h1>
+    <p class="lead">Enterprise Consumer Relationship Management — কেন এই business exists, কিভাবে campaign চলে, ৩০টি flow blocks, Report Manager, JML process ও AI verification — সব গভীরভাবে এক গাইডে।</p>
+    <div class="hero-stats">
+      <div class="stat"><b data-count="18">0</b><span>Sections</span></div>
+      <div class="stat"><b data-count="30">0</b><span>Flow Blocks</span></div>
+      <div class="stat"><b data-count="4">0</b><span>Operational Reports</span></div>
+      <div class="stat"><b data-count="5">0</b><span>User Roles</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="toc" id="toc">
+    <h3>বিষয়সূচী</h3>
+    <a href="#overview">১. ECRM এক নজরে</a>
+    <a href="#why">২. কেন এই Business Exists</a>
+    <a href="#how">৩. কিভাবে Business চলে</a>
+    <a href="#objectives">৪. Objectives ও Market Analysis</a>
+    <a href="#concepts">৫. Core Concepts</a>
+    <a href="#concepts" class="sub">User vs Consumer</a>
+    <a href="#concepts" class="sub">Franchise vs SOB</a>
+    <a href="#concepts" class="sub">Outlet · PTR · Brands</a>
+    <a href="#jml">৬. JML Process</a>
+    <a href="#reportmanager">৭. Report Manager</a>
+    <a href="#roles">৮. User Roles ও Access</a>
+    <a href="#agencies">৯. Agencies ও Coverage</a>
+    <a href="#architecture">১০. Architecture — Business View</a>
+    <a href="#campaign">১১. Campaign Flow Logic</a>
+    <a href="#blocks">১২. ৩০টি Flow Blocks</a>
+    <a href="#reports">১৩. ৪টি Operational Reports</a>
+    <a href="#tasks">১৪. Analytics Tasks</a>
+    <a href="#ai">১৫. AI Audio Verification</a>
+    <a href="#practice">১৬. Training/Practice Center</a>
+    <a href="#portal">১৭. Portal Sections Map</a>
+    <a href="#team">১৮. Team Credits</a>
+  </nav>
+
+  <main>
+
+    <!-- ===== 1. OVERVIEW ===== -->
+    <section class="part p1" id="overview">
+      <div class="part-head">
+        <div class="num">১</div>
+        <div><h2>ECRM এক নজরে</h2><p>পুরো platform-এর এক-লাইন পরিচয় ও backbone</p></div>
+      </div>
+      <p style="color:var(--ink-soft);font-weight:300;font-size:16.5px;margin-bottom:18px">ECRM হলো একটি <b>Enterprise Consumer Relationship Management</b> platform — যা British American Tobacco Bangladesh (BATB)-এর জন্য তৈরি। এটি <b>field-force driven</b> — RAs/BRs মোবাইল app দিয়ে outlet-এ গিয়ে consumer-এর সাথে কথা বলে, survey চালায়, আর data-র ভিত্তিতে ভবিষ্যত campaigns design হয়।</p>
+      <div class="grid">
+        <div class="gcard"><h4>User Type</h4><p>Field force (mobile) + Management (web)</p></div>
+        <div class="gcard"><h4>Engagement</h4><p>Outlet-visit + one-on-one consumer conversation</p></div>
+        <div class="gcard"><h4>Data Collection</h4><p>Survey-based — dropdown, multipleChoice, contactNo ইত্যাদি</p></div>
+        <div class="gcard"><h4>Verification</h4><p>OTP, audio recording, AI audio verification</p></div>
+        <div class="gcard"><h4>Reporting</h4><p>Daily, Live Observation, Call Checkback, Call Center</p></div>
+        <div class="gcard"><h4>Deployment</h4><p>PostgreSQL (AWS RDS) + BigQuery analytics</p></div>
+      </div>
+      <div class="callout"><span class="label">মূল কথা</span>ECRM শুধু একটা survey tool না — এটি BATB-এর সম্পূর্ণ <b>consumer engagement pipeline</b> — acquisition থেকে verification পর্যন্ত।</div>
+    </section>
+
+    <!-- ===== 2. WHY ===== -->
+    <section class="part p2" id="why">
+      <div class="part-head">
+        <div class="num">২</div>
+        <div><h2>কেন এই Business Exists</h2><p>legal constraint-ই পুরো model define করে</p></div>
+      </div>
+      <div class="flow">
+        <h4>🚫 The Core Problem</h4>
+        <p style="color:var(--ink-soft);font-weight:300">Smoking advertisements public media (TV, billboard, newspaper) তে <b>আইনত নিষিদ্ধ</b>। Tobacco brand-এর advertising restriction-এর কারণে traditional marketing channel ব্যবহার করা যায় না।</p>
+        <div class="callout red"><span class="label">The Core Problem</span>Public advertising নিষিদ্ধ → <b>direct person-to-person consumer reach</b> mandatory।</div>
+        <h4>✅ The Only Legal Solution</h4>
+        <div class="chain">
+          <span>Smoking ads নিষিদ্ধ</span><i>→</i>
+          <span class="goal">Outlet visit</span><i>→</i>
+          <span>Consumer-এর সাথে সরাসরি contact</span><i>→</i>
+          <span class="goal">Field force model</span>
+        </div>
+        <div class="callout amber"><span class="label">Deep Thinking</span>এই restriction-ই decide করে — কেন platform mobile-first, কেন outlet = terminal point, কেন প্রতিটা interaction record করতে হয় (compliance), আর কেন audio/AI verification দরকার। Advertising না থাকায়, <b>বিশ্বাস ও verification</b>-ই BATB-এর brand reach-এর ভিত্তি।</div>
+      </div>
+    </section>
+
+    <!-- ===== 3. HOW ===== -->
+    <section class="part p3" id="how">
+      <div class="part-head">
+        <div class="num">৩</div>
+        <div><h2>কিভাবে Business চলে</h2><p>একটা campaign-এর complete lifecycle</p></div>
+      </div>
+      <div class="flow">
+        <div class="chain">
+          <span>1. Campaign Design</span><i>→</i>
+          <span>2. Field Execution</span><i>→</i>
+          <span>3. Monitoring</span><i>→</i>
+          <span class="goal">4. Data & Insights</span>
+        </div>
+        <h4>১. Campaign Design</h4>
+        <div class="chain"><span>Business Team survey questions তৈরি করে</span><i>→</i><span>Campaign components configure হয় (flow blocks)</span></div>
+        <h4>২. Field Execution</h4>
+        <div class="chain">
+          <span>RA/BR outlet-এ যায়</span><i>→</i>
+          <span>consumer (≥18) সাথে এক-এক interaction</span><i>→</i>
+          <span class="code" style="font-family:var(--font-mono)">audio_start</span><i>→</i>
+          <span>survey data collect</span><i>→</i>
+          <span class="goal">OTP verify + PTR/reward</span>
+        </div>
+        <h4>৩. Monitoring</h4>
+        <div class="chain"><span>Supervisor live observation</span><i>→</i><span>Call checkback</span><i>→</i><span>AI audio verification</span></div>
+        <h4>৪. Data & Insights</h4>
+        <div class="chain"><span>Data BigQuery-তে replicate</span><i>→</i><span>Reports generate</span><i>→</i><span class="goal">Analysis → future campaign</span></div>
+        <div class="callout"><span class="label">The Feedback Loop</span>ECRM-এর সবচেয়ে গুরুত্বপূর্ণ business insight হলো <b>closing the loop</b>: survey data → consumer behavior → পরবর্তী campaign-এর design → নতুন data → নতুন insight। প্রতিটা campaign আগের campaign-এর <b>data-driven learning</b> ব্যবহার করে আরও target-ভিত্তিক হয়।</div>
+      </div>
+    </section>
+
+    <!-- ===== 4. OBJECTIVES ===== -->
+    <section class="part p4" id="objectives">
+      <div class="part-head">
+        <div class="num">৪</div>
+        <div><h2>Objectives ও Market/Product Analysis</h2><p>কেন এই data সংগ্রহ করা হয়</p></div>
+      </div>
+      <div class="cards">
+        <article class="card" data-reveal>
+          <div class="idx">🎯</div>
+          <div>
+            <h3>Objectives</h3>
+            <p>Consumer ও product-related data সংগ্রহ · survey = primary engagement ও insight tool · historical data analysis · requirement-based, campaign-wise marketing flow design।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">🏆</div>
+          <div>
+            <h3>Competitor Analysis</h3>
+            <p>Competitor product offerings, promotions ও campaign trends ট্র্যাক · market positioning, gaps, opportunities identify · SOB (non-BATB) products-এর উপর focus।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">📦</div>
+          <div>
+            <h3>Own Product Analysis</h3>
+            <p>নিজের product-এর sales trends · customer engagement level · survey feedback · product lifecycle stage (launch → growth → maturity)।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">✨</div>
+          <div>
+            <h3>New Product Promotion</h3>
+            <p>Target audience identify · pre-launch validation · pilot campaigns · post-launch performance tracking।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">📈</div>
+          <div>
+            <h3>Expected Benefits</h3>
+            <p>ভালো customer understanding · traditional ads-এর উপর dependency কমে · data-driven decisions · better product-market fit · higher ROI।</p>
+            <div class="chips"><span>Customer Insight</span><span>Less Ad Dependency</span><span>Data-Driven</span><span>Higher ROI</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== 5. CONCEPTS ===== -->
+    <section class="part p5" id="concepts">
+      <div class="part-head">
+        <div class="num">৫</div>
+        <div><h2>Core Concepts — গভীর ব্যাখ্যা</h2><p>platform-এর fundamental vocabulary</p></div>
+      </div>
+
+      <h3 class="concept-title">👥 User vs Consumer</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th></th><th>User</th><th>Consumer</th></tr></thead>
+          <tbody>
+            <tr><td><b>কে?</b></td><td>যে eCRM app ব্যবহার করে</td><td>যার data survey দিয়ে collect হয়</td></tr>
+            <tr><td><b>ভূমিকা</b></td><td>Survey চালায়, campaign manage করে</td><td>উত্তর দেয়, data provider</td></tr>
+            <tr><td><b>Example</b></td><td>RA, AC, SUP</td><td>দোকানে আসা smoker (≥18)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout"><span class="label">Deep Thinking</span>এই পার্থক্য critical — system <b>two-sided</b>: <b>user</b> হলো collector (field force), <b>consumer</b> হলো source (data)। Report-গুলো এই দুই side-কে আলাদা করে track করে।</div>
+
+      <h3 class="concept-title">🏷️ Product Classifications — Franchise vs SOB</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Type</th><th>অর্থ</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><b>Franchise</b></td><td>Core BATB brands</td><td>BATB-এর নিজস্ব ব্র্যান্ড</td></tr>
+            <tr><td><b>SOB</b></td><td>Secondary Own Brand / competitor — non-BATB products</td><td>Competitor বা external products</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout amber"><span class="label">Why এই পার্থক্য</span>Competitor analysis করতে SOB tracking দরকার — <b>"আমাদের brand কতটা market-এ, competitor কতটা"</b> বুঝতে।</div>
+
+      <h3 class="concept-title">🏬 Outlet = POS = Retailer</h3>
+      <p style="color:var(--ink-soft);font-weight:300;margin-bottom:10px">Outlet, Retailer, আর POS (Point of Sale) — সব একই entity। এটি <b>terminal point for contact</b> — সব consumer/retailer contact এখানেই হয়। Campaign terminal point সাধারণত POI; কখনো Cluster। প্রতিটা outlet একটা cluster-এর সাথে assigned।</p>
+      <div class="callout"><span class="label">Deep Thinking</span>Outlet-কেন্দ্রিক model কেন? কারণ outlet-ই সেই physical place যেখানে target consumer (smoker) কে পাওয়া যায়। পুরো hierarchy শেষ পর্যন্ত outlet-এ converge হয়।</div>
+
+      <h3 class="concept-title">🎁 PTR — Purchase Through Retail</h3>
+      <div class="chain" style="margin:12px 0">
+        <span class="goal">PTR = Reward = Gift</span><i>→</i>
+        <span>Campaign-এ consumer-কে দেওয়া reward</span><i>→</i>
+        <span>Example: Lighter, Body Spray</span>
+      </div>
+      <p style="color:var(--ink-soft);font-weight:300;margin-bottom:10px">PTR-ই field force-এর <b>"currency"</b> — RA-রা এই gift দিয়ে consumer-কে engage করে। তাই PTR tracking report-গুলো business-এর জন্য vital।</p>
+
+      <h3 class="concept-title">🏷️ Brand Definitions — Primary / Secondary / Previous</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Brand Type</th><th>অর্থ</th></tr></thead>
+          <tbody>
+            <tr><td><b>Primary Brand</b></td><td>Consumer সাধারণত যে brand smoke করে</td></tr>
+            <tr><td><b>Secondary Brand</b></td><td>Primary unavailable হলে যে brand smoke করে</td></tr>
+            <tr><td><b>Previous Brand</b></td><td>আগে যে brand smoke করত (NULL before Q1 2025)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout"><span class="label">Deep Thinking</span>এই তিনটা brand level capture করে consumer-এর <b>brand loyalty</b> ও <b>switching behavior</b>। Primary→Secondary→Previous progression analysis করলে বোঝা যায় কে কীভাবে brand switch করে — যা competitor strategy-তে গুরুত্বপূর্ণ।</div>
+    </section>
+
+    <!-- ===== 6. JML ===== -->
+    <section class="part p6" id="jml">
+      <div class="part-head">
+        <div class="num">৬</div>
+        <div><h2>JML Process (Joiner-Mover-Leaver)</h2><p>user lifecycle management — সব action approved ও logged</p></div>
+      </div>
+      <div class="flow">
+        <div class="chain">
+          <span>Joiner</span><i>→</i>
+          <span>Mover</span><i>→</i>
+          <span class="warn">Leaver</span><i>→</i>
+          <span class="goal">Audit Log</span>
+        </div>
+        <div class="grid" style="margin-top:16px">
+          <div class="gcard"><h4>Joiner</h4><p>নতুন user account তৈরি — field force বাড়ছে, নতুন member যোগ।</p></div>
+          <div class="gcard"><h4>Mover</h4><p>Role/access পরিবর্তন — promotion, transfer, area change।</p></div>
+          <div class="gcard"><h4>Leaver</h4><p>Deactivation (exit) — employee ছেড়ে গেলে access বন্ধ।</p></div>
+          <div class="gcard"><h4>Audit Log</h4><p>সব action logged — সম্পূর্ণ accountability।</p></div>
+        </div>
+        <div class="callout"><span class="label">Deep Thinking</span>JML নিশ্চিত করে platform-এ <b>কখনো unauthorized access</b> না থাকে। Tobacco industry-তে regulatory scrutiny অনেক বেশি, তাই user lifecycle-এ strict control + audit অপরিহার্য। Applies to all management users (AC, SUP, RA); <b>all actions require approval</b>।</div>
+      </div>
+    </section>
+
+    <!-- ===== 7. REPORT MANAGER ===== -->
+    <section class="part p1" id="reportmanager">
+      <div class="part-head">
+        <div class="num">৭</div>
+        <div><h2>Report Manager — ৫ ধরনের Report</h2><p>প্রতিটা report একটা আলাদা verification layer</p></div>
+      </div>
+      <div class="grid">
+        <div class="gcard"><h4>📄 Daily Raw</h4><p>প্রতিদিন campaign-এর raw data — daily operations। <b>"কী হলো"</b></p></div>
+        <div class="gcard"><h4>📞 Call Checkback</h4><p>Follow-up call — consumer সত্যিই contact হয়েছে কিনা। <b>"সত্যি হলো কিনা"</b></p></div>
+        <div class="gcard"><h4>👁️ Live Observation</h4><p>Supervisor live check — process compliance। <b>"কিভাবে হলো"</b></p></div>
+        <div class="gcard"><h4>📞 Call Center</h4><p>Second contact — follow-up announcement বা gift delivery। <b>"repeat engagement"</b></p></div>
+        <div class="gcard"><h4>📅 Dynamic Report</h4><p>Configurable parameters + custom date range — flexible ad-hoc analysis। <b>"কী pattern আছে"</b></p></div>
+      </div>
+      <div class="callout"><span class="label">Verification Layers</span><b>Daily Raw</b> = ground truth · <b>Call Checkback</b> = consumer verify · <b>Live Observation</b> = process verify · <b>Call Center</b> = অতিরিক্ত engagement · <b>Dynamic</b> = analysis।</div>
+    </section>
+
+    <!-- ===== 8. ROLES ===== -->
+    <section class="part p2" id="roles">
+      <div class="part-head">
+        <div class="num">৮</div>
+        <div><h2>User Roles ও Access</h2><p>যারা field-এ — mobile, যারা office-এ — web</p></div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Role</th><th>Full Name</th><th>Access</th><th>Business Logic</th></tr></thead>
+          <tbody>
+            <tr><td><b>RA / BR / FF</b></td><td>Brand Rep / Field Force</td><td>Mobile</td><td>Field-এ যায়, outlet visit, survey চালায় — <b>সম্পূর্ণ execution</b></td></tr>
+            <tr><td><b>SUP</b></td><td>Supervisor</td><td>Mobile + Web</td><td>RA-দের assign করে, সমস্যা সমাধান, observation — <b>তত্ত্বাবধান</b></td></tr>
+            <tr><td><b>AC</b></td><td>Area Coordinator</td><td>Web</td><td>Area level management, planning — <b>কৌশলগত</b></td></tr>
+            <tr><td><b>DC</b></td><td>District Coordinator</td><td>Web</td><td>District level management, monitoring — <b>কৌশলগত</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout"><span class="label">Deep Thinking</span>Access split দেখে বোঝা যায় — <b>যারা field-এ (execution)</b> mobile পায় (আউটডোর, offline-friendly); <b>যারা office-এ (management)</b> web পায় (বড় screen, dashboard)। SUP-এর উভয়ই — কারণ সে field-ও দেখে, report-ও দেখে।</div>
+    </section>
+
+    <!-- ===== 9. AGENCIES ===== -->
+    <section class="part p3" id="agencies">
+      <div class="part-head">
+        <div class="num">৯</div>
+        <div><h2>Agencies ও Coverage</h2><p>national coverage — প্রতিটা agency একটা region-এর responsibility নেয়</p></div>
+      </div>
+      <div class="grid">
+        <div class="gcard"><h4>v2 tech</h4><p>Internal team (V2 Technology) — platform তৈরি ও maintain করে।</p></div>
+        <div class="gcard"><h4>ATMSL</h4><p>Sylhet, Dhaka South</p></div>
+        <div class="gcard"><h4>IMSL</h4><p>Dhaka North, Chittagong</p></div>
+        <div class="gcard"><h4>IMSR</h4><p>Rajshahi, Barishal, Khulna</p></div>
+      </div>
+      <div class="callout amber"><span class="label">Deep Thinking</span>বাংলাদেশ জুড়ে field force manage করার জন্য BATB <b>multiple agencies</b> ব্যবহার করে — national coverage নিশ্চিত, প্রতিটা agency-র নিজস্ব management structure। <b>v2 tech</b> হলো internal team — যারা platform বানায় ও maintain করে।</div>
+    </section>
+
+    <!-- ===== 10. ARCHITECTURE ===== -->
+    <section class="part p4" id="architecture">
+      <div class="part-head">
+        <div class="num">১০</div>
+        <div><h2>Architecture — Business View</h2><p>Operational vs Analytics — কেন আলাদা</p></div>
+      </div>
+      <div class="flow">
+        <div class="chain">
+          <span>Mobile App (Field Force)</span><i>→</i>
+          <span>Operational DB (RDS)</span><i>→</i>
+          <span class="goal">BigQuery (Analytics)</span>
+        </div>
+        <div class="grid" style="margin-top:16px">
+          <div class="gcard"><h4>Operational DB (RDS)</h4><p>Day-to-day operations — transaction, campaign execution, raw data capture, core app logic।</p></div>
+          <div class="gcard"><h4>BigQuery (Analytics)</h4><p>Scalable dashboards, reporting — production-এ impact ছাড়াই query।</p></div>
+        </div>
+        <div class="callout"><span class="label">Deep Thinking</span>কেন দুটো আলাদা? <b>Operational DB</b> দিয়ে user transaction চলে (fast, transactional)। <b>Analytics</b> দিয়ে heavy reporting (scalable, read-heavy)। এদের আলাদা রাখলে production performance খারাপ হয় না। <b>Replica</b> ব্যবহার হয় যাতে reporting query production-এ load না ফেলে।</div>
+      </div>
+    </section>
+
+    <!-- ===== 11. CAMPAIGN FLOW ===== -->
+    <section class="part p5" id="campaign">
+      <div class="part-head">
+        <div class="num">১১</div>
+        <div><h2>Campaign Flow Logic</h2><p>প্রতিটা interaction একটা flow — capture → validate → reward</p></div>
+      </div>
+      <div class="flow">
+        <div class="chain">
+          <span>1. Initial Setup</span><i>→</i>
+          <span>2. Consumer Input</span><i>→</i>
+          <span>3. Validation</span><i>→</i>
+          <span class="goal">4. Execution</span>
+        </div>
+        <div class="steps" style="margin-top:20px">
+          <div class="step"><h4>Initial Setup</h4><p><span class="mono">audio_start</span> → compliance log। Interaction শুরুই recording দিয়ে।</p></div>
+          <div class="step"><h4>Consumer Input</h4><p><span class="mono">dropdown</span> / <span class="mono">radio</span> / <span class="mono">contactNo</span> → target demographics capture।</p></div>
+          <div class="step"><h4>Validation</h4><p>age check, OTP verify → invalid flow block। শুধু valid, 18+ data।</p></div>
+          <div class="step"><h4>Execution</h4><p>Successful target → PTR/reward। সঠিক target-ই reward পায়।</p></div>
+        </div>
+        <div class="callout"><span class="label">Deep Thinking</span>এই ৪-ধাপ pattern-টাই প্রতিটা campaign-এর backbone — <b>capture → validate → reward</b>। নিশ্চিত করে: (১) শুধু valid, 18+ consumer data, (২) প্রতিটা interaction প্রমাণযোগ্য, (৩) সঠিক target-কেই reward।</div>
+        <div class="chips" style="margin-top:14px"><span>Business Teams</span><span>Campaign Managers</span><span>Supervisors</span><span>Technical Teams</span></div>
+      </div>
+    </section>
+
+    <!-- ===== 12. FLOW BLOCKS ===== -->
+    <section class="part p6" id="blocks">
+      <div class="part-head">
+        <div class="num">১২</div>
+        <div><h2>৩০টি Flow Blocks — গভীর ব্যাখ্যা</h2><p>প্রতিটা block একটা নির্দিষ্ট business operation-এর জন্য</p></div>
+      </div>
+
+      <h3 class="concept-title">🎙️ Audio Blocks (Compliance & QA)</h3>
+      <div class="cards">
+        <article class="card" data-reveal>
+          <div class="idx">01</div>
+          <div>
+            <h3><span class="code">audio_start</span> Interaction শুরুতে অটো recording</h3>
+            <p>Compliance monitoring, QA, supervisor validation, RA behavior analysis, campaign auditing।</p>
+            <span class="tag red">Regulatory প্রমাণ</span>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">02</div>
+          <div>
+            <h3><span class="code">audio_end</span> Interaction শেষে recording বন্ধ</h3>
+            <p>Audio verification workflow finalize, complete recording store for audit & QA।</p>
+            <span class="tag red">সম্পূর্ণ recording</span>
+          </div>
+        </article>
+      </div>
+      <div class="callout red"><span class="label">Deep Thinking</span>Tobacco industry-তে <b>"কি বলা হয়েছে" প্রমাণ করা</b> গুরুত্বপূর্ণ (regulatory)। audio_start→audio_end পুরো conversation record করে — dispute-তে প্রমাণ, আর AI দিয়ে verify করা যায় RA ঠিকমতো message দিয়েছে কিনা।</div>
+
+      <h3 class="concept-title">📥 Input Blocks (Data Collection)</h3>
+      <div class="cards">
+        <article class="card" data-reveal>
+          <div class="idx">01</div>
+          <div>
+            <h3><span class="code">dropdown</span> Predefined list থেকে single select</h3>
+            <p>Territory, Profession, Retail Type, Consumer Category — data consistency।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">02</div>
+          <div>
+            <h3><span class="code">multipleChoice</span> Predefined options থেকে single answer</h3>
+            <p>Main survey interaction block — consumer feedback, brand preference।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">03</div>
+          <div>
+            <h3><span class="code">checkbox</span> Multiple option একসাথে select</h3>
+            <p>Multiple product selection, campaign preference, behavior analysis।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">04</div>
+          <div>
+            <h3><span class="code">contactNo</span> Consumer mobile capture ও validate</h3>
+            <p>Call center engagement, PTR follow-up, repeat communication।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">05</div>
+          <div>
+            <h3><span class="code">date</span> Date-based input (DOB)</h3>
+            <p><b>Legal age validation (18+)</b>, campaign eligibility, segmentation।</p>
+            <span class="tag red">18+ legal check</span>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">06</div>
+          <div>
+            <h3><span class="code">textInput</span> Free-text input</h3>
+            <p>Consumer name, address, remarks, supervisor comment।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">07</div>
+          <div>
+            <h3><span class="code">product</span> BATB বা competitor brand select</h3>
+            <p>Primary/secondary/previous brand, competitor analysis, PTR targeting।</p>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="concept-title">✅ Validation & Compliance Blocks</h3>
+      <div class="cards">
+        <article class="card" data-reveal>
+          <div class="idx">01</div>
+          <div>
+            <h3><span class="code">validations</span> Input validation rules</h3>
+            <p>Regex, min/max value, age validation, mandatory field।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">02</div>
+          <div>
+            <h3><span class="code">otp</span> OTP-based verification</h3>
+            <p>Consumer authenticity verify, fake survey prevention।</p>
+            <span class="tag teal">Trust</span>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">03</div>
+          <div>
+            <h3><span class="code">lookup</span> Hidden/visible validation lookup</h3>
+            <p>Duplicate checking, eligibility validation, campaign condition checking।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">04</div>
+          <div>
+            <h3><span class="code">terms</span> Terms & conditions + acknowledgment</h3>
+            <p>Compliance, legal acknowledgment, consent management।</p>
+            <span class="tag teal">Legal consent</span>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">05</div>
+          <div>
+            <h3><span class="code">required</span> Blocks mandatory mark</h3>
+            <p>Incomplete submission prevent, mandatory data collection।</p>
+          </div>
+        </article>
+      </div>
+      <div class="callout"><span class="label">Deep Thinking</span>এই blocks-গুলোই <b>data quality ও legitimacy</b> নিশ্চিত করে। OTP = consumer আসল কিনা, lookup = duplicate কিনা, terms = legal consent আছে কিনা। Data untrustworthy হলে পুরো campaign analysis ভুল হতো।</div>
+
+      <h3 class="concept-title">🖼️ Media & Engagement Blocks</h3>
+      <div class="cards">
+        <article class="card" data-reveal>
+          <div class="idx">01</div>
+          <div>
+            <h3><span class="code">camera</span> Mobile camera দিয়ে photo</h3>
+            <p>Outlet image, PTR proof, consumer interaction proof।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">02</div>
+          <div>
+            <h3><span class="code">image</span> Static image display</h3>
+            <p>Product branding, instructional image, campaign awareness।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">03</div>
+          <div>
+            <h3><span class="code">video</span> AV/video play</h3>
+            <p>Campaign engagement, promotional AV, awareness, consumer education।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">04</div>
+          <div>
+            <h3><span class="code">interactive_gallery</span> Interactive image gallery</h3>
+            <p>Product awareness, AV engagement, promotion।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">05</div>
+          <div>
+            <h3><span class="code">interactive_av</span> Initial AV + selectable AV options</h3>
+            <p>Interactive consumer engagement, promotional experience।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">06</div>
+          <div>
+            <h3><span class="code">uiux_video</span> UI/UX-focused AV</h3>
+            <p>Brand engagement, promotional storytelling।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">07</div>
+          <div>
+            <h3><span class="code">emoji_rating</span> Emoji reaction feedback</h3>
+            <p>Quick sentiment, campaign satisfaction, AV engagement scoring।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">08</div>
+          <div>
+            <h3><span class="code">star_rating</span> Star-based scoring</h3>
+            <p>Consumer satisfaction, engagement quality analysis।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">09</div>
+          <div>
+            <h3><span class="code">game</span> 3rd-party APK/game</h3>
+            <p>Engagement campaigns, entertainment promotion, gamification।</p>
+          </div>
+        </article>
+      </div>
+      <div class="callout amber"><span class="label">Deep Thinking</span>Media blocks campaign-কে <b>interactive ও engaging</b> করে। Brand ads legal না, তাই <b>AV, game, gallery</b> দিয়ে attention capture। camera দিয়ে <b>proof</b> collect (PTR দেওয়া হয়েছে কিনা)। emoji/star rating দিয়ে <b>instant sentiment</b>।</div>
+
+      <h3 class="concept-title">🧭 Navigation & Logic Blocks</h3>
+      <div class="cards">
+        <article class="card" data-reveal>
+          <div class="idx">01</div>
+          <div>
+            <h3><span class="code">jumping_logic</span> Conditional navigation</h3>
+            <p>Dynamic survey flow, campaign branching, personalized journey।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">02</div>
+          <div>
+            <h3><span class="code">referTo</span> Next block/group path define</h3>
+            <p>Dynamic routing, survey branch navigation।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">03</div>
+          <div>
+            <h3><span class="code">skip</span> Skip navigation</h3>
+            <p>Irrelevant blocks skip — previous answers অনুযায়ী, interaction optimize।</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">04</div>
+          <div>
+            <h3><span class="code">options</span> Selectable values store</h3>
+            <p>Survey answers standardize, reporting consistency।</p>
+          </div>
+        </article>
+      </div>
+      <div class="callout"><span class="label">Deep Thinking</span>এই blocks-গুলো <b>personalization</b> তৈরি করে। Jumping/skip logic দিয়ে — আগের answer অনুযায়ী পরবর্তী প্রশ্নগুলো context-based হয়। Interaction ছোট ও relevant — user experience ভালো।</div>
+
+      <h3 class="concept-title">🎁 Outcome & Messaging Blocks</h3>
+      <div class="cards">
+        <article class="card" data-reveal>
+          <div class="idx">01</div>
+          <div>
+            <h3><span class="code">giveable</span> PTR/reward/gift allocation</h3>
+            <p>Campaign gift distribution, PTR rewards, incentive tracking।</p>
+            <span class="tag teal">Happy ending</span>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">02</div>
+          <div>
+            <h3><span class="code">popup_message</span> Info/warning popup</h3>
+            <p>Campaign instruction, compliance warning, PTR eligibility notice।</p>
+          </div>
+        </article>
+      </div>
+      <div class="callout amber"><span class="label">Deep Thinking</span>giveable-ই campaign-এর <b>"happy ending"</b> — success consumer reward পায়। এটাই field force-কে motivation দেয়, consumer-কে engagement-এ রাখে। PTR distribution track করলে business জানতে পারে কোন gift effective।</div>
+    </section>
+
+    <!-- ===== 13. OPERATIONAL REPORTS ===== -->
+    <section class="part p1" id="reports">
+      <div class="part-head">
+        <div class="num">১৩</div>
+        <div><h2>৪টি Operational Reports — Business Logic</h2><p>প্রতিটা report একটা আলাদা business monitoring layer</p></div>
+      </div>
+
+      <div class="cards">
+        <article class="card" data-reveal>
+          <div class="idx">১</div>
+          <div>
+            <h3>📋 Daily Contact Survey Report</h3>
+            <p>প্রতিটা contact-এর সম্পূর্ণ record — contact metadata, location hierarchy, consumer profile, brand info, timing, survey answers। One row = one unique contact event।</p>
+            <span class="tag teal">"কী হয়েছে" — ground truth</span>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">২</div>
+          <div>
+            <h3>👁️ Live Observation Report (Joint Call)</h3>
+            <p>Supervisor একসাথে BR-এর consumer contact observation — ১৬টা checklist item (correct cluster, attire, shop permission, device compliance, full messaging)। Supervisor = <span class="mono">user_id</span>, BR = <span class="mono">ff_id</span>।</p>
+            <span class="tag teal">"কিভাবে হলো" — process verify</span>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">৩</div>
+          <div>
+            <h3>📞 Call Checkback Report</h3>
+            <p>Post-contact quality audit — supervisor consumer-কে call করে BR-র performance verify, ১৭টা verification question। Original contact-এর সাথে <b>4-key composite match</b> (phone + BR ID + campaign ID + date)।</p>
+            <span class="tag teal">"সত্যিই হলো কিনা" — fabrication detect</span>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="idx">৪</div>
+          <div>
+            <h3>☎️ Call Center Report</h3>
+            <p>Outbound dialer contacts — Cluster-এ anchored (type=7), 3-step chain (contact → assignment → dialer list), agency region CASE-derived, English survey, contact status logic।</p>
+            <span class="tag teal">"দ্বিতীয় যোগাযোগ" — repeat engagement</span>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="concept-title">📊 Report Comparison</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Aspect</th><th>Daily Contact</th><th>Live Observation</th><th>Call Checkback</th><th>Call Center</th></tr></thead>
+          <tbody>
+            <tr><td><b>Primary Question</b></td><td>কী হলো</td><td>কিভাবে হলো</td><td>সত্যিই হলো কিনা</td><td>দ্বিতীয় engagement</td></tr>
+            <tr><td><b>Location Anchor</b></td><td>Outlet (8)</td><td>Outlet (8)</td><td>Outlet (8)</td><td>Cluster (7)</td></tr>
+            <tr><td><b>Supervisor</b></td><td>Not present</td><td><span class="mono">user_id</span></td><td><span class="mono">user_id</span></td><td>Not present</td></tr>
+            <tr><td><b>Consumer Profile</b></td><td>Full (name, age, address)</td><td>Not captured</td><td>Not captured</td><td>Phone only</td></tr>
+            <tr><td><b>Agency Field</b></td><td>Not present</td><td>Not present</td><td>Not present</td><td>Derived (CASE)</td></tr>
+            <tr><td><b>Survey Language</b></td><td>Bengali</td><td>Bengali</td><td>Bengali</td><td>English</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== 14. ANALYTICS TASKS ===== -->
+    <section class="part p2" id="tasks">
+      <div class="part-head">
+        <div class="num">১৪</div>
+        <div><h2>Analytics Tasks (Campaign 161)</h2><p>৫টা challenge — business question → SQL logic</p></div>
+      </div>
+      <div class="grid">
+        <div class="gcard"><h4>1 · Count of Consumer</h4><p>মোট কত unique consumer — <b>fresh vs not-fresh</b> split (JSONB data)।</p></div>
+        <div class="gcard"><h4>2 · RA Wise Duration & Interval</h4><p>প্রতিটা RA কতক্ষণ contact করল, এক contact থেকে পরের interval কত (LEAD window)।</p></div>
+        <div class="gcard"><h4>3 · Total Campaign Duration</h4><p>Campaign প্রথম contact থেকে শেষ contact পর্যন্ত কতদিন চলল।</p></div>
+        <div class="gcard"><h4>4 · Date Wise PTR Achievement</h4><p>প্রতিদিন কত PTR (gift) বিতরণ — gift material অনুযায়ী split।</p></div>
+        <div class="gcard"><h4>5 · Outlet Wise PTR Count</h4><p>কোন outlet-এ কত PTR — high/low performing outlet identify।</p></div>
+      </div>
+      <div class="callout"><span class="label">Deep Thinking</span>Fresh consumer = কত নতুন consumer (growth) · contact duration/interval = RA productivity · PTR achievement = campaign effectiveness · outlet-wise = কোন outlet-এ focus দিতে হবে।</div>
+    </section>
+
+    <!-- ===== 15. AI AUDIO ===== -->
+    <section class="part p3" id="ai">
+      <div class="part-head">
+        <div class="num">১৫</div>
+        <div><h2>AI Audio Verification (aai_ System)</h2><p>ECRM-এর AI-powered QA layer — scale-এ QA</p></div>
+      </div>
+      <div class="flow">
+        <div class="chain">
+          <span>1. Audio capture</span><i>→</i>
+          <span>2. AI analysis</span><i>→</i>
+          <span>3. Auditor assignment</span><i>→</i>
+          <span class="goal">4. Verification</span>
+        </div>
+        <div class="grid" style="margin-top:16px">
+          <div class="gcard"><h4>aai_audios</h4><p>Captured audio recording</p></div>
+          <div class="gcard"><h4>aai_projects</h4><p>Verification project — detect phrase, noise reduction</p></div>
+          <div class="gcard"><h4>aai_audio_assign_maps</h4><p>Auditor-কে audio assign (level-based)</p></div>
+          <div class="gcard"><h4>aai_verified_audios</h4><p>Result — quality score, phrase score</p></div>
+          <div class="gcard"><h4>aai_questions</h4><p>Verification question set</p></div>
+        </div>
+        <div class="callout"><span class="label">Deep Thinking</span>এটা <b>final trust layer</b>। Field-এ হাজারো RA audio record করে — AI analyze করলে বোঝা যায় RA ঠিকঠাক campaign message দিয়েছে কিনা, correct phrase বলেছে কিনা, noise ঠিক আছে কিনা। <b>Manually সব audio review সম্ভব না</b> — AI প্রথম ফিল্টার।</div>
+      </div>
+    </section>
+
+    <!-- ===== 16. PRACTICE ===== -->
+    <section class="part p4" id="practice">
+      <div class="part-head">
+        <div class="num">১৬</div>
+        <div><h2>Training/Practice Center</h2><p>নতুনদের জন্য learning material repository</p></div>
+      </div>
+      <div class="grid">
+        <div class="gcard"><h4>Task 1</h4><p>Data Entry & Campaign Setup</p></div>
+        <div class="gcard"><h4>Task 2</h4><p>Call Center SQL Reporting</p></div>
+      </div>
+      <div class="callout amber"><span class="label">Resources</span>প্রতিটা task-এর সাথে: <b>Practice Questions</b> (PDF/assignment) · <b>Reference Guides</b> (Excel template, training material, schema dictionary) · <b>Supporting Resources</b> (video tutorial, PostgreSQL cheat sheet)। এছাড়া <b>PostgreSQL Assessment quiz</b> (public/quiz.html) — ACID, joins, indexes, window functions।</div>
+    </section>
+
+    <!-- ===== 17. PORTAL MAP ===== -->
+    <section class="part p5" id="portal">
+      <div class="part-head">
+        <div class="num">১৭</div>
+        <div><h2>Portal Sections Map</h2><p>portal-টি ৯টা section নিয়ে</p></div>
+      </div>
+      <div class="grid">
+        <div class="gcard"><h4>Business Explain</h4><p>business logic, hierarchy, flow</p></div>
+        <div class="gcard"><h4>Campaign Flow Components</h4><p>৩০টা flow blocks</p></div>
+        <div class="gcard"><h4>SQL Reports</h4><p>৪টা production report + comparison</p></div>
+        <div class="gcard"><h4>Tasks & Questions</h4><p>Authenticated task board</p></div>
+        <div class="gcard"><h4>ER Diagram</h4><p>Interactive relationship graph</p></div>
+        <div class="gcard"><h4>Schema Viewer</h4><p>Relationship explorer</p></div>
+        <div class="gcard"><h4>DB Explorer</h4><p>135+ tables dictionary</p></div>
+        <div class="gcard"><h4>Tutorial</h4><p>Google Drive resources</p></div>
+        <div class="gcard"><h4>Practice</h4><p>Training materials</p></div>
+      </div>
+      <div class="callout"><span class="label">Platform Facts</span>PostgreSQL · ecrm_prod · AWS RDS ap-southeast-1 · 135 Tables · 4 Reports · 30 Campaign Blocks</div>
+    </section>
+
+    <!-- ===== 18. TEAM ===== -->
+    <section class="part p6" id="team">
+      <div class="part-head">
+        <div class="num">১৮</div>
+        <div><h2>Team Credits</h2><p>যারা এই project বানিয়েছে</p></div>
+      </div>
+      <div class="grid">
+        <div class="gcard"><h4>MD AHSAMUL HAQUE</h4><p>Junior DB Engineer Intern · Author</p><span class="tag teal">Author</span></div>
+        <div class="gcard"><h4>Rahat Maksud Pranto</h4><p>Junior Data Analyst · Supervisor</p><span class="tag blue">Supervisor</span></div>
+        <div class="gcard"><h4>Sohanur Rahman</h4><p>Senior Data Analyst · Manager</p><span class="tag red">Manager</span></div>
+      </div>
+    </section>
+
+    <!-- ===== CLOSING ===== -->
+    <section class="closing" id="closing" data-reveal>
+      <h2>ECRM — এক নজরে বোঝার চাবিকাঠি</h2>
+      <p>ECRM-এর পুরো logic তিনটা ধাপে ঘোরে: <b>capture → validate → reward</b>। Advertising নিষিদ্ধ বলে outlet-কেন্দ্রিক field force; data-র বিশ্বাসযোগ্যতার জন্য OTP + audio + AI verification; আর engagement-এর জন্য PTR ও interactive flow blocks।</p>
+      <div class="key">
+        <span>Outlet = Terminal Point</span>
+        <span>PTR = <b>Reward</b></span>
+        <span>18+ <b>Legal</b></span>
+        <span>JML = <b>Audit</b></span>
+        <span>AI = <b>Trust</b></span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">ecrm_tutorial.md · ECRM (Enterprise Consumer Relationship Management) — Business & Logic visual guide · <a href="../index.html">কাজকর্ম শিখ</a> · <a href="team.html" style="color:var(--teal)">Team</a></div>
+</footer>
+
+<button id="top" aria-label="Back to top">↑</button>
+
+<script>
+  const toc=document.getElementById("toc");
+  const links=[...toc.querySelectorAll("a")];
+  const sections=links.map(a=>document.querySelector(a.getAttribute("href")));
+  const topBtn=document.getElementById("top");
+
+  window.addEventListener("scroll",()=>{
+    topBtn.classList.toggle("show",window.scrollY>500);
+    let current=sections[0];
+    for(const sec of sections){if(sec&&sec.getBoundingClientRect().top<=120)current=sec}
+    links.forEach(l=>{l.classList.toggle("active",l.getAttribute("href")==="#"+current.id)});
+  },{passive:true});
+  topBtn.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.1,rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll("[data-reveal]").forEach(el=>io.observe(el));
+
+  const counters=document.querySelectorAll("[data-count]");
+  const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target,target=+el.dataset.count,dur=1100,start=performance.now();const tick=(now)=>{const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,3);el.textContent=Math.round(target*ease);if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick);cio.unobserve(el)}}),{threshold:.6});
+  counters.forEach(el=>cio.observe(el));
+</script>
+</body>
+</html>

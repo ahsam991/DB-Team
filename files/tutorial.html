@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutorial — ECRM Tasks & Problem Solving | কাজকর্ম শিখ</title>
+<meta name="description" content="কাজকর্ম শিখ · ECRM Tutorial — business logic, campaign flow, 30 flow blocks, 4 reports ও ৫টি Analytics Problem Solving task।">
+<meta name="theme-color" content="#faf6ee">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf6ee;
+    --bg-soft:#f1ead9;
+    --paper:#fffdf7;
+    --paper-2:#f7f1e3;
+    --ink:#231b10;
+    --ink-soft:#574b38;
+    --muted:#8b7c63;
+    --amber:#d97a1f;
+    --amber-2:#f2b134;
+    --teal:#1f7a5c;
+    --blue:#3b6fb6;
+    --red:#c4453c;
+    --purple:#8a5fb6;
+    --dark:#171512;
+    --dark-line:rgba(250,246,238,.14);
+    --line:rgba(35,27,16,.14);
+    --line-strong:rgba(35,27,16,.3);
+    --radius:16px;
+    --shadow:0 26px 60px -30px rgba(35,27,16,.35);
+    --shadow-sm:0 12px 28px -16px rgba(35,27,16,.28);
+    --font-body:"Hind Siliguri",sans-serif;
+    --font-disp:"Fraunces",serif;
+    --font-mono:"IBM Plex Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{font-family:var(--font-body);background:var(--bg);color:var(--ink);line-height:1.8;font-size:17px;overflow-x:hidden}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  .mono{font-family:var(--font-mono)}
+  a{color:inherit}
+
+  /* ---------- Topbar ---------- */
+  .top{position:sticky;top:0;z-index:100;background:rgba(250,246,238,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;text-decoration:none}
+  .brand .mark{width:32px;height:32px;border-radius:10px;background:var(--amber);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:15px;box-shadow:0 6px 16px -6px rgba(217,122,31,.6)}
+  nav.topnav{display:flex;gap:4px;align-items:center}
+  nav.topnav a{color:var(--ink-soft);text-decoration:none;font-size:14.5px;font-weight:500;padding:8px 14px;border-radius:999px;transition:all .2s}
+  nav.topnav a:hover{color:var(--ink);background:var(--paper-2)}
+  nav.topnav a.on{color:var(--amber);font-weight:600}
+  nav.topnav a.go{background:var(--amber);color:#fff;font-weight:600;box-shadow:0 8px 20px -10px rgba(217,122,31,.7)}
+  nav.topnav a.go:hover{transform:translateY(-1px)}
+  .burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;width:42px;height:42px;font-size:20px;cursor:pointer;color:var(--ink)}
+  .mmenu{display:none;position:fixed;inset:0;z-index:300;background:rgba(250,246,238,.98);padding:88px 24px 30px;flex-direction:column;gap:6px}
+  .mmenu.open{display:flex}
+  .mmenu a{padding:14px 18px;border-radius:14px;font-weight:600;font-size:17px;text-decoration:none;border:1px solid var(--line);background:var(--paper)}
+  .mmenu a.go{background:var(--amber);color:#fff;border-color:var(--amber)}
+  .mmenu .close{margin-left:auto;background:none;border:none;font-size:26px;cursor:pointer;color:var(--ink)}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;padding:70px 0 40px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(760px 380px at 78% -8%,rgba(217,122,31,.2),transparent 60%),radial-gradient(640px 360px at 6% 12%,rgba(31,122,92,.14),transparent 55%)}
+  .hero .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.45;pointer-events:none;animation:drift 14s ease-in-out infinite}
+  .hero .blob.b1{width:260px;height:260px;background:rgba(242,177,52,.4);top:-70px;right:8%}
+  .hero .blob.b2{width:220px;height:220px;background:rgba(31,122,92,.35);bottom:-50px;left:4%;animation-delay:-7s}
+  @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-20px)}}
+  .hero .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(217,122,31,.1);color:var(--amber);border:1px solid rgba(217,122,31,.35);padding:6px 14px;border-radius:999px;font-family:var(--font-mono);font-size:13px;font-weight:600;letter-spacing:.5px;animation:rise .7s .05s both}
+  .hero .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(217,122,31,.5);animation:ping 2s infinite}
+  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(217,122,31,.5)}70%{box-shadow:0 0 0 11px rgba(217,122,31,0)}100%{box-shadow:0 0 0 0 rgba(217,122,31,0)}}
+  .hero h1{font-family:var(--font-disp);font-weight:800;font-size:clamp(34px,6vw,56px);line-height:1.1;letter-spacing:-1px;max-width:860px;margin-top:22px;animation:rise .7s .15s both}
+  .hero h1 em{font-style:italic;color:var(--teal)}
+  .hero p.lead{margin-top:20px;color:var(--ink-soft);font-size:19px;max-width:680px;font-weight:300;animation:rise .7s .25s both}
+  .hero-stats{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;animation:rise .7s .35s both}
+  .stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 22px;min-width:132px;transition:all .3s}
+  .stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:rgba(217,122,31,.4)}
+  .stat b{display:block;font-family:var(--font-disp);font-size:30px;color:var(--teal);font-weight:800;line-height:1}
+  .stat span{font-size:13.5px;color:var(--muted);font-weight:500}
+  @keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+  /* ---------- Layout ---------- */
+  .layout{display:grid;grid-template-columns:258px 1fr;gap:40px;padding-bottom:80px}
+
+  /* ---------- Sidebar ---------- */
+  nav.toc{position:sticky;top:82px;align-self:start;background:var(--paper);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px 16px;max-height:calc(100vh - 100px);overflow-y:auto;box-shadow:var(--shadow-sm)}
+  nav.toc h3{font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;font-weight:600}
+  nav.toc a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14.5px;padding:7px 10px;border-radius:8px;border-left:3px solid transparent;transition:all .2s}
+  nav.toc a:hover{color:var(--ink);background:var(--paper-2)}
+  nav.toc a.active{color:var(--amber);border-left-color:var(--amber);background:rgba(217,122,31,.07);font-weight:600}
+
+  /* ---------- Sections ---------- */
+  .part{margin-bottom:56px}
+  .part-head{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+  .part-head .num{flex-shrink:0;width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:22px;font-family:var(--font-mono)}
+  .part-head h2{font-family:var(--font-disp);font-size:clamp(22px,3vw,30px);font-weight:800;line-height:1.2}
+  .part-head p{color:var(--muted);font-size:15px;margin-top:2px}
+  .p1 .num{background:linear-gradient(135deg,var(--amber),var(--amber-2));color:#fff}
+  .p2 .num{background:linear-gradient(135deg,var(--teal),#5fd4a4);color:#fff}
+  .p3 .num{background:linear-gradient(135deg,#3b6fb6,#7cc0ff);color:#fff}
+  .p4 .num{background:linear-gradient(135deg,#8a5fb6,#c4a1f0);color:#fff}
+  .p5 .num{background:linear-gradient(135deg,#c4453c,#ff8c8c);color:#fff}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;display:flex;gap:18px;transition:all .3s;margin-bottom:14px}
+  .card:hover{transform:translateY(-3px);border-color:rgba(217,122,31,.4);box-shadow:var(--shadow-sm)}
+  .card .idx{flex-shrink:0;font-family:var(--font-mono);font-weight:700;font-size:22px;color:var(--teal);opacity:.9;width:42px;line-height:1.2}
+  .card h3{font-size:20px;font-weight:700;margin-bottom:8px}
+  .card h3 .code{font-family:var(--font-mono);font-size:16px;background:var(--paper-2);border:1px solid var(--line);padding:1px 8px;border-radius:7px;color:var(--amber)}
+  .card p{color:var(--ink-soft);font-size:16px;font-weight:300}
+  .card .tag{display:inline-block;margin-top:12px;font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--amber);background:rgba(217,122,31,.08);border:1px solid rgba(217,122,31,.3);padding:3px 10px;border-radius:999px}
+  .card .tag.teal{color:var(--teal);background:rgba(31,122,92,.08);border-color:rgba(31,122,92,.3)}
+  .card .tag.blue{color:var(--blue);background:rgba(59,111,182,.08);border-color:rgba(59,111,182,.3)}
+  .card .tag.purple{color:var(--purple);background:rgba(138,95,182,.08);border-color:rgba(138,95,182,.3)}
+  .card .tag.red{color:var(--red);background:rgba(196,69,60,.08);border-color:rgba(196,69,60,.3)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+  .gcard{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px;transition:all .3s;position:relative;overflow:hidden}
+  .gcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),var(--amber-2),transparent)}
+  .gcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);border-color:rgba(217,122,31,.4)}
+  .gcard h4{font-family:var(--font-disp);font-size:18px;font-weight:800;margin-bottom:8px}
+  .gcard p{color:var(--ink-soft);font-size:15px;font-weight:300}
+  .gcard .gno{font-family:var(--font-mono);font-size:11px;color:var(--amber);font-weight:600;letter-spacing:1px;display:block;margin-bottom:6px}
+
+  .callout{background:rgba(31,122,92,.07);border:1px solid rgba(31,122,92,.25);border-left:4px solid var(--teal);border-radius:var(--radius);padding:18px 20px;margin-top:18px;font-size:15.5px;color:var(--ink-soft)}
+  .callout .label{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--teal);text-transform:uppercase;display:block;margin-bottom:6px}
+  .callout.amber{background:rgba(217,122,31,.07);border-color:rgba(217,122,31,.25);border-left-color:var(--amber)}
+  .callout.amber .label{color:var(--amber)}
+
+  .flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-top:18px}
+  .flow span{font-size:14.5px;font-weight:600;border:1px solid var(--line-strong);border-radius:999px;padding:7px 15px;background:var(--bg)}
+  .flow i{color:var(--amber);font-style:normal;font-weight:800}
+
+  .tables{width:100%;border-collapse:collapse;margin-top:8px}
+  .tables th{font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--line-strong)}
+  .tables td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink-soft);vertical-align:top}
+  .tables tr:last-child td{border-bottom:none}
+  .tables td b{color:var(--ink)}
+  .tables td .code{font-family:var(--font-mono);color:var(--amber);font-weight:600}
+
+  /* ---------- Task solution ---------- */
+  .task-sol{background:var(--bg-soft);border:1px dashed var(--line-strong);border-radius:var(--radius);padding:18px 20px;margin-top:14px}
+  .task-sol .step{font-family:var(--font-mono);font-size:12.5px;color:var(--teal);font-weight:600;display:block;margin-bottom:6px}
+  .task-sol p{font-size:15px;color:var(--ink-soft);font-weight:300}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--dark);color:#f4efe4;margin-top:70px;padding:36px 0 28px}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+  .foot-bottom .mono{font-family:var(--font-mono);font-size:11px;color:rgba(244,239,228,.4);letter-spacing:.5px}
+  .foot-bottom span{font-size:13px;color:rgba(244,239,228,.5)}
+  .foot-links{display:flex;gap:22px;flex-wrap:wrap}
+  .foot-links a{color:rgba(244,239,228,.6);text-decoration:none;font-size:13.5px;transition:color .2s}
+  .foot-links a:hover{color:var(--amber-2)}
+
+  #topbtn{position:fixed;bottom:24px;right:24px;z-index:90;width:48px;height:48px;border-radius:50%;border:none;background:var(--amber);color:#fff;font-size:20px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;box-shadow:0 10px 24px -10px rgba(217,122,31,.8)}
+  #topbtn.show{opacity:1;pointer-events:auto}
+  #topbtn:hover{transform:translateY(-3px)}
+
+  @media (max-width:960px){
+    nav.topnav{display:none}
+    .burger{display:grid;place-items:center}
+    .layout{grid-template-columns:1fr}
+    nav.toc{position:static;max-height:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== TOPBAR ===== -->
+<header class="top">
+  <div class="wrap topbar">
+    <a class="brand" href="../index.html">
+      <span class="mark">ক</span>
+      <span class="bt"><b>কাজকর্ম শিখ</b></span>
+    </a>
+    <nav class="topnav">
+      <a href="../index.html#center">Knowledge</a>
+      <a href="../index.html#ecosystem">AI Tools</a>
+      <a href="../index.html#workflows">Workflows</a>
+      <a href="../index.html#docs">Docs</a>
+      <a href="author.html">Author</a>
+      <a class="go" href="ecrm-tutorial.html">Full ECRM →</a>
+    </nav>
+    <button class="burger" id="burgerBtn" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<!-- ===== MOBILE MENU ===== -->
+<div class="mmenu" id="mmenu">
+  <button class="close" id="mmenuClose" aria-label="Close">✕</button>
+  <a href="../index.html">← Home</a>
+  <a href="../index.html#center">Knowledge</a>
+  <a href="../index.html#ecosystem">AI Tools</a>
+  <a href="author.html">Author</a>
+  <a class="go" href="ecrm-tutorial.html">Full ECRM →</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="top">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="wrap">
+    <span class="badge"><span class="dot"></span> ECRM Tutorial &amp; Tasks</span>
+    <h1>Business Logic → <em>Problem Solving</em></h1>
+    <p class="lead">ECRM (Enterprise Consumer Relationship Management) — BAT Bangladesh-এর consumer engagement platform। এই tutorial-এ business logic শিখে <b>৫টি real analytics problem</b> SQL দিয়ে সমাধান করা হয়।</p>
+    <div class="hero-stats">
+      <div class="stat"><b>135</b><span>Tables</span></div>
+      <div class="stat"><b>30</b><span>Flow Blocks</span></div>
+      <div class="stat"><b>4</b><span>Reports</span></div>
+      <div class="stat"><b>5</b><span>Analytics Tasks</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTENT ===== -->
+<div class="wrap layout">
+  <nav class="toc" id="toc">
+    <h3>In this tutorial</h3>
+    <a href="#overview" class="active">১ · Tutorial Overview</a>
+    <a href="#business">২ · Business Logic</a>
+    <a href="#campaign">৩ · Campaign Flow</a>
+    <a href="#problems">৪ · Problem Solving</a>
+    <a href="#tasks">৫ · Practice Tasks</a>
+    <a href="#reports">৬ · Reports</a>
+  </nav>
+
+  <main>
+    <!-- ===== 1. OVERVIEW ===== -->
+    <section class="part p1" id="overview">
+      <div class="part-head">
+        <div class="num">১</div>
+        <div><h2>Tutorial Overview</h2><p>ECRM এক নজরে — কিসের জন্য শিখছি</p></div>
+      </div>
+      <div class="card">
+        <div class="idx">01</div>
+        <div>
+          <h3>Platform-এর মূল ভিত্তি</h3>
+          <p><b>Field-force driven system</b> — RAs / BRs / Field Force মোবাইল app দিয়ে outlet-এ গিয়ে consumer-এর সাথে কথা বলে, survey চালায়, data collect করে আর PTR (reward/gift) বিতরণ করে।</p>
+          <div class="tag teal">Survey-based</div>
+          <div class="tag blue">OTP + Audio Verify</div>
+          <div class="tag purple">PostgreSQL · BigQuery</div>
+        </div>
+      </div>
+      <div class="flow">
+        <span>Outlet Visit</span><i>→</i>
+        <span>Consumer Talk</span><i>→</i>
+        <span>Survey</span><i>→</i>
+        <span>Verification</span><i>→</i>
+        <span>PTR / Report</span>
+      </div>
+      <div class="callout"><span class="label">Core Idea</span>ECRM শুধু একটা survey tool না — এটি BATB-এর সম্পূর্ণ <b>consumer engagement pipeline</b> — acquisition থেকে verification পর্যন্ত। Smoking advertisement legal না, তাই <b>direct person-to-person reach</b>-ই একমাত্র channel।</div>
+    </section>
+
+    <!-- ===== 2. BUSINESS LOGIC ===== -->
+    <section class="part p2" id="business">
+      <div class="part-head">
+        <div class="num">২</div>
+        <div><h2>Business Logic</h2><p>কেন system-টা এমনভাবে চলে</p></div>
+      </div>
+      <div class="card">
+        <div class="idx">02</div>
+        <div>
+          <h3>User vs Consumer</h3>
+          <p><b>User</b> = যিনি app ব্যবহার করেন (RA, AC, SUP); <b>Consumer</b> = যার data survey দিয়ে collect হয় (দোকানে আসা 18+ smoker)। System two-sided — collector ও source।</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="idx">03</div>
+        <div>
+          <h3>Franchise vs SOB · Outlet · PTR</h3>
+          <p><b>Franchise</b> = BATB নিজস্ব ব্র্যান্ড; <b>SOB</b> = competitor product। <b>Outlet = POS = Retailer</b> — সব contact-এর terminal point। <b>PTR = Reward/Gift</b> — field force-এর engagement currency।</p>
+          <div class="tag">Brand Loyalty</div>
+          <div class="tag teal">Primary → Secondary → Previous</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="idx">04</div>
+        <div>
+          <h3>JML — User Lifecycle</h3>
+          <p><b>Joiner → Mover → Leaver</b> — account creation থেকে deactivation পর্যন্ত সব action-এ approval ও full audit log। Unauthorized access কখনো না হওয়া নিশ্চিত করে।</p>
+          <div class="tag red">Approval</div>
+          <div class="tag blue">Audit Trail</div>
+        </div>
+      </div>
+      <div class="callout amber"><span class="label">Roles</span><b>RA/BR/FF</b> (mobile) — execution · <b>SUP</b> (mobile + web) — supervision · <b>AC/DC</b> (web) — strategy। Mobile = field execution, Web = management dashboard।</div>
+    </section>
+
+    <!-- ===== 3. CAMPAIGN FLOW ===== -->
+    <section class="part p3" id="campaign">
+      <div class="part-head">
+        <div class="num">৩</div>
+        <div><h2>Campaign Flow Logic</h2><p>Capture → Validate → Reward</p></div>
+      </div>
+      <div class="grid">
+        <div class="gcard"><span class="gno">FLOW</span><h4>1 · Initial Setup</h4><p><span class="code">audio_start</span> — interaction শুরুই recording দিয়ে, compliance প্রমাণ।</p></div>
+        <div class="gcard"><span class="gno">FLOW</span><h4>2 · Consumer Input</h4><p><span class="code">dropdown · radio · contactNo</span> — target demographics capture।</p></div>
+        <div class="gcard"><span class="gno">FLOW</span><h4>3 · Validation</h4><p><span class="code">age · OTP</span> — invalid / fake entries block।</p></div>
+        <div class="gcard"><span class="gno">FLOW</span><h4>4 · Execution</h4><p><span class="code">giveable</span> — সফল consumer-কে PTR/reward।</p></div>
+      </div>
+      <div class="callout"><span class="label">30 Flow Blocks</span>ECRM campaign engine-এ <b>৩০টি flow block</b> — audio (compliance), input (data collection), validation (OTP/lookup/terms), media (AV/game/rating), navigation (jumping_logic/skip), outcome (giveable)। প্রতিটা block একটা নির্দিষ্ট business operation-এর জন্য।</div>
+    </section>
+
+    <!-- ===== 4. PROBLEM SOLVING ===== -->
+    <section class="part p4" id="problems">
+      <div class="part-head">
+        <div class="num">৪</div>
+        <div><h2>Problem Solving — Analytics Tasks</h2><p>Campaign 161 · business question → SQL logic</p></div>
+      </div>
+      <div class="card">
+        <div class="idx">P1</div>
+        <div>
+          <h3>Find Count of Consumer</h3>
+          <p>মোট কত <b>unique consumer</b> — <b>fresh vs not-fresh</b> split (JSONB data)। Fresh = নতুন consumer = growth indicator।</p>
+          <div class="tag">JSONB</div>
+          <div class="tag teal">Fresh/Not-Fresh</div>
+          <div class="task-sol"><span class="step">SQL APPROACH</span><p>Consumer ID দিয়ে distinct count, তারপর প্রথম-contact date চেক করে fresh split।</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="idx">P2</div>
+        <div>
+          <h3>RA Wise Contact Duration &amp; Interval</h3>
+          <p>প্রতিটা RA কতক্ষণ contact করল, এক contact থেকে পরের contact-এর <b>interval</b> কত — <b>LEAD window</b> function। RA productivity measure।</p>
+          <div class="tag">Window Function</div>
+          <div class="tag blue">LEAD()</div>
+          <div class="task-sol"><span class="step">SQL APPROACH</span><p>Per RA, contact timestamps সাজিয়ে LEAD(timestamp) দিয়ে interval বের করা।</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="idx">P3</div>
+        <div>
+          <h3>Find Total Campaign Duration</h3>
+          <p>Campaign-এর <b>প্রথম contact থেকে শেষ contact</b> পর্যন্ত কতদিন চলল — MIN/MAX timestamp।</p>
+          <div class="tag">MIN / MAX</div>
+          <div class="task-sol"><span class="step">SQL APPROACH</span><p>MIN(contact_time) ও MAX(contact_time)-এর difference — campaign age।</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="idx">P4</div>
+        <div>
+          <h3>Date Wise PTR Achievement</h3>
+          <p>প্রতিদিন কত <b>PTR (gift) বিতরণ</b> — gift material অনুযায়ী split। Campaign effectiveness।</p>
+          <div class="tag teal">GROUP BY DATE</div>
+          <div class="task-sol"><span class="step">SQL APPROACH</span><p>Date-এ GROUP BY, gift material-এ split করে count।</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="idx">P5</div>
+        <div>
+          <h3>Outlet Wise PTR Count</h3>
+          <p>কোন outlet-এ কত PTR — <b>high/low performing outlet</b> identify। কোন outlet-এ focus দিতে হবে।</p>
+          <div class="tag purple">GROUP BY OUTLET</div>
+          <div class="task-sol"><span class="step">SQL APPROACH</span><p>Outlet-এ GROUP BY করে PTR count, DESC sort — top performers।</p></div>
+        </div>
+      </div>
+      <div class="callout"><span class="label">Deep Thinking</span>প্রতিটা task শেখায় — <b>business question → SQL logic</b>। Fresh consumer = growth · contact interval = RA productivity · PTR achievement = campaign effectiveness · outlet-wise = focus area।</div>
+    </section>
+
+    <!-- ===== 5. PRACTICE TASKS ===== -->
+    <section class="part p5" id="tasks">
+      <div class="part-head">
+        <div class="num">৫</div>
+        <div><h2>Practice Tasks</h2><p>Training/Practice Center — learning material repository</p></div>
+      </div>
+      <div class="grid">
+        <div class="gcard"><span class="gno">TASK 1</span><h4>Data Entry &amp; Campaign Setup</h4><p>Survey questions, campaign components ও flow blocks configure করা শেখা।</p></div>
+        <div class="gcard"><span class="gno">TASK 2</span><h4>Call Center SQL Reporting</h4><p>Call Center report query বানানো — SQL reporting skill।</p></div>
+      </div>
+      <div class="callout amber"><span class="label">Resources</span>প্রতিটা task-এর সাথে: <b>Practice Questions</b> (PDF/assignment) · <b>Reference Guides</b> (Excel template, training material, schema dictionary) · <b>Supporting Resources</b> (video tutorial, PostgreSQL cheat sheet)। এছাড়া <b>PostgreSQL Assessment quiz</b> — ACID, joins, indexes, window functions।</div>
+    </section>
+
+    <!-- ===== 6. REPORTS ===== -->
+    <section class="part p1" id="reports">
+      <div class="part-head">
+        <div class="num">৬</div>
+        <div><h2>Operational Reports</h2><p>৪টা production report — প্রতিটা আলাদা verification layer</p></div>
+      </div>
+      <table class="tables">
+        <tr><th>Report</th><th>Primary Question</th><th>Business Why</th></tr>
+        <tr><td><b>Daily Contact Survey</b></td><td><span class="code">কী হলো</span></td><td>Ground truth — কত contact, কোথায়, কোন consumer</td></tr>
+        <tr><td><b>Live Observation</b></td><td><span class="code">কিভাবে হলো</span></td><td>Supervisor BR-কে live check — process compliance</td></tr>
+        <tr><td><b>Call Checkback</b></td><td><span class="code">সত্যিই হলো কিনা</span></td><td>Consumer verify — fabrication detect (4-key composite match)</td></tr>
+        <tr><td><b>Call Center</b></td><td><span class="code">দ্বিতীয় engagement</span></td><td>Follow-up call / gift delivery — cluster-anchored dialer</td></tr>
+      </table>
+      <div class="callout"><span class="label">Verification Layers</span><b>Daily Raw</b> = ground truth · <b>Call Checkback</b> = consumer verify · <b>Live Observation</b> = process verify · <b>Call Center</b> = repeat engagement · <b>Dynamic</b> = ad-hoc pattern analysis।</div>
+      <div class="flow">
+        <span><b>Full Detail?</b></span>
+        <a href="ecrm-tutorial.html" style="font-weight:700;color:var(--amber);text-decoration:none">Open Full ECRM Tutorial →</a>
+        <a href="eCRM_Complete_Documentation.html" style="font-weight:700;color:var(--teal);text-decoration:none">Complete DB Reference →</a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">
+      <span>© 2026 কাজকর্ম শিখ · ECRM Tutorial &amp; Problem Solving</span>
+      <div class="foot-links">
+        <a href="../index.html">Home</a>
+        <a href="ecrm-tutorial.html">Full ECRM</a>
+        <a href="author.html">Author</a>
+      </div>
+      <span class="mono">tutorial.html · v2</span>
+    </div>
+  </div>
+</footer>
+
+<button id="topbtn" aria-label="Back to top">↑</button>
+
+<script>
+  const links=document.querySelectorAll("nav.toc a");
+  const secs=[...document.querySelectorAll("section.part")];
+  const sp=window.scrollY>500?0:84;
+  window.addEventListener("scroll",()=>{
+    const y=window.scrollY+120;
+    let cur=secs[0].id;
+    secs.forEach(s=>{if(s.offsetTop<=y)cur=s.id});
+    links.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+cur));
+    tb.classList.toggle("show",window.scrollY>500);
+  },{passive:true});
+  const tb=document.getElementById("topbtn");
+  tb.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+  const burger=document.getElementById("burgerBtn"),mmenu=document.getElementById("mmenu");
+  burger.addEventListener("click",()=>mmenu.classList.add("open"));
+  document.getElementById("mmenuClose").addEventListener("click",()=>mmenu.classList.remove("open"));
+  mmenu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>mmenu.classList.remove("open")));
+</script>
+</body>
+</html>

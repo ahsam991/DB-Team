@@ -15,3 +15,5 @@ node_modules/
 
 # Logs
 *.log
+# ECRM source project (has secrets; keep local)
+ECRM-tutorial/

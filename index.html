@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>কাজকর্ম শিখ — AI Utilization Guide</title>
-<meta name="description" content="কাজকর্ম শিখ — Claude-এর ২৫টি সেটিংস ও অভ্যাস এবং Database Team AI Ecosystem, সব গাইড ও ডকুমেন্ট এক hub-এ।">
-<meta property="og:title" content="কাজকর্ম শিখ — AI Utilization Guide">
-<meta property="og:description" content="Claude ২৫ সেটিংস + Database Team AI Ecosystem — সব গাইড ও ডকুমেন্ট এক hub-এ।">
+<title>কাজকর্ম শিখ — AI Knowledge System</title>
+<meta name="description" content="কাজকর্ম শিখ — AI Knowledge System. Claude ২৫টি সেটিংস, Database Team AI Ecosystem, ECRM Knowledge Base — সব গাইড, ডকুমেন্ট, workflow ও টিম এক intelligent hub-এ।">
+<meta property="og:title" content="কাজকর্ম শিখ — AI Knowledge System">
+<meta property="og:description" content="AI tools, workflows, documentation ও team knowledge — connected in one intelligent hub.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#faf6ee">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,9 +28,12 @@
     --red:#c4453c;
     --blue:#3b6fb6;
     --purple:#8a5fb6;
+    --dark:#171512;
+    --dark-2:#201d19;
+    --dark-line:rgba(250,246,238,.14);
     --line:rgba(35,27,16,.14);
     --line-strong:rgba(35,27,16,.3);
-    --radius:18px;
+    --radius:20px;
     --shadow:0 26px 60px -30px rgba(35,27,16,.35);
     --shadow-sm:0 12px 28px -16px rgba(35,27,16,.28);
     --font-body:"Hind Siliguri",sans-serif;
@@ -38,188 +41,355 @@
     --font-mono:"IBM Plex Mono",monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth;scroll-padding-top:78px}
-  body{
-    font-family:var(--font-body);background:var(--bg);color:var(--ink);
-    line-height:1.8;font-size:16.5px;overflow-x:hidden;
-  }
-  body::after{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
+  html{scroll-behavior:smooth;scroll-padding-top:74px}
+  body{font-family:var(--font-body);background:var(--bg);color:var(--ink);line-height:1.8;font-size:16.5px;overflow-x:hidden}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
   .wrap{max-width:1240px;margin:0 auto;padding:0 26px}
   .mono{font-family:var(--font-mono)}
-  .en{font-weight:600;color:var(--ink)}
   a{color:inherit}
+  img{max-width:100%}
 
   /* ---------- Topbar ---------- */
-  .top{position:sticky;top:0;z-index:100;background:rgba(250,246,238,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-  .topbar{display:flex;align-items:center;justify-content:space-between;height:62px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
-  .brand .mark{width:32px;height:32px;border-radius:10px;background:var(--amber);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:15px;box-shadow:0 6px 16px -6px rgba(217,122,31,.6)}
-  nav.topnav{display:flex;gap:4px;align-items:center}
-  nav.topnav a{color:var(--ink-soft);text-decoration:none;font-size:14.5px;font-weight:500;padding:8px 14px;border-radius:999px;transition:all .2s}
+  .top{position:sticky;top:0;z-index:200;background:rgba(250,246,238,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:64px;gap:18px}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+  .brand .mark{width:34px;height:34px;border-radius:10px;background:var(--amber);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:16px;box-shadow:0 6px 16px -6px rgba(217,122,31,.6)}
+  .brand .bt{display:flex;flex-direction:column;line-height:1.15}
+  .brand .bt .b1{font-weight:700;font-size:17px}
+  .brand .bt .b2{font-family:var(--font-mono);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted)}
+  nav.topnav{display:flex;gap:2px;align-items:center}
+  nav.topnav a{color:var(--ink-soft);text-decoration:none;font-size:14px;font-weight:500;padding:8px 13px;border-radius:999px;transition:all .2s}
   nav.topnav a:hover{color:var(--ink);background:var(--paper-2)}
-  nav.topnav a.go{background:var(--amber);color:#fff;font-weight:600;box-shadow:0 8px 20px -10px rgba(217,122,31,.7)}
-  nav.topnav a.go:hover{transform:translateY(-1px)}
+  .search-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12.5px;color:var(--muted);border:1px solid var(--line);background:var(--paper);padding:7px 13px;border-radius:999px;cursor:pointer;transition:all .2s}
+  .search-btn:hover{color:var(--ink);border-color:var(--line-strong)}
+  .search-btn kbd{font-family:var(--font-mono);font-size:10px;border:1px solid var(--line);border-radius:5px;padding:1px 5px;background:var(--bg-soft);color:var(--ink-soft)}
+  nav.topnav a.go{background:var(--amber);color:#fff;font-weight:600;box-shadow:0 8px 20px -10px rgba(217,122,31,.7);padding:9px 16px}
+  nav.topnav a.go:hover{transform:translateY(-1px);background:var(--amber)}
+  .burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;width:42px;height:42px;font-size:20px;cursor:pointer;color:var(--ink)}
+
+  /* mobile menu */
+  .mmenu{display:none;position:fixed;inset:0;z-index:300;background:rgba(250,246,238,.98);padding:88px 26px 30px;flex-direction:column;gap:6px}
+  .mmenu.open{display:flex}
+  .mmenu a{padding:14px 18px;border-radius:14px;font-weight:600;font-size:17px;text-decoration:none;border:1px solid var(--line);background:var(--paper)}
+  .mmenu a.go{background:var(--amber);color:#fff;border-color:var(--amber)}
+  .mmenu .close{margin-left:auto;background:none;border:none;font-size:26px;cursor:pointer;color:var(--ink)}
 
   /* ---------- Hero ---------- */
-  .hero{position:relative;padding:84px 0 60px;overflow:hidden}
-  .hero::before{
-    content:"";position:absolute;inset:0;pointer-events:none;
-    background:
-      radial-gradient(760px 380px at 78% -8%,rgba(242,177,52,.25),transparent 60%),
-      radial-gradient(640px 360px at 6% 12%,rgba(31,122,92,.16),transparent 55%);
-  }
-  .hero .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;pointer-events:none;animation:drift 14s ease-in-out infinite}
-  .hero .blob.b1{width:300px;height:300px;background:rgba(242,177,52,.45);top:-80px;right:6%}
-  .hero .blob.b2{width:240px;height:240px;background:rgba(31,122,92,.4);bottom:-60px;left:3%;animation-delay:-7s}
+  .hero{position:relative;padding:78px 0 0;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(820px 400px at 80% -10%,rgba(242,177,52,.28),transparent 62%),radial-gradient(680px 380px at 4% 16%,rgba(31,122,92,.16),transparent 55%)}
+  .hero .grid-lines{position:absolute;inset:0;pointer-events:none;opacity:.4;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 82% 70% at 50% 0%,#000 25%,transparent 72%)}
+  .hero .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.45;pointer-events:none;animation:drift 14s ease-in-out infinite}
+  .hero .blob.b1{width:300px;height:300px;background:rgba(242,177,52,.45);top:-60px;right:4%}
+  .hero .blob.b2{width:240px;height:240px;background:rgba(31,122,92,.38);bottom:-40px;left:2%;animation-delay:-7s}
   @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-20px)}}
-  .hero .grid-lines{
-    position:absolute;inset:0;pointer-events:none;opacity:.5;
-    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:64px 64px;
-    mask-image:radial-gradient(ellipse 80% 70% at 50% 0%,#000 25%,transparent 70%);
-  }
-  .hero .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:600;position:relative;animation:rise .7s .05s both}
+  .hero-inner{display:grid;grid-template-columns:1.2fr .8fr;gap:44px;align-items:center;position:relative}
+  .hero .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);font-weight:600;animation:rise .7s .05s both}
   .hero .eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(217,122,31,.5);animation:ping 2s infinite}
   @keyframes ping{0%{box-shadow:0 0 0 0 rgba(217,122,31,.5)}70%{box-shadow:0 0 0 12px rgba(217,122,31,0)}100%{box-shadow:0 0 0 0 rgba(217,122,31,0)}}
-  .hero h1{font-family:var(--font-disp);font-weight:800;font-size:clamp(40px,7vw,78px);line-height:1.04;letter-spacing:-1.5px;margin-top:22px;max-width:880px;position:relative;animation:rise .7s .12s both}
+  .hero h1{font-family:var(--font-disp);font-weight:800;font-size:clamp(44px,6vw,82px);line-height:1.02;letter-spacing:-1.5px;margin-top:22px;animation:rise .7s .12s both}
   .hero h1 .hl{color:var(--amber);font-style:italic;position:relative;white-space:nowrap}
-  .hero h1 .hl::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:8px;background:rgba(242,177,52,.35);z-index:-1;border-radius:4px}
-  .hero .sub{max-width:620px;color:var(--ink-soft);font-size:18.5px;font-weight:300;margin-top:24px;position:relative;animation:rise .7s .22s both}
-  .hero .cta{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap;position:relative;animation:rise .7s .32s both}
-  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:11px 22px;border-radius:999px;text-decoration:none;border:1.5px solid var(--line-strong);background:var(--paper);color:var(--ink);transition:all .25s;cursor:pointer}
+  .hero h1 .hl::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:9px;background:rgba(242,177,52,.35);z-index:-1;border-radius:4px}
+  .hero .sub{max-width:600px;color:var(--ink-soft);font-size:18.5px;font-weight:300;margin-top:24px;animation:rise .7s .22s both}
+  .hero .cta{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;animation:rise .7s .32s both}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:12px 22px;border-radius:999px;text-decoration:none;border:1.5px solid var(--line-strong);background:var(--paper);color:var(--ink);transition:all .25s;cursor:pointer}
   .btn:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
   .btn.solid{background:var(--amber);border-color:var(--amber);color:#fff;box-shadow:0 12px 26px -12px rgba(217,122,31,.8)}
-  .btn.solid:hover{transform:translateY(-3px);filter:brightness(1.06)}
+  .btn.solid:hover{filter:brightness(1.06)}
   .btn.ghost{background:transparent}
+  .btn.dark{background:var(--dark);border-color:var(--dark);color:#faf6ee}
 
-  .hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:56px;position:relative;animation:rise .7s .42s both}
-  .cell{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;position:relative;overflow:hidden;transition:all .3s}
-  .cell:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);border-color:rgba(217,122,31,.4)}
-  .cell::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),var(--amber-2),transparent)}
-  .cell .n{font-family:var(--font-disp);font-size:40px;font-weight:800;color:var(--amber);line-height:1}
-  .cell .l{font-size:13px;color:var(--muted);margin-top:8px;font-weight:500}
+  /* System overview dashboard card */
+  .sys-card{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;animation:rise .7s .42s both}
+  .sys-card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--amber),var(--amber-2),var(--teal))}
+  .sys-card .sys-head{display:flex;align-items:center;justify-content:space-between;font-family:var(--font-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .sys-card .sys-head .live{display:inline-flex;align-items:center;gap:6px;color:var(--teal)}
+  .sys-card .sys-head .live i{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:ping 2s infinite}
+  .sys-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:14px;margin-top:20px}
+  .sys-cell{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:18px 14px;text-align:center;transition:all .25s}
+  .sys-cell:hover{transform:translateY(-3px);border-color:rgba(217,122,31,.4);box-shadow:var(--shadow-sm)}
+  .sys-cell .n{font-family:var(--font-disp);font-size:38px;font-weight:800;color:var(--amber);line-height:1}
+  .sys-cell .l{font-size:12px;color:var(--muted);margin-top:8px;font-weight:500}
+  .sys-progress{margin-top:20px;background:var(--bg-soft);border-radius:999px;height:10px;overflow:hidden;position:relative}
+  .sys-progress i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--amber),var(--amber-2));transition:width 1.4s cubic-bezier(.4,0,.2,1)}
+  .sys-progress-label{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-top:8px;letter-spacing:.5px}
+  .sys-progress-label b{color:var(--teal)}
 
   @keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 
   /* ---------- Marquee ---------- */
-  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-soft);overflow:hidden;padding:14px 0}
+  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-soft);overflow:hidden;padding:13px 0;margin-top:60px}
   .marquee .track{display:flex;gap:56px;white-space:nowrap;width:max-content;animation:scroll 30s linear infinite}
   .marquee:hover .track{animation-play-state:paused}
-  .marquee span{font-family:var(--font-mono);font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft)}
+  .marquee span{font-family:var(--font-mono);font-size:12.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft)}
   .marquee b{color:var(--amber)}
   @keyframes scroll{to{transform:translateX(-50%)}}
 
   /* ---------- Sections ---------- */
-  section{padding:76px 0}
-  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:42px;flex-wrap:wrap}
-  .sec-head .kicker{font-family:var(--font-mono);font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:600;display:block;margin-bottom:8px}
-  .sec-head h2{font-family:var(--font-disp);font-weight:800;font-size:clamp(28px,4.5vw,46px);letter-spacing:-1px;line-height:1.08}
-  .sec-head p{color:var(--muted);max-width:430px;font-weight:300;font-size:16px}
+  section{padding:78px 0}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:40px;flex-wrap:wrap}
+  .sec-head .kicker{font-family:var(--font-mono);font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);font-weight:600;display:block;margin-bottom:8px}
+  .sec-head h2{font-family:var(--font-disp);font-weight:800;font-size:clamp(30px,4.5vw,48px);letter-spacing:-1px;line-height:1.06}
+  .sec-head p{color:var(--muted);max-width:440px;font-weight:300;font-size:16px}
+  .sec-center{text-align:center}
+  .sec-center .kicker{display:block}
+  .sec-center p{margin:0 auto}
 
-  /* ---------- Part switcher ---------- */
-  .part-switch{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line-strong);border-radius:999px;padding:10px 18px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
-  .part-switch a{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:600;font-size:15px;padding:8px 18px;border-radius:999px;transition:all .2s}
-  .part-switch a:hover{background:var(--bg-soft);transform:translateY(-1px)}
-  .part-switch .pnum{font-family:var(--font-mono);font-size:11px;letter-spacing:1px;background:var(--amber);color:#fff;border-radius:999px;padding:3px 10px;font-weight:700}
-  .part-switch .sw-arrow{font-family:var(--font-mono);font-style:normal;color:var(--amber);font-weight:700;animation:arrowmove 2.4s ease-in-out infinite}
+  /* ---------- Command Center ---------- */
+  .cmd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .cmd-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;text-decoration:none;display:flex;align-items:flex-start;gap:16px;transition:all .3s;position:relative;overflow:hidden}
+  .cmd-card::before{content:"";position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--acc,var(--amber));opacity:.9}
+  .cmd-card:hover{transform:translateY(-5px);border-color:rgba(217,122,31,.4);box-shadow:var(--shadow-sm)}
+  .cmd-card .ic{width:46px;height:46px;border-radius:13px;background:var(--bg-soft);display:grid;place-items:center;font-size:21px;flex-shrink:0}
+  .cmd-card h3{font-family:var(--font-disp);font-size:19px;font-weight:800;line-height:1.25}
+  .cmd-card p{color:var(--muted);font-size:13.5px;font-weight:300;margin-top:3px}
+  .cmd-card .arr{margin-left:auto;align-self:center;font-family:var(--font-mono);color:var(--acc,var(--amber));font-size:18px;transition:transform .3s}
+  .cmd-card:hover .arr{transform:translateX(7px)}
+
+  /* ---------- Claude 25 settings ---------- */
+  .pills-col{display:grid;gap:16px}
+  .pill-flow{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px 26px;transition:all .3s;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .pill-flow:hover{border-color:rgba(31,122,92,.4);transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+  .pill-flow .pn{font-family:var(--font-disp);font-weight:800;font-size:34px;color:var(--amber-2);width:54px;flex-shrink:0;line-height:1}
+  .pill-flow .pt{min-width:190px}
+  .pill-flow h3{font-family:var(--font-disp);font-size:19px;font-weight:700;color:var(--teal);line-height:1.3}
+  .pill-flow .chain{display:flex;align-items:center;flex-wrap:wrap;gap:8px;flex:1}
+  .pill-flow .chain span{font-size:12.5px;font-weight:500;border:1px solid var(--line-strong);border-radius:8px;padding:5px 10px;color:var(--ink-soft);background:var(--paper-2);transition:all .2s}
+  .pill-flow .chain span:hover{border-color:var(--amber);color:var(--amber)}
+  .pill-flow .chain i{font-family:var(--font-mono);color:var(--amber);font-style:normal;font-weight:700;animation:arrowmove 2s ease-in-out infinite}
   @keyframes arrowmove{0%,100%{transform:translateX(0);opacity:.6}50%{transform:translateX(6px);opacity:1}}
 
-  /* ---------- Hub / documents ---------- */
-  .hub{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-  .hub-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:26px;text-decoration:none;display:flex;flex-direction:column;gap:12px;transition:all .3s;position:relative;overflow:hidden}
-  .hub-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(242,177,52,.08),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none}
-  .hub-card:hover{transform:translateY(-6px);border-color:rgba(217,122,31,.45);box-shadow:var(--shadow)}
-  .hub-card:hover::before{opacity:1}
-  .hub-card .type{font-family:var(--font-mono);font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
-  .hub-card .type.md{color:var(--teal)}.hub-card .type.html{color:var(--orange)}.hub-card .type.pdf{color:var(--red)}.hub-card .type.hub{color:var(--amber)}
-  .hub-card h3{font-family:var(--font-disp);font-size:22px;font-weight:700;line-height:1.25}
-  .hub-card p{color:var(--muted);font-size:14.5px;font-weight:300;flex:1}
-  .hub-card .meta{font-family:var(--font-mono);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
-  .hub-card .meta .arr{color:var(--amber);transition:transform .3s}
-  .hub-card:hover .meta .arr{transform:translateX(8px)}
+  /* ---------- Knowledge Map ---------- */
+  .map-shell{background:var(--paper);border:1px solid var(--line);border-radius:26px;padding:30px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+  .map-wrap{position:relative;max-width:900px;margin:0 auto;height:520px}
+  .map-wrap svg.lines{position:absolute;inset:0;width:100%;height:100%}
+  .map-wrap svg.lines path{fill:none;stroke:var(--line-strong);stroke-width:1.6;stroke-dasharray:6 7;animation:flow 4s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-26}}
+  .map-node{position:absolute;transform:translate(-50%,-50%);background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:14px 18px;text-align:center;transition:all .25s;box-shadow:var(--shadow-sm);min-width:120px}
+  .map-node:hover{transform:translate(-50%,-50%) scale(1.05);border-color:var(--amber);z-index:2}
+  .map-node .mt{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--muted);font-weight:600}
+  .map-node .mn{font-family:var(--font-disp);font-weight:800;font-size:16px;line-height:1.2}
+  .map-node.center{background:var(--dark);border-color:var(--dark);color:#faf6ee}
+  .map-node.center .mt{color:var(--amber-2)}
+  .map-node.center .mn{color:#fff;font-size:19px}
+  .map-node.database{border-color:rgba(31,122,92,.5)}.map-node.database .mn{color:var(--teal)}
+  .map-node.research{border-color:rgba(138,95,182,.5)}.map-node.research .mn{color:var(--purple)}
+  .map-node.design{border-color:rgba(217,122,31,.5)}.map-node.design .mn{color:var(--amber)}
+  .map-node.workflows{border-color:rgba(224,82,42,.5)}.map-node.workflows .mn{color:var(--orange)}
+  .map-node.team{border-color:rgba(59,111,182,.5)}.map-node.team .mn{color:var(--blue)}
+  .map-node.docs{border-color:rgba(196,69,60,.5)}.map-node.docs .mn{color:var(--red)}
 
-  /* ---------- Flows ---------- */
-  .flow-col{display:grid;gap:16px}
-  .flow{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;transition:all .3s}
-  .flow:hover{border-color:rgba(31,122,92,.4);transform:translateY(-3px);box-shadow:var(--shadow-sm)}
-  .flow h3{font-family:var(--font-disp);font-size:21px;font-weight:700;margin-bottom:16px;color:var(--teal)}
-  .flow .chain{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
-  .flow .chain span{font-size:13px;font-weight:500;border:1px solid var(--line-strong);border-radius:8px;padding:6px 11px;color:var(--ink-soft);background:var(--paper-2);transition:all .2s}
-  .flow .chain span:hover{border-color:var(--amber);color:var(--amber)}
-  .flow .chain span.goal{background:var(--teal);color:#fff;border-color:var(--teal);font-weight:600}
-  .flow .chain i{font-family:var(--font-mono);color:var(--amber);font-style:normal;font-weight:700;animation:arrowmove 2s ease-in-out infinite}
-
-  /* ---------- Tool grid ---------- */
-  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
-  .fbtn{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.5px;padding:8px 16px;border-radius:999px;border:1px solid var(--line-strong);background:var(--paper);color:var(--ink-soft);cursor:pointer;transition:all .2s}
-  .fbtn.active,.fbtn:hover{background:var(--amber);border-color:var(--amber);color:#fff;font-weight:600;box-shadow:0 8px 18px -8px rgba(217,122,31,.7)}
-  .tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
-  .tool{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;transition:all .3s;animation:fade .4s ease}
-  .tool:hover{transform:translateY(-5px);border-color:rgba(217,122,31,.4);box-shadow:var(--shadow-sm)}
-  .tool.hide{display:none}
+  /* ---------- AI Ecosystem (dark) ---------- */
+  .eco{background:var(--dark);color:#f4efe4}
+  .eco .sec-head h2{color:#fff}
+  .eco .sec-head .kicker{color:var(--amber-2)}
+  .eco .sec-head p{color:rgba(244,239,228,.6)}
+  .eco-stages{display:flex;align-items:stretch;gap:0}
+  .eco-stage{background:var(--dark-2);border:1px solid var(--dark-line);border-radius:18px;padding:20px;position:relative;transition:all .3s;flex:1;min-width:0}
+  .eco-stage:hover{border-color:rgba(242,177,52,.4);transform:translateY(-4px)}
+  .eco-stage .st-label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--amber-2);font-weight:600;display:block;margin-bottom:12px}
+  .eco-stage .st-tools{display:flex;flex-direction:column;gap:8px}
+  .eco-stage .st-tools span{font-size:13.5px;font-weight:500;color:#d9d2c4;background:rgba(250,246,238,.06);border:1px solid var(--dark-line);border-radius:9px;padding:7px 12px;display:flex;align-items:center;gap:8px}
+  .eco-stage .st-tools span b{color:var(--amber-2);font-weight:600}
+  .eco-stage .st-desc{font-size:11.5px;color:rgba(244,239,228,.45);margin-top:12px;font-family:var(--font-mono)}
+  .eco-arrow{align-self:center;font-family:var(--font-mono);color:var(--amber-2);font-size:22px;padding:0 8px;animation:arrowmove 2s ease-in-out infinite;flex-shrink:0}
+  .eco-tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:42px}
+  .eco-tool{background:var(--dark-2);border:1px solid var(--dark-line);border-radius:15px;padding:20px;transition:all .3s;animation:fade .4s ease;display:flex;flex-direction:column;gap:8px}
+  .eco-tool:hover{transform:translateY(-5px);border-color:rgba(242,177,52,.4);box-shadow:0 18px 40px -22px rgba(0,0,0,.8)}
+  .eco-tool.hide{display:none}
   @keyframes fade{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
-  .tool .top{display:flex;justify-content:space-between;align-items:flex-start}
-  .tool .tcat{font-family:var(--font-mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--teal);border:1px solid rgba(31,122,92,.35);padding:2px 9px;border-radius:999px;font-weight:600}
-  .tool .tnum{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
-  .tool h3{font-family:var(--font-disp);font-size:23px;font-weight:700;margin:10px 0 6px}
-  .tool p{color:var(--muted);font-size:14px;font-weight:300}
-  .tool .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-  .tool .tags span{font-size:11.5px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--muted);background:var(--bg)}
+  .eco-tool .etop{display:flex;justify-content:space-between;align-items:flex-start}
+  .eco-tool .etcat{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--amber-2);border:1px solid rgba(242,177,52,.4);padding:2px 9px;border-radius:999px;font-weight:600}
+  .eco-tool .etnum{font-family:var(--font-mono);font-size:11px;color:rgba(244,239,228,.4)}
+  .eco-tool h3{font-family:var(--font-disp);font-size:20px;font-weight:700;color:#fff}
+  .eco-tool p{color:rgba(244,239,228,.6);font-size:13.5px;font-weight:300;flex:1}
+  .eco-tool .etags{display:flex;flex-wrap:wrap;gap:6px}
+  .eco-tool .etags span{font-size:10.5px;border:1px solid var(--dark-line);border-radius:999px;padding:2px 9px;color:rgba(244,239,228,.55)}
+  .eco-filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:34px}
+  .efbtn{font-family:var(--font-mono);font-size:12px;letter-spacing:.5px;padding:8px 16px;border-radius:999px;border:1px solid var(--dark-line);background:transparent;color:#d9d2c4;cursor:pointer;transition:all .2s}
+  .efbtn.active,.efbtn:hover{background:var(--amber-2);border-color:var(--amber-2);color:var(--dark);font-weight:600}
 
-  /* ---------- Rules ---------- */
-  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-  .rule{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 24px;display:flex;gap:14px;align-items:flex-start;transition:all .25s}
-  .rule:hover{border-color:rgba(31,122,92,.4);transform:translateY(-3px);box-shadow:var(--shadow-sm)}
-  .rule .ck{font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--teal);flex-shrink:0;width:26px;height:26px;border:1px solid rgba(31,122,92,.4);border-radius:8px;display:grid;place-items:center;background:rgba(31,122,92,.06)}
-  .rule .ck.no{color:var(--red);border-color:rgba(196,69,60,.4);background:rgba(196,69,60,.06)}
-  .rule .rt{font-size:15px;font-weight:600}
-  .rule .rs{font-size:13px;color:var(--muted);font-weight:300;margin-top:3px}
+  /* ---------- ECRM Knowledge Base ---------- */
+  .ecrm-feature{background:linear-gradient(140deg,var(--paper),var(--paper-2));border:1px solid var(--line);border-radius:26px;padding:40px;display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:center;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+  .ecrm-feature::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--teal),var(--amber))}
+  .ecrm-feature .kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);font-weight:600;display:block;margin-bottom:10px}
+  .ecrm-feature h2{font-family:var(--font-disp);font-weight:800;font-size:clamp(28px,4vw,42px);letter-spacing:-1px;line-height:1.08}
+  .ecrm-feature .desc{color:var(--ink-soft);font-weight:300;margin-top:16px;font-size:16px;line-height:1.85}
+  .ecrm-feature .btns{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+  .ecrm-flow{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow-sm)}
+  .ecrm-flow .flabel{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;font-weight:600}
+  .ecrm-flow .frow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .ecrm-flow .fstep{background:var(--bg-soft);border:1px solid var(--line-strong);border-radius:11px;padding:9px 13px;font-size:12.5px;font-weight:600;text-align:center;transition:all .25s}
+  .ecrm-flow .fstep:hover{border-color:var(--teal);color:var(--teal)}
+  .ecrm-flow .fstep b{display:block;font-family:var(--font-mono);font-size:9.5px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:2px}
+  .ecrm-flow .farrow{font-family:var(--font-mono);color:var(--amber);font-weight:700;animation:arrowmove 2s ease-in-out infinite}
+  .ecrm-flow .fmeta{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .ecrm-flow .fmeta span{font-size:11px;color:var(--muted);text-align:center;border:1px dashed var(--line);border-radius:9px;padding:6px 4px;font-weight:500}
 
-  /* ---------- Team strip ---------- */
-  .team-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-  .tstrip-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;transition:all .3s}
-  .tstrip-card:hover{transform:translateY(-6px);border-color:rgba(217,122,31,.45);box-shadow:var(--shadow-sm)}
-  .tstrip-card .avatar{width:110px;height:110px;border-radius:50%;overflow:hidden;border:3px solid var(--amber-2);background:var(--bg-soft);display:grid;place-items:center}
-  .tstrip-card .avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}
-  .tstrip-card .avatar .ph{width:100%;height:100%;display:grid;place-items:center;font-family:var(--font-disp);font-weight:800;font-size:44px;color:#fff;background:linear-gradient(150deg,var(--purple,var(--blue)),var(--teal))}
-  .tstrip-card .info h3{font-family:var(--font-disp);font-size:17px;font-weight:800;line-height:1.3}
-  .tstrip-card .info .role{display:inline-block;margin-top:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;color:#fff;padding:3px 10px;border-radius:999px}
-  .tstrip-card .info .role.senior{background:var(--amber)}
-  .tstrip-card .info .role.mid{background:var(--teal)}
-  .tstrip-card .info .role.junior{background:var(--blue)}
-  .tstrip-card .info .role.ml{background:var(--purple)}
+  /* ---------- Workflow Engine ---------- */
+  .wf-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;align-items:stretch}
+  .wf-list{display:flex;flex-direction:column;gap:12px}
+  .wf-item{display:flex;align-items:center;gap:16px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 20px;cursor:pointer;transition:all .25s;text-align:left;font-family:inherit;width:100%}
+  .wf-item:hover{border-color:rgba(31,122,92,.4);transform:translateX(4px)}
+  .wf-item.active{border-color:var(--teal);background:var(--paper-2);box-shadow:0 12px 26px -18px rgba(31,122,92,.5)}
+  .wf-item .wic{width:40px;height:40px;border-radius:12px;background:var(--bg-soft);display:grid;place-items:center;font-size:18px;flex-shrink:0}
+  .wf-item .wit{flex:1}
+  .wf-item h3{font-family:var(--font-disp);font-size:17px;font-weight:800;line-height:1.2}
+  .wf-item .wseq{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+  .wf-item .warr{font-family:var(--font-mono);color:var(--amber);font-size:16px;transition:transform .3s}
+  .wf-item:hover .warr{transform:translateX(6px)}
+  .wf-panel{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column}
+  .wf-panel .wfp-label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .wf-panel h3{font-family:var(--font-disp);font-size:24px;font-weight:800;margin:6px 0 20px;color:var(--teal)}
+  .wf-nodes{display:flex;flex-direction:column;gap:0;align-items:center}
+  .wf-node{background:var(--bg-soft);border:1.5px solid var(--line-strong);border-radius:12px;padding:11px 22px;font-size:14px;font-weight:600;text-align:center;animation:nodein .4s ease both}
+  .wf-node.goal{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700}
+  .wf-node.stage{background:var(--amber);border-color:var(--amber);color:#fff}
+  @keyframes nodein{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
+  .wf-link{font-family:var(--font-mono);color:var(--amber);font-weight:700;font-size:15px;padding:4px 0;animation:arrowmove 2s ease-in-out infinite}
 
-  /* ---------- CTA ---------- */
-  .cta-band{background:linear-gradient(120deg,var(--amber),var(--orange));position:relative;overflow:hidden;border-radius:24px;margin:0 26px;box-shadow:var(--shadow)}
-  .cta-band::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 85% -20%,rgba(255,255,255,.28),transparent 60%)}
-  .cta-band .wrap{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;padding:52px 40px;position:relative}
-  .cta-band h2{font-family:var(--font-disp);font-size:clamp(28px,4.5vw,44px);font-weight:800;color:#fff;letter-spacing:-1px;line-height:1.1}
-  .cta-band p{color:rgba(255,255,255,.9);font-weight:400;margin-top:8px;max-width:520px}
-  .cta-band .btn{background:#fff;color:var(--amber);border-color:#fff;font-weight:700}
-  .cta-band .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
-  .cta-band .btn:hover{transform:translateY(-3px);box-shadow:0 16px 30px -12px rgba(20,16,12,.5)}
+  /* ---------- Document Library ---------- */
+  .docs-core{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .doc-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:26px;text-decoration:none;display:flex;flex-direction:column;gap:12px;transition:all .3s;position:relative;overflow:hidden}
+  .doc-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(242,177,52,.08),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none}
+  .doc-card:hover{transform:translateY(-6px);border-color:rgba(217,122,31,.45);box-shadow:var(--shadow)}
+  .doc-card:hover::before{opacity:1}
+  .doc-card .type{font-family:var(--font-mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;align-self:flex-start}
+  .doc-card .type.md{color:var(--teal)}.doc-card .type.html{color:var(--orange)}.doc-card .type.hub{color:var(--amber)}
+  .doc-card h3{font-family:var(--font-disp);font-size:21px;font-weight:700;line-height:1.25}
+  .doc-card p{color:var(--muted);font-size:14px;font-weight:300;flex:1}
+  .doc-card .meta{font-family:var(--font-mono);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+  .doc-card .meta .arr{color:var(--amber);transition:transform .3s}
+  .doc-card:hover .meta .arr{transform:translateX(8px)}
+  .docs-ref{margin-top:28px;border-top:1px solid var(--line);padding-top:26px}
+  .docs-ref .ref-title{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:14px}
+  .ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .ref-col .ref-sub{font-family:var(--font-mono);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:10px}
+  .ref-row{display:flex;align-items:center;gap:14px;padding:13px 18px;border:1px solid var(--line);border-radius:13px;margin-bottom:10px;text-decoration:none;transition:all .25s;background:var(--paper)}
+  .ref-row:hover{border-color:rgba(31,122,92,.4);transform:translateX(6px);box-shadow:var(--shadow-sm)}
+  .ref-row .ric{font-size:18px;width:36px;height:36px;border-radius:10px;background:var(--bg-soft);display:grid;place-items:center;flex-shrink:0}
+  .ref-row .rt{flex:1;font-size:14.5px;font-weight:600}
+  .ref-row .rfile{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+  .ref-row .rarr{font-family:var(--font-mono);color:var(--amber);font-size:16px;transition:transform .3s}
+  .ref-row:hover .rarr{transform:translateX(6px)}
 
-  footer{border-top:1px solid var(--line);margin-top:72px;padding:40px 0 46px}
-  .foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
-  .foot .mono{font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
-  .foot a{color:var(--muted);text-decoration:none;transition:color .2s}
-  .foot a:hover{color:var(--amber)}
+  /* ---------- Team ---------- */
+  .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px}
+  .tcard{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:22px;text-align:center;transition:all .3s;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center}
+  .tcard::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--amber),var(--teal));opacity:0;transition:opacity .3s}
+  .tcard:hover{transform:translateY(-6px);border-color:rgba(217,122,31,.45);box-shadow:var(--shadow-sm)}
+  .tcard:hover::before{opacity:1}
+  .tcard .avatar{width:104px;height:104px;border-radius:50%;overflow:hidden;border:3px solid var(--amber-2);background:var(--bg-soft);display:grid;place-items:center;margin-bottom:14px}
+  .tcard .avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}
+  .tcard .avatar .ph{width:100%;height:100%;display:grid;place-items:center;font-family:var(--font-disp);font-weight:800;font-size:40px;color:#fff;background:linear-gradient(150deg,var(--purple),var(--teal))}
+  .tcard h3{font-family:var(--font-disp);font-size:17px;font-weight:800;line-height:1.25}
+  .tcard .role{display:inline-block;margin-top:7px;font-family:var(--font-mono);font-size:10.5px;font-weight:700;color:#fff;padding:3px 11px;border-radius:999px}
+  .tcard .role.senior{background:var(--amber)}
+  .tcard .role.mid{background:var(--teal)}
+  .tcard .role.junior{background:var(--blue)}
+  .tcard .role.ml{background:var(--purple)}
+  .tcard .skills{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:14px;max-height:0;opacity:0;overflow:hidden;transition:all .35s ease}
+  .tcard:hover .skills{max-height:80px;opacity:1;margin-top:14px}
+  .tcard .skills span{font-size:10.5px;border:1px solid var(--line);border-radius:999px;padding:2px 9px;color:var(--muted)}
+  .tcard .vprof{margin-top:14px;font-family:var(--font-mono);font-size:11px;color:var(--amber);font-weight:600;text-decoration:none;opacity:0;max-height:0;transition:all .35s}
+  .tcard:hover .vprof{opacity:1;max-height:30px}
 
+  /* ---------- AI Governance ---------- */
+  .gov-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .gov-col{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:28px;border-top:5px solid var(--teal)}
+  .gov-col.never{border-top-color:var(--red)}
+  .gov-col h3{font-family:var(--font-disp);font-size:21px;font-weight:800;display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .gov-col .gsub{font-size:13.5px;color:var(--muted);font-weight:300;margin-bottom:18px}
+  .gov-item{display:flex;gap:13px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+  .gov-item:last-child{border-bottom:none}
+  .gov-item .gck{font-family:var(--font-mono);font-size:14px;font-weight:700;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex-shrink:0}
+  .gov-col.do .gov-item .gck{color:var(--teal);border:1px solid rgba(31,122,92,.4);background:rgba(31,122,92,.06)}
+  .gov-col.never .gov-item .gck{color:var(--red);border:1px solid rgba(196,69,60,.4);background:rgba(196,69,60,.06)}
+  .gov-item .gt{font-size:15px;font-weight:600}
+  .gov-item .gs{font-size:13px;color:var(--muted);font-weight:300;margin-top:2px}
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{background:linear-gradient(120deg,var(--amber),var(--orange));position:relative;overflow:hidden;border-radius:26px;margin:0 26px;box-shadow:var(--shadow);padding:60px 40px;text-align:center}
+  .final-cta::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 85% -20%,rgba(255,255,255,.28),transparent 60%)}
+  .final-cta::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(ellipse 70% 80% at 50% 50%,#000 20%,transparent 70%)}
+  .final-cta>*{position:relative}
+  .final-cta h2{font-family:var(--font-disp);font-size:clamp(32px,5.5vw,52px);font-weight:800;color:#fff;letter-spacing:-1.5px;line-height:1.05}
+  .final-cta p{color:rgba(255,255,255,.92);font-weight:400;margin-top:10px;font-size:17px}
+  .final-cta .btn{background:#fff;color:var(--amber);border-color:#fff;font-weight:700;margin-top:28px;font-size:16px;padding:13px 26px}
+  .final-cta .btn:hover{transform:translateY(-3px);box-shadow:0 16px 30px -12px rgba(20,16,12,.5)}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--dark);color:#f4efe4;margin-top:80px;padding:64px 0 30px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:36px;padding-bottom:44px;border-bottom:1px solid var(--dark-line)}
+  .foot-brand .mark{width:34px;height:34px;border-radius:10px;background:var(--amber);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:16px}
+  .foot-brand h3{font-family:var(--font-disp);font-size:19px;font-weight:800;margin-top:14px;display:flex;align-items:center;gap:10px}
+  .foot-brand p{color:rgba(244,239,228,.55);font-size:13.5px;font-weight:300;margin-top:10px;max-width:280px}
+  .foot-col h4{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--amber-2);font-weight:600;margin-bottom:16px}
+  .foot-col a{display:block;color:rgba(244,239,228,.65);text-decoration:none;font-size:14px;padding:5px 0;transition:color .2s}
+  .foot-col a:hover{color:var(--amber-2)}
+  .foot-sub p{color:rgba(244,239,228,.55);font-size:13.5px;font-weight:300;margin-bottom:14px}
+  .sub-row{display:flex;gap:8px}
+  .sub-row input{flex:1;background:rgba(250,246,238,.08);border:1px solid var(--dark-line);border-radius:999px;padding:10px 16px;color:#f4efe4;font-family:inherit;font-size:14px;outline:none}
+  .sub-row input::placeholder{color:rgba(244,239,228,.4)}
+  .sub-row input:focus{border-color:var(--amber-2)}
+  .sub-row .btn{background:var(--amber-2);color:var(--dark);border:none;font-weight:700;padding:10px 20px}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding-top:24px}
+  .foot-bottom .mono{font-family:var(--font-mono);font-size:11px;color:rgba(244,239,228,.4);letter-spacing:.5px}
+  .foot-bottom span{font-size:13px;color:rgba(244,239,228,.5)}
+
+  /* ---------- Reveal / topbtn ---------- */
   [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
   [data-reveal].in{opacity:1;transform:none}
   #topbtn{position:fixed;bottom:24px;right:24px;z-index:90;width:48px;height:48px;border-radius:50%;border:none;background:var(--amber);color:#fff;font-size:20px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;box-shadow:0 10px 24px -10px rgba(217,122,31,.8)}
   #topbtn.show{opacity:1;pointer-events:auto}
   #topbtn:hover{transform:translateY(-3px)}
 
-  @media (max-width:760px){
-    nav.topnav a:not(.go){display:none}
-    .cta-band{margin:0 14px}
+  /* ---------- Search overlay ---------- */
+  .search-overlay{position:fixed;inset:0;z-index:400;background:rgba(35,27,16,.45);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .25s}
+  .search-overlay.open{opacity:1;pointer-events:auto}
+  .search-box{position:absolute;top:12vh;left:50%;transform:translate(-50%,-16px);width:min(620px,92vw);background:var(--paper);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;transition:transform .25s}
+  .search-overlay.open .search-box{transform:translate(-50%,0)}
+  .search-input{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line)}
+  .search-input .sic{font-size:18px}
+  .search-input input{flex:1;border:none;outline:none;font-family:inherit;font-size:17px;background:transparent;color:var(--ink)}
+  .search-input kbd{font-family:var(--font-mono);font-size:10px;border:1px solid var(--line);border-radius:5px;padding:2px 7px;background:var(--bg-soft);color:var(--muted)}
+  .search-results{max-height:56vh;overflow-y:auto;padding:10px}
+  .sr-group{font-family:var(--font-mono);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;padding:10px 14px 4px}
+  .sr-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;cursor:pointer;transition:all .15s}
+  .sr-item:hover,.sr-item.sel{background:var(--bg-soft)}
+  .sr-item .sri{width:30px;height:30px;border-radius:9px;background:var(--paper-2);display:grid;place-items:center;font-size:14px;flex-shrink:0}
+  .sr-item .srt{flex:1;font-size:14.5px;font-weight:600}
+  .sr-item .srd{font-family:var(--font-mono);font-size:10.5px;color:var(--muted)}
+  .sr-item a{position:absolute;opacity:0}
+  .search-empty{padding:26px;text-align:center;color:var(--muted);font-size:14px}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1080px){
+    .hero-inner{grid-template-columns:1fr;gap:34px}
+    .marquee{margin-top:44px}
+  }
+  @media (max-width:960px){
+    nav.topnav{display:none}
+    .burger{display:grid;place-items:center}
+    .eco-stages{flex-direction:column}
+    .eco-arrow{transform:rotate(90deg);align-self:center;padding:6px 0}
+    .ecrm-feature{grid-template-columns:1fr;padding:28px}
+    .wf-grid{grid-template-columns:1fr}
+    .gov-grid{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .map-wrap{height:auto}
+    .map-node{position:static;transform:none;margin:10px auto;max-width:240px}
+    .map-node:hover{transform:scale(1.03)}
+    .map-wrap svg.lines{display:none}
+  }
+  @media (max-width:560px){
+    .eco-stages{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr}
+    .final-cta{margin:0 14px;padding:44px 22px}
+    .hero .cta .btn{width:100%;justify-content:center}
   }
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    [data-reveal]{opacity:1;transform:none}
   }
 </style>
 </head>
@@ -228,38 +398,71 @@
 <!-- ===== TOPBAR ===== -->
 <header class="top">
   <div class="wrap topbar">
-    <div class="brand"><span class="mark">ক</span> কাজকর্ম শিখ</div>
+    <a class="brand" href="#top">
+      <span class="mark">ক</span>
+      <span class="bt">
+        <span class="b1">কাজকর্ম শিখ</span>
+        <span class="b2">AI Knowledge System</span>
+      </span>
+    </a>
     <nav class="topnav">
-      <a href="#hub">Documents</a>
-      <a href="#part2">AI Tools</a>
-      <a href="#team">Team</a>
+      <a href="#center">Knowledge</a>
+      <a href="#ecosystem">AI Tools</a>
       <a href="#workflows">Workflows</a>
-      <a href="#rules">Rules</a>
-      <a class="go" href="claude-guide.html">Claude Guide →</a>
+      <a href="#team">Team</a>
+      <a href="#docs">Docs</a>
+      <a href="files/tutorial.html">Tutorial</a>
+      <a href="files/author.html">Author</a>
     </nav>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="search-btn" id="searchBtn">⌕ <span>Search</span> <kbd>⌘K</kbd></button>
+      <a class="go" style="color:#fff;background:var(--amber);text-decoration:none;font-size:14px;font-weight:600;padding:9px 16px;border-radius:999px;box-shadow:0 8px 20px -10px rgba(217,122,31,.7)" href="files/ecrm-tutorial.html">Open ECRM →</a>
+      <button class="burger" id="burgerBtn" aria-label="Menu">☰</button>
+    </div>
   </div>
 </header>
 
+<!-- ===== MOBILE MENU ===== -->
+<div class="mmenu" id="mmenu">
+  <button class="close" id="mmenuClose" aria-label="Close">✕</button>
+  <a href="#center">Knowledge</a>
+  <a href="#ecosystem">AI Tools</a>
+  <a href="#workflows">Workflows</a>
+  <a href="#team">Team</a>
+  <a href="#docs">Docs</a>
+  <a href="files/tutorial.html">Tutorial</a>
+  <a href="files/author.html">Author</a>
+  <a class="go" href="files/ecrm-tutorial.html">Open ECRM →</a>
+</div>
+
 <!-- ===== HERO ===== -->
-<section class="hero">
+<section class="hero" id="top">
   <div class="grid-lines"></div>
   <div class="blob b1"></div>
   <div class="blob b2"></div>
-  <div class="wrap">
-    <div class="eyebrow"><span class="dot"></span> কাজকর্ম শিখ · All Pages & Documents</div>
-    <h1>কাজকর্ম <span class="hl">শিখ</span></h1>
-    <p class="sub">Claude-এর ২৫টি সেটিংস ও অভ্যাস থেকে Database Team-এর AI ecosystem — পুরো প্রকল্পের সব গাইড, ডকুমেন্ট ও পেজ এই একটি hub-এ connected।</p>
-    <div class="cta">
-      <a class="btn solid" href="#hub">Documents Explore</a>
-      <a class="btn ghost" href="#part2">Tools Dashboard</a>
-      <a class="btn ghost" href="claude-guide.html">Visual Guide</a>
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> AI Knowledge System</div>
+      <h1>কাজকর্ম <span class="hl">শিখ</span> — smarter.</h1>
+      <p class="sub">AI tools, workflows, documentation এবং team knowledge — connected in one intelligent hub. Claude-এর ২৫টি সেটিংস থেকে ECRM Knowledge Base, সব এক জায়গায়।</p>
+      <div class="cta">
+        <a class="btn solid" href="#center">Explore Knowledge →</a>
+        <a class="btn ghost" href="files/ecrm-tutorial.html">Open ECRM Guide →</a>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div class="cell"><div class="n" data-count="25">0</div><div class="l">Claude Settings & Habits</div></div>
-      <div class="cell"><div class="n" data-count="19">0</div><div class="l">AI Tools Mapped</div></div>
-      <div class="cell"><div class="n" data-count="6">0</div><div class="l">Team Workflows</div></div>
-      <div class="cell"><div class="n" data-count="5">0</div><div class="l">Documents & Guides</div></div>
-      <div class="cell"><div class="n" data-count="5">0</div><div class="l">Min Quick Start</div></div>
+    <div class="sys-card">
+      <div class="sys-head">
+        <span>SYSTEM OVERVIEW</span>
+        <span class="live"><i></i> LIVE</span>
+      </div>
+      <div class="sys-metrics">
+        <div class="sys-cell"><div class="n" data-count="25">0</div><div class="l">AI Practices</div></div>
+        <div class="sys-cell"><div class="n" data-count="19">0</div><div class="l">AI Tools</div></div>
+        <div class="sys-cell"><div class="n" data-count="06">0</div><div class="l">Workflows</div></div>
+        <div class="sys-cell"><div class="n" data-count="10">0</div><div class="l">Docs &amp; Guides</div></div>
+      </div>
+      <div class="sys-progress"><i id="sysBar"></i></div>
+      <div class="sys-progress-label"><span>Knowledge Coverage</span><b>100%</b></div>
     </div>
   </div>
 </section>
@@ -277,290 +480,662 @@
   </div>
 </div>
 
-<!-- ===== DOCUMENT HUB ===== -->
-<section id="hub">
+<!-- ===== COMMAND CENTER ===== -->
+<section id="center">
+  <div class="wrap">
+    <div class="sec-head sec-center" data-reveal>
+      <div>
+        <span class="kicker">01 · Command Center</span>
+        <h2>What do you want to accomplish?</h2>
+      </div>
+      <p>Choose a path to get started — প্রতিটি path-এর জন্য টিমের selected tools ও workflow।</p>
+    </div>
+    <div class="cmd-grid">
+      <a class="cmd-card" href="#ecosystem" data-filter="core" style="--acc:var(--teal)" data-reveal>
+        <div class="ic">🗄️</div>
+        <div><h3>SQL &amp; Database</h3><p>Optimize queries, design databases</p></div>
+        <span class="arr">→</span>
+      </a>
+      <a class="cmd-card" href="#ecosystem" data-filter="core" style="--acc:var(--purple)" data-reveal>
+        <div class="ic">🔍</div>
+        <div><h3>Research</h3><p>Find &amp; verify information</p></div>
+        <span class="arr">→</span>
+      </a>
+      <a class="cmd-card" href="#ecosystem" data-filter="core" style="--acc:var(--amber)" data-reveal>
+        <div class="ic">📝</div>
+        <div><h3>Documentation</h3><p>Write docs, better &amp; faster</p></div>
+        <span class="arr">→</span>
+      </a>
+      <a class="cmd-card" href="#ecosystem" data-filter="data" style="--acc:var(--blue)" data-reveal>
+        <div class="ic">📊</div>
+        <div><h3>Data Analytics</h3><p>Analyze data, get insights</p></div>
+        <span class="arr">→</span>
+      </a>
+      <a class="cmd-card" href="#ecosystem" data-filter="design" style="--acc:var(--orange)" data-reveal>
+        <div class="ic">🎨</div>
+        <div><h3>Design</h3><p>Visualize ideas, create better</p></div>
+        <span class="arr">→</span>
+      </a>
+      <a class="cmd-card" href="#ecosystem" data-filter="meeting" style="--acc:var(--red)" data-reveal>
+        <div class="ic">🤝</div>
+        <div><h3>Meetings</h3><p>Capture notes, action items</p></div>
+        <span class="arr">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CLAUDE 25 SETTINGS ===== -->
+<section id="claude25" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <div>
-        <span class="kicker">01 · Document Hub</span>
-        <h2>সব পেজ ও ডকুমেন্ট</h2>
+        <span class="kicker">02 · Knowledge · Part 1</span>
+        <h2>Claude ২৫টি সেটিংস ও অভ্যাস</h2>
       </div>
-      <p>প্রকল্পের প্রতিটি গাইড এখান থেকে এক ক্লিকে খুলুন — markdown, HTML বা combined format। Page1 ও Page2 একে অপরের সাথে cross-linked।</p>
+      <p>Setup, Speed, Security, Judgment ও Advanced — ৫টি ধাপে Claude-কে workflow হিসেবে ব্যবহার করুন। <a href="files/Page1.md" style="color:var(--amber);text-decoration:none;font-weight:600">মূল গাইড →</a></p>
     </div>
-    <div class="part-switch" data-reveal>
-      <a href="#part1"><span class="pnum">Part 1</span> Claude ২৫টি সেটিংস ও অভ্যাস</a>
-      <i class="sw-arrow">⇄</i>
-      <a href="#part2"><span class="pnum">Part 2</span> Database Team AI Ecosystem</a>
+    <div class="pills-col">
+      <div class="pill-flow" data-reveal><span class="pn">১</span><div class="pt"><h3>Setup ঠিক করুন</h3></div><div class="chain"><span>Desktop</span><i>→</i><span>Chat/Cowork</span><i>→</i><span>Project</span><i>→</i><span>Instructions</span><i>→</i><span>Skill</span></div></div>
+      <div class="pill-flow" data-reveal><span class="pn">২</span><div class="pt"><h3>গতি বাড়ান</h3></div><div class="chain"><span>Model Selector</span><i>→</i><span>Effort</span><i>→</i><span>Extended Thinking</span><i>→</i><span>Outcome Prompt</span></div></div>
+      <div class="pill-flow" data-reveal><span class="pn">৩</span><div class="pt"><h3>Security ও Privacy</h3></div><div class="chain"><span>Placeholder</span><i>→</i><span>Incognito Chat</span><i>→</i><span>Memory Review</span><i>→</i><span>Less Files</span></div></div>
+      <div class="pill-flow" data-reveal><span class="pn">৪</span><div class="pt"><h3>নিজের বিচারবুদ্ধি</h3></div><div class="chain"><span>Cross-check</span><i>→</i><span>Counter-Argument</span><i>→</i><span>Self-Audit</span><i>→</i><span>Draft Verify</span></div></div>
+      <div class="pill-flow" data-reveal><span class="pn">৫</span><div class="pt"><h3>Advanced</h3></div><div class="chain"><span>Research</span><i>→</i><span>3 Questions</span><i>→</i><span>3 Approaches</span><i>→</i><span>Pick Strongest</span></div></div>
     </div>
-    <div class="hub">
-      <a class="hub-card" href="index.html" data-reveal>
-        <span class="type hub">Landing · Main</span>
-        <h3>কাজকর্ম শিখ — Main Hub</h3>
-        <p>পুরো প্রকল্পের main landing page — সব কিছুর entry point।</p>
-        <div class="meta"><span>index.html</span><span class="arr">→</span></div>
-      </a>
-      <a class="hub-card" href="claude-guide.html" data-reveal>
-        <span class="type html">Visual Guide</span>
+    <div style="margin-top:20px;text-align:right" data-reveal>
+      <a class="btn ghost" href="files/claude-guide.html">Visual Guide দেখুন →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== KNOWLEDGE MAP ===== -->
+<section id="map">
+  <div class="wrap">
+    <div class="sec-head sec-center" data-reveal>
+      <div>
+        <span class="kicker">03 · Knowledge Map</span>
+        <h2>KNOWLEDGE MAP</h2>
+      </div>
+      <p>কীভাবে সব resource এক knowledge system-এর অংশ — interconnected, discoverable, actionable।</p>
+    </div>
+    <div class="map-shell" data-reveal>
+      <div class="map-wrap">
+        <svg class="lines" viewBox="0 0 900 520" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M450,260 C 380,190 320,150 260,105" />
+          <path d="M450,260 C 450,190 450,150 450,105" />
+          <path d="M450,260 C 520,190 580,150 640,105" />
+          <path d="M450,260 C 400,340 370,390 350,435" />
+          <path d="M450,260 C 450,340 450,390 450,435" />
+          <path d="M450,260 C 500,340 530,390 550,435" />
+        </svg>
+        <div class="map-node database" style="top:18%;left:22%"><span class="mt">DATA</span><span class="mn">DATABASE</span></div>
+        <div class="map-node research" style="top:18%;left:50%"><span class="mt">KNOWLEDGE</span><span class="mn">RESEARCH</span></div>
+        <div class="map-node design" style="top:18%;left:78%"><span class="mt">CREATIVITY</span><span class="mn">DESIGN</span></div>
+        <div class="map-node center" style="top:50%;left:50%"><span class="mt">CORE</span><span class="mn">AI KNOWLEDGE HUB</span></div>
+        <div class="map-node workflows" style="top:82%;left:22%"><span class="mt">ENGINE</span><span class="mn">WORKFLOWS</span></div>
+        <div class="map-node team" style="top:82%;left:50%"><span class="mt">PEOPLE</span><span class="mn">TEAM</span></div>
+        <div class="map-node docs" style="top:82%;left:78%"><span class="mt">SOURCE</span><span class="mn">DOCS</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AI ECOSYSTEM ===== -->
+<section id="ecosystem" class="eco">
+  <div class="wrap">
+    <div class="sec-head sec-center" data-reveal>
+      <div>
+        <span class="kicker">04 · AI Ecosystem</span>
+        <h2>AI ECOSYSTEM</h2>
+      </div>
+      <p>A complete stack for modern work — ১৯টি tool, ৫টি category। ক্লিক করে দ্রুত খুঁজুন।</p>
+    </div>
+    <div class="eco-stages" data-reveal>
+      <div class="eco-stage">
+        <span class="st-label">THINK / REASON</span>
+        <div class="st-tools">
+          <span>💬 <b>ChatGPT</b></span>
+          <span>🧠 <b>Claude</b></span>
+          <span>🐋 <b>DeepSeek</b></span>
+          <span>✨ <b>Gemini</b></span>
+        </div>
+        <div class="st-desc">Requirement বুঝুন, চিন্তা করুন</div>
+      </div>
+      <div class="eco-arrow">→</div>
+      <div class="eco-stage">
+        <span class="st-label">RESEARCH / DATA</span>
+        <div class="st-tools">
+          <span>📚 <b>NotebookLM</b></span>
+          <span>🔎 <b>Perplexity</b></span>
+          <span>📈 <b>Julius</b></span>
+        </div>
+        <div class="st-desc">Find, verify &amp; analyze</div>
+      </div>
+      <div class="eco-arrow">→</div>
+      <div class="eco-stage">
+        <span class="st-label">BUILD / CREATE</span>
+        <div class="st-tools">
+          <span>⚡ <b>Cursor</b></span>
+          <span>🚀 <b>Copilot</b></span>
+          <span>🎨 <b>Figma</b></span>
+          <span>🖌️ <b>Canva</b></span>
+        </div>
+        <div class="st-desc">Build, design &amp; ship</div>
+      </div>
+      <div class="eco-arrow">→</div>
+      <div class="eco-stage">
+        <span class="st-label">OUTPUT / DELIVER</span>
+        <div class="st-tools">
+          <span>📄 <b>Reports</b></span>
+          <span>📘 <b>Docs</b></span>
+          <span>📊 <b>Dashboards</b></span>
+          <span>✅ <b>Production</b></span>
+        </div>
+        <div class="st-desc">Deliver verified output</div>
+      </div>
+    </div>
+    <div class="eco-filters" data-reveal>
+      <button class="efbtn active" data-f="all">All (19)</button>
+      <button class="efbtn" data-f="core">Core AI</button>
+      <button class="efbtn" data-f="design">Design</button>
+      <button class="efbtn" data-f="dev">Development</button>
+      <button class="efbtn" data-f="data">Data &amp; Analytics</button>
+      <button class="efbtn" data-f="meeting">Meeting</button>
+    </div>
+    <div class="eco-tools" id="toolgrid">
+      <div class="eco-tool" data-cat="core" data-reveal><div class="etop"><span class="etcat">Core</span><span class="etnum">01</span></div><h3>ChatGPT</h3><p>Requirement বুঝতে, documentation ও prompt optimize-এ সেরা।</p><div class="etags"><span>SQL Explanation</span><span>BRD</span><span>Storytelling</span></div></div>
+      <div class="eco-tool" data-cat="core" data-reveal><div class="etop"><span class="etcat">Core</span><span class="etnum">02</span></div><h3>DeepSeek</h3><p>Complex query ও performance issue troubleshooting।</p><div class="etags"><span>Query Debug</span><span>Logic</span><span>Analysis</span></div></div>
+      <div class="eco-tool" data-cat="core" data-reveal><div class="etop"><span class="etcat">Core</span><span class="etnum">03</span></div><h3>Claude AI</h3><p>100+ page document, BRD, SRS, policy বিশ্লেষণে বিশেষজ্ঞ।</p><div class="etags"><span>SOP</span><span>Requirement Review</span><span>Long Context</span></div></div>
+      <div class="eco-tool" data-cat="core" data-reveal><div class="etop"><span class="etcat">Core</span><span class="etnum">04</span></div><h3>Gemini + NotebookLM</h3><p>Multiple document analyse ও research summary।</p><div class="etags"><span>Research</span><span>Knowledge Base</span><span>Meeting Notes</span></div></div>
+      <div class="eco-tool" data-cat="core" data-reveal><div class="etop"><span class="etcat">Core</span><span class="etnum">05</span></div><h3>Qwen AI</h3><p>Syntax, formula বা ছোট requirement-এর দ্রুত check।</p><div class="etags"><span>Fast Response</span><span>Quick Validation</span></div></div>
+      <div class="eco-tool" data-cat="core" data-reveal><div class="etop"><span class="etcat">Core</span><span class="etnum">06</span></div><h3>Arena AI</h3><p>একই requirement বিভিন্ন model কীভাবে solve করে compare।</p><div class="etags"><span>Direct Mode</span><span>MAX Variant</span><span>Planning</span></div></div>
+      <div class="eco-tool" data-cat="design" data-reveal><div class="etop"><span class="etcat">Design</span><span class="etnum">07</span></div><h3>Stitch AI</h3><p>মাথার idea visual format-এ convert করুন।</p><div class="etags"><span>User Flow</span><span>Journey Map</span><span>Product Thinking</span></div></div>
+      <div class="eco-tool" data-cat="design" data-reveal><div class="etop"><span class="etcat">Design</span><span class="etnum">08</span></div><h3>Figma AI</h3><p>Stitch-concept-কে professional design-এ রূপান্তর।</p><div class="etags"><span>UI/UX</span><span>Dashboard Design</span><span>Prototyping</span></div></div>
+      <div class="eco-tool" data-cat="design" data-reveal><div class="etop"><span class="etcat">Design</span><span class="etnum">09</span></div><h3>Meigen AI</h3><p>Custom image prompt ও creative asset তৈরি।</p><div class="etags"><span>Image Prompts</span><span>Marketing Assets</span></div></div>
+      <div class="eco-tool" data-cat="design" data-reveal><div class="etop"><span class="etcat">Design</span><span class="etnum">10</span></div><h3>Canva AI</h3><p>Management presentation ও process flow ভিজ্যুয়ালি present।</p><div class="etags"><span>Reports</span><span>Visual Docs</span><span>Social Content</span></div></div>
+      <div class="eco-tool" data-cat="dev" data-reveal><div class="etop"><span class="etcat">Dev</span><span class="etnum">11</span></div><h3>GitHub Copilot</h3><p>Daily coding, SQL ও automation scripts-এর জন্য।</p><div class="etags"><span>SQL Writing</span><span>Scripts</span><span>Code Completion</span></div></div>
+      <div class="eco-tool" data-cat="dev" data-reveal><div class="etop"><span class="etcat">Dev</span><span class="etnum">12</span></div><h3>Cursor AI</h3><p>Multiple files analyse ও large project maintain।</p><div class="etags"><span>Refactoring</span><span>Database Scripts</span></div></div>
+      <div class="eco-tool" data-cat="dev" data-reveal><div class="etop"><span class="etcat">Dev</span><span class="etnum">13</span></div><h3>Windsurf AI</h3><p>Proof-of-concept ও development দ্রুত complete।</p><div class="etags"><span>End-to-End Coding</span><span>Rapid Prototyping</span></div></div>
+      <div class="eco-tool" data-cat="dev" data-reveal><div class="etop"><span class="etcat">Dev</span><span class="etnum">14</span></div><h3>Perplexity AI</h3><p>Trusted sources সহ research ও tech comparison।</p><div class="etags"><span>Latest Info</span><span>Docs Reference</span></div></div>
+      <div class="eco-tool" data-cat="data" data-reveal><div class="etop"><span class="etcat">Data</span><span class="etnum">15</span></div><h3>Julius AI</h3><p>Raw data analyse ও visualization।</p><div class="etags"><span>Excel/CSV</span><span>Quick Reporting</span></div></div>
+      <div class="eco-tool" data-cat="data" data-reveal><div class="etop"><span class="etcat">Data</span><span class="etnum">16</span></div><h3>Power BI Copilot</h3><p>Management dashboard ও reporting insights।</p><div class="etags"><span>KPI Review</span><span>Data Insights</span></div></div>
+      <div class="eco-tool" data-cat="data" data-reveal><div class="etop"><span class="etcat">Data</span><span class="etnum">17</span></div><h3>Tableau Pulse AI</h3><p>Business performance ও trend detection।</p><div class="etags"><span>Business Analytics</span><span>KPI Monitoring</span></div></div>
+      <div class="eco-tool" data-cat="meeting" data-reveal><div class="etop"><span class="etcat">Meeting</span><span class="etnum">18</span></div><h3>Otter AI</h3><p>Recording থেকে notes ও action items।</p><div class="etags"><span>Transcription</span><span>Action Extraction</span></div></div>
+      <div class="eco-tool" data-cat="meeting" data-reveal><div class="etop"><span class="etcat">Meeting</span><span class="etnum">19</span></div><h3>Fireflies AI</h3><p>Meeting discussion automatic summarize।</p><div class="etags"><span>Follow-Up Tasks</span><span>Collaboration</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ECRM KNOWLEDGE BASE ===== -->
+<section id="ecrm">
+  <div class="wrap">
+    <div class="ecrm-feature" data-reveal>
+      <div>
+        <span class="kicker">05 · ECRM Knowledge Base</span>
+        <h2>ECRM KNOWLEDGE BASE</h2>
+        <p class="desc">BATB consumer engagement platform — business logic, workflows, reporting এবং verification এক জায়গায়। eCRM Complete Documentation-এ ১৩১টি table, ৫টি views, ১৪টি modules ও interactive Knowledge Graph।</p>
+        <div class="btns">
+          <a class="btn solid" href="files/ecrm-tutorial.html">Explore ECRM →</a>
+          <a class="btn ghost" href="files/eCRM_Complete_Documentation.html">SQL Reference</a>
+        </div>
+      </div>
+      <div class="ecrm-flow">
+        <div class="flabel">ECRM Flow</div>
+        <div class="frow">
+          <div class="fstep"><b>Create &amp; Plan</b>CAMPAIGN</div>
+          <span class="farrow">→</span>
+          <div class="fstep"><b>Reach &amp; Engage</b>CONTACT</div>
+          <span class="farrow">→</span>
+          <div class="fstep"><b>Collect Data</b>SURVEY</div>
+          <span class="farrow">→</span>
+          <div class="fstep"><b>Business Logic</b>JML</div>
+          <span class="farrow">→</span>
+          <div class="fstep"><b>AI + Manual</b>VERIFICATION</div>
+        </div>
+        <div style="text-align:center;font-family:var(--font-mono);color:var(--amber);font-weight:700;margin-top:10px;animation:arrowmove 2s ease-in-out infinite">↓</div>
+        <div class="frow"><div class="fstep" style="border-color:var(--teal);color:var(--teal)"><b>Dashboard · Insights · Export</b>REPORTING</div></div>
+        <div class="fmeta">
+          <span>Campaign-161 Tasks</span>
+          <span>Report Manager · 5 types</span>
+          <span>AI Audio Verification</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORKFLOW ENGINE ===== -->
+<section id="workflows" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div>
+        <span class="kicker">06 · Workflow Engine</span>
+        <h2>WORKFLOW ENGINE</h2>
+      </div>
+      <p>Proven workflows used by the team — কোন কাজে কোন tool-এর sequence, production-ready।</p>
+    </div>
+    <div class="wf-grid">
+      <div class="wf-list" id="wfList" data-reveal>
+        <button class="wf-item active" data-wf="0"><span class="wic">⚡</span><span class="wit"><h3>Query Optimization</h3><span class="wseq">Requirement → ChatGPT → DeepSeek → Production</span></span><span class="warr">→</span></button>
+        <button class="wf-item" data-wf="1"><span class="wic">🔧</span><span class="wit"><h3>Problem Solving</h3><span class="wseq">Problem → DeepSeek → Claude → Solution</span></span><span class="warr">→</span></button>
+        <button class="wf-item" data-wf="2"><span class="wic">📝</span><span class="wit"><h3>Documentation</h3><span class="wseq">Requirement → ChatGPT → Claude → Final Doc</span></span><span class="warr">→</span></button>
+        <button class="wf-item" data-wf="3"><span class="wic">🔍</span><span class="wit"><h3>Research</h3><span class="wseq">References → NotebookLM → Gemini → Analysis</span></span><span class="warr">→</span></button>
+        <button class="wf-item" data-wf="4"><span class="wic">📊</span><span class="wit"><h3>Dashboard &amp; Analytics</h3><span class="wseq">Raw Data → Julius AI → Power BI → Dashboard</span></span><span class="warr">→</span></button>
+        <button class="wf-item" data-wf="5"><span class="wic">🎨</span><span class="wit"><h3>Visual Planning</h3><span class="wseq">Idea → Stitch AI → Figma AI → Presentation</span></span><span class="warr">→</span></button>
+      </div>
+      <div class="wf-panel" data-reveal>
+        <span class="wfp-label">Current Workflow</span>
+        <h3 id="wfTitle">Query Optimization</h3>
+        <div class="wf-nodes" id="wfNodes"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DOCUMENT LIBRARY ===== -->
+<section id="docs">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div>
+        <span class="kicker">07 · Document Library</span>
+        <h2>DOCUMENT LIBRARY</h2>
+      </div>
+      <p>প্রকল্পের প্রতিটি গাইড এখান থেকে এক ক্লিকে খুলুন — Core guides থেকে source markdown পর্যন্ত।</p>
+    </div>
+    <div class="docs-core">
+      <a class="doc-card" href="files/claude-guide.html" data-reveal>
+        <span class="type html">Core · Visual Guide</span>
         <h3>Claude ২৫ সেটিংস — Visual Guide</h3>
         <p>Page1.md-এর সম্পূর্ণ content স্টাইলিশ HTML-এ। Part 1-এর বিস্তারিত।</p>
         <div class="meta"><span>claude-guide.html</span><span class="arr">→</span></div>
       </a>
-      <a class="hub-card" href="db-guide.html" data-reveal>
-        <span class="type html">Visual Guide</span>
-        <h3>Database Team AI Ecosystem — Visual Guide</h3>
+      <a class="doc-card" href="files/db-guide.html" data-reveal>
+        <span class="type html">Core · Visual Guide</span>
+        <h3>Database Team AI Ecosystem</h3>
         <p>Page2.md-এর সম্পূর্ণ content স্টাইলিশ HTML-এ। ১৯টি tool, ৬টি workflow।</p>
         <div class="meta"><span>db-guide.html</span><span class="arr">→</span></div>
       </a>
-      <a class="hub-card" href="COMBINED-GUIDE.md" data-reveal>
-        <span class="type md">Combined · MD</span>
-        <h3>Complete Combined Guide</h3>
-        <p>Page1 + Page2 একসাথে — সম্পূর্ণ markdown গাইড।</p>
-        <div class="meta"><span>COMBINED-GUIDE.md</span><span class="arr">→</span></div>
+      <a class="doc-card" href="files/ecrm-tutorial.html" data-reveal>
+        <span class="type html">Core · ECRM Business Guide</span>
+        <h3>ECRM Tutorial — Business ও Logic</h3>
+        <p>BATB consumer engagement platform — ৩০টি flow blocks, Report Manager, JML, AI verification, গভীর business logic।</p>
+        <div class="meta"><span>ecrm-tutorial.html</span><span class="arr">→</span></div>
       </a>
-      <a class="hub-card" href="Page1.md" data-reveal>
-        <span class="type md">Source · MD</span>
-        <h3>Page1 — Claude ২৫টি সেটিংস</h3>
-        <p>মূল সোর্স ডকুমেন্ট: Setup, Speed, Security, Judgment, Advanced।</p>
-        <div class="meta"><span>Page1.md</span><span class="arr">→</span></div>
+      <a class="doc-card" href="files/eCRM_Complete_Documentation.html" data-reveal>
+        <span class="type html">Core · Complete Documentation</span>
+        <h3>eCRM Complete Documentation</h3>
+        <p>সম্পূর্ণ ECRM Database Reference — Business Documentation + ১৩১টি table, ৫টি views, ১৪টি modules, interactive Knowledge Graph ও search।</p>
+        <div class="meta"><span>eCRM_Complete_Documentation.html</span><span class="arr">→</span></div>
       </a>
-      <a class="hub-card" href="Page2.md" data-reveal>
-        <span class="type md">Source · MD</span>
-        <h3>Page2 — Database Team AI Ecosystem</h3>
-        <p>১৯টি AI tool, ৬টি workflow, Golden Rules ও Recommended Stack।</p>
-        <div class="meta"><span>Page2.md</span><span class="arr">→</span></div>
+      <a class="doc-card" href="files/tutorial.html" data-reveal>
+        <span class="type html">Core · Tutorial &amp; Tasks</span>
+        <h3>ECRM Tutorial — Problem Solving</h3>
+        <p>Business logic → Campaign Flow → ৫টি Analytics Problem Solving task → Practice Tasks ও Reports।</p>
+        <div class="meta"><span>tutorial.html</span><span class="arr">→</span></div>
       </a>
-      <a class="hub-card" href="team.html" data-reveal>
-        <span class="type html">Team Page</span>
-        <h3>Database Team — আমাদের টিম</h3>
-        <p>ডেটা অ্যানালিস্ট থেকে ML ইঞ্জিনিয়ার — পুরো টিম পরিচিতি সহ।</p>
-        <div class="meta"><span>team.html</span><span class="arr">→</span></div>
-      </a>
-      <a class="hub-card" href="gamified-recruitment-docs%20(1).html" data-reveal>
-        <span class="type pdf">Gamified · System Docs</span>
-        <h3>Gamified Recruitment — System &amp; Database Docs</h3>
-        <p>12 টি table, 21 relationships, সম্পূর্ণ schema ও checklist — বড় ডকুমেন্টেশন।</p>
+      <a class="doc-card" href="files/gamified-recruitment-docs%20(1).html" data-reveal>
+        <span class="type html">Core · System &amp; Database Docs</span>
+        <h3>Gamified Recruitment — System Docs</h3>
+        <p>সম্পূর্ণ Gamified Recruitment system documentation — ১২টি table, ২১টি relationships, সম্পূর্ণ schema ও checklist।</p>
         <div class="meta"><span>gamified-recruitment-docs.html</span><span class="arr">→</span></div>
       </a>
     </div>
-  </div>
-</section>
-
-<!-- ===== PART 1 OVERVIEW ===== -->
-<section id="part1">
-  <div class="wrap">
-    <div class="sec-head" data-reveal>
-      <div>
-        <span class="kicker">02 · Part 1</span>
-        <h2>Claude ২৫টি সেটিংস ও অভ্যাস</h2>
+    <div class="docs-ref">
+      <div class="ref-title">Reference Documents &amp; Sources</div>
+      <div class="ref-grid">
+        <div class="ref-col">
+          <div class="ref-sub">Markdown Sources</div>
+          <a class="ref-row" href="files/Page1.md" data-reveal><span class="ric">📄</span><span class="rt">Page1 — Claude ২৫টি সেটিংস</span><span class="rfile">Page1.md</span><span class="rarr">→</span></a>
+          <a class="ref-row" href="files/Page2.md" data-reveal><span class="ric">📄</span><span class="rt">Page2 — Database Team AI Ecosystem</span><span class="rfile">Page2.md</span><span class="rarr">→</span></a>
+          <a class="ref-row" href="files/COMBINED-GUIDE.md" data-reveal><span class="ric">📚</span><span class="rt">Complete Combined Guide</span><span class="rfile">COMBINED-GUIDE.md</span><span class="rarr">→</span></a>
+          <a class="ref-row" href="files/ecrm_tutorial.md" data-reveal><span class="ric">📈</span><span class="rt">ECRM Tutorial — Source</span><span class="rfile">ecrm_tutorial.md</span><span class="rarr">→</span></a>
+        </div>
+        <div class="ref-col">
+          <div class="ref-sub">Pages &amp; People</div>
+          <a class="ref-row" href="files/team.html" data-reveal><span class="ric">👥</span><span class="rt">Database Team — আমাদের টিম</span><span class="rfile">team.html</span><span class="rarr">→</span></a>
+          <a class="ref-row" href="files/author.html" data-reveal><span class="ric">👤</span><span class="rt">Author — MD Ahsamul Haque</span><span class="rfile">author.html</span><span class="rarr">→</span></a>
+          <a class="ref-row" href="index.html" data-reveal><span class="ric">🏠</span><span class="rt">কাজকর্ম শিখ — Main Hub</span><span class="rfile">index.html</span><span class="rarr">→</span></a>
+          <a class="ref-row" href="files/DB Team.md" data-reveal><span class="ric">🗂️</span><span class="rt">DB Team — Team Notes</span><span class="rfile">DB Team.md</span><span class="rarr">→</span></a>
+        </div>
       </div>
-      <p>Setup, Speed, Security, Judgment ও Advanced — ৫টি ধাপে Claude-কে workflow হিসেবে ব্যবহার করুন। <a href="Page1.md" style="color:var(--amber);text-decoration:none;font-weight:600">মূল গাইড →</a></p>
-    </div>
-    <div class="flow-col">
-      <div class="flow" data-reveal>
-        <h3>১ · Setup ঠিক করুন</h3>
-        <div class="chain"><span>Desktop</span><i>→</i><span>Chat/Cowork</span><i>→</i><span>Project</span><i>→</i><span>Instructions</span><i>→</i><span>Skill</span></div>
-      </div>
-      <div class="flow" data-reveal>
-        <h3>২ · গতি বাড়ান</h3>
-        <div class="chain"><span>Model Selector</span><i>→</i><span>Effort</span><i>→</i><span>Extended Thinking</span><i>→</i><span>Outcome Prompt</span></div>
-      </div>
-      <div class="flow" data-reveal>
-        <h3>৩ · Security ও Privacy</h3>
-        <div class="chain"><span>Placeholder</span><i>→</i><span>Incognito Chat</span><i>→</i><span>Memory Review</span><i>→</i><span>Less Files</span></div>
-      </div>
-      <div class="flow" data-reveal>
-        <h3>৪ · নিজের বিচারবুদ্ধি</h3>
-        <div class="chain"><span>Cross-check</span><i>→</i><span>Counter-Argument</span><i>→</i><span>Self-Audit</span><i>→</i><span>Draft Verify</span></div>
-      </div>
-      <div class="flow" data-reveal>
-        <h3>৫ · Advanced</h3>
-        <div class="chain"><span>Research</span><i>→</i><span>3 Questions</span><i>→</i><span>3 Approaches</span><i>→</i><span>Pick Strongest</span></div>
-      </div>
-    </div>
-    <div style="margin-top:18px;text-align:right" data-reveal>
-      <a class="btn ghost" href="claude-guide.html">Visual Guide দেখুন →</a>
     </div>
   </div>
 </section>
 
-<!-- ===== PART 2 TOOLS ===== -->
-<section id="part2" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-  <div class="wrap">
-    <div class="sec-head" data-reveal>
-      <div>
-        <span class="kicker">03 · Tools Dashboard</span>
-        <h2>Database Team AI Ecosystem</h2>
-      </div>
-      <p>Best Tool for Specific Task — ১৯টি tool, category filter সহ। ক্লিক করে দ্রুত খুঁজুন।</p>
-    </div>
-    <div class="filters" data-reveal>
-      <button class="fbtn active" data-f="all">All (19)</button>
-      <button class="fbtn" data-f="core">Core AI</button>
-      <button class="fbtn" data-f="design">Design</button>
-      <button class="fbtn" data-f="dev">Development</button>
-      <button class="fbtn" data-f="data">Data & Analytics</button>
-      <button class="fbtn" data-f="meeting">Meeting</button>
-    </div>
-    <div class="tools" id="toolgrid">
-      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">01</span></div><h3>ChatGPT</h3><p>Requirement বুঝতে, documentation ও prompt optimize-এ সেরা।</p><div class="tags"><span>SQL Explanation</span><span>BRD</span><span>Storytelling</span></div></div>
-      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">02</span></div><h3>DeepSeek</h3><p>Complex query ও performance issue troubleshooting।</p><div class="tags"><span>Query Debug</span><span>Logic</span><span>Analysis</span></div></div>
-      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">03</span></div><h3>Claude AI</h3><p>100+ page document, BRD, SRS, policy বিশ্লেষণে বিশেষজ্ঞ।</p><div class="tags"><span>SOP</span><span>Requirement Review</span><span>Long Context</span></div></div>
-      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">04</span></div><h3>Gemini + NotebookLM</h3><p>Multiple document analyse ও research summary।</p><div class="tags"><span>Research</span><span>Knowledge Base</span><span>Meeting Notes</span></div></div>
-      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">05</span></div><h3>Qwen AI</h3><p>Syntax, formula বা ছোট requirement-এর দ্রুত check।</p><div class="tags"><span>Fast Response</span><span>Quick Validation</span></div></div>
-      <div class="tool" data-cat="core" data-reveal><div class="top"><span class="tcat">Core</span><span class="tnum">06</span></div><h3>Arena AI</h3><p>একই requirement বিভিন্ন model কীভাবে solve করে compare।</p><div class="tags"><span>Direct Mode</span><span>MAX Variant</span><span>Planning</span></div></div>
-      <div class="tool" data-cat="design" data-reveal><div class="top"><span class="tcat">Design</span><span class="tnum">07</span></div><h3>Stitch AI</h3><p>মাথার idea visual format-এ convert করুন।</p><div class="tags"><span>User Flow</span><span>Journey Map</span><span>Product Thinking</span></div></div>
-      <div class="tool" data-cat="design" data-reveal><div class="top"><span class="tcat">Design</span><span class="tnum">08</span></div><h3>Figma AI</h3><p>Stitch-concept-কে professional design-এ রূপান্তর।</p><div class="tags"><span>UI/UX</span><span>Dashboard Design</span><span>Prototyping</span></div></div>
-      <div class="tool" data-cat="design" data-reveal><div class="top"><span class="tcat">Design</span><span class="tnum">09</span></div><h3>Meigen AI</h3><p>Custom image prompt ও creative asset তৈরি।</p><div class="tags"><span>Image Prompts</span><span>Marketing Assets</span></div></div>
-      <div class="tool" data-cat="design" data-reveal><div class="top"><span class="tcat">Design</span><span class="tnum">10</span></div><h3>Canva AI</h3><p>Management presentation ও process flow ভিজ্যুয়ালি present।</p><div class="tags"><span>Reports</span><span>Visual Docs</span><span>Social Content</span></div></div>
-      <div class="tool" data-cat="dev" data-reveal><div class="top"><span class="tcat">Dev</span><span class="tnum">11</span></div><h3>GitHub Copilot</h3><p>Daily coding, SQL ও automation scripts-এর জন্য।</p><div class="tags"><span>SQL Writing</span><span>Scripts</span><span>Code Completion</span></div></div>
-      <div class="tool" data-cat="dev" data-reveal><div class="top"><span class="tcat">Dev</span><span class="tnum">12</span></div><h3>Cursor AI</h3><p>Multiple files analyse ও large project maintain।</p><div class="tags"><span>Refactoring</span><span>Database Scripts</span></div></div>
-      <div class="tool" data-cat="dev" data-reveal><div class="top"><span class="tcat">Dev</span><span class="tnum">13</span></div><h3>Windsurf AI</h3><p>Proof-of-concept ও development দ্রুত complete।</p><div class="tags"><span>End-to-End Coding</span><span>Rapid Prototyping</span></div></div>
-      <div class="tool" data-cat="dev" data-reveal><div class="top"><span class="tcat">Dev</span><span class="tnum">14</span></div><h3>Perplexity AI</h3><p>Trusted sources সহ research ও tech comparison।</p><div class="tags"><span>Latest Info</span><span>Docs Reference</span></div></div>
-      <div class="tool" data-cat="data" data-reveal><div class="top"><span class="tcat">Data</span><span class="tnum">15</span></div><h3>Julius AI</h3><p>Raw data analyse ও visualization।</p><div class="tags"><span>Excel/CSV</span><span>Quick Reporting</span></div></div>
-      <div class="tool" data-cat="data" data-reveal><div class="top"><span class="tcat">Data</span><span class="tnum">16</span></div><h3>Power BI Copilot</h3><p>Management dashboard ও reporting insights।</p><div class="tags"><span>KPI Review</span><span>Data Insights</span></div></div>
-      <div class="tool" data-cat="data" data-reveal><div class="top"><span class="tcat">Data</span><span class="tnum">17</span></div><h3>Tableau Pulse AI</h3><p>Business performance ও trend detection।</p><div class="tags"><span>Business Analytics</span><span>KPI Monitoring</span></div></div>
-      <div class="tool" data-cat="meeting" data-reveal><div class="top"><span class="tcat">Meeting</span><span class="tnum">18</span></div><h3>Otter AI</h3><p>Recording থেকে notes ও action items।</p><div class="tags"><span>Transcription</span><span>Action Extraction</span></div></div>
-      <div class="tool" data-cat="meeting" data-reveal><div class="top"><span class="tcat">Meeting</span><span class="tnum">19</span></div><h3>Fireflies AI</h3><p>Meeting discussion automatic summarize।</p><div class="tags"><span>Follow-Up Tasks</span><span>Collaboration</span></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== DATABASE TEAM ===== -->
+<!-- ===== TEAM ===== -->
 <section id="team" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <div>
-        <span class="kicker">04 · Database Team</span>
-        <h2>আমাদের টিম</h2>
+        <span class="kicker">08 · Team</span>
+        <h2>TEAM</h2>
       </div>
-      <p>সিনিয়র ডেটা অ্যানালিস্ট থেকে ML ইঞ্জিনিয়ার — প্রতিটি কাজে দক্ষতা ও দায়বদ্ধতা। <a href="team.html" style="color:var(--amber);text-decoration:none;font-weight:600">সম্পূর্ণ টিম পেজ →</a></p>
+      <p>সিনিয়র ডেটা অ্যানালিস্ট থেকে ML ইঞ্জিনিয়ার — প্রতিটি কাজে দক্ষতা ও দায়বদ্ধতা। Hover করলে skills দেখা যাবে।</p>
     </div>
-    <div class="team-strip">
-      <a class="tstrip-card" href="team.html" data-reveal>
-        <div class="avatar"><img src="images/sohan.png" alt="Sohanur Rahman" loading="lazy"></div>
-        <div class="info"><h3>Sohanur Rahman</h3><span class="role senior">Senior Data Analyst</span></div>
-      </a>
-      <a class="tstrip-card" href="team.html" data-reveal>
-        <div class="avatar"><img src="images/Rahat.png" alt="Rahat Maksud Pranto" loading="lazy"></div>
-        <div class="info"><h3>Rahat Maksud Pranto</h3><span class="role mid">Data Analyst</span></div>
-      </a>
-      <a class="tstrip-card" href="team.html" data-reveal>
-        <div class="avatar"><img src="images/ahsam.png" alt="Md Ahsamul Haque" loading="lazy"></div>
-        <div class="info"><h3>Md Ahsamul Haque</h3><span class="role junior">Junior Data Analyst</span></div>
-      </a>
-      <a class="tstrip-card" href="team.html" data-reveal>
-        <div class="avatar"><img src="images/sajib.png" alt="Shajib Kumar Shaha" loading="lazy"></div>
-        <div class="info"><h3>Shajib Kumar Shaha</h3><span class="role junior">Jr. Database Engineer</span></div>
-      </a>
-      <a class="tstrip-card" href="team.html" data-reveal>
+    <div class="team-grid">
+      <div class="tcard" data-reveal>
+        <div class="avatar"><img src="files/images/sohan.png" alt="Sohanur Rahman" loading="lazy"></div>
+        <h3>Sohanur Rahman</h3>
+        <span class="role senior">Senior Data Analyst</span>
+        <div class="skills"><span>SQL</span><span>Reporting</span><span>Data Quality</span><span>Validation</span></div>
+        <a class="vprof" href="files/team.html">View Profile →</a>
+      </div>
+      <div class="tcard" data-reveal>
+        <div class="avatar"><img src="files/images/Rahat.png" alt="Rahat Maksud Pranto" loading="lazy"></div>
+        <h3>Rahat Maksud Pranto</h3>
+        <span class="role mid">Data Analyst</span>
+        <div class="skills"><span>SQL</span><span>Data Cleaning</span><span>Dashboards</span></div>
+        <a class="vprof" href="files/team.html">View Profile →</a>
+      </div>
+      <div class="tcard" data-reveal>
+        <div class="avatar"><img src="files/images/ahsam.png" alt="Md Ahsamul Haque" loading="lazy"></div>
+        <h3>Md Ahsamul Haque</h3>
+        <span class="role junior">Junior Data Analyst · Author</span>
+        <div class="skills"><span>SQL</span><span>ECRM</span><span>Documentation</span></div>
+        <a class="vprof" href="files/author.html">View Profile →</a>
+      </div>
+      <div class="tcard" data-reveal>
+        <div class="avatar"><img src="files/images/sajib.png" alt="Shajib Kumar Shaha" loading="lazy"></div>
+        <h3>Shajib Kumar Shaha</h3>
+        <span class="role junior">Jr. Database Engineer</span>
+        <div class="skills"><span>PostgreSQL</span><span>MySQL</span><span>Oracle</span></div>
+        <a class="vprof" href="files/team.html">View Profile →</a>
+      </div>
+      <div class="tcard" data-reveal>
         <div class="avatar"><div class="ph">T</div></div>
-        <div class="info"><h3>Tahima</h3><span class="role ml">ML Engineer</span></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== WORKFLOWS ===== -->
-<section id="workflows">
-  <div class="wrap">
-    <div class="sec-head" data-reveal>
-      <div>
-        <span class="kicker">05 · Workflows</span>
-        <h2>টিমের ৬টি Recommended Workflow</h2>
+        <h3>Tahima</h3>
+        <span class="role ml">ML Engineer</span>
+        <div class="skills"><span>ML</span><span>Python</span><span>Models</span><span>AI</span></div>
+        <a class="vprof" href="files/team.html">View Profile →</a>
       </div>
-      <p>কোন কাজে কোন tool-এর sequence — production-ready patterns।</p>
-    </div>
-    <div class="flow-col">
-      <div class="flow" data-reveal><h3>Query Optimization</h3><div class="chain"><span>Requirement</span><i>→</i><span>ChatGPT</span><i>→</i><span>DeepSeek</span><i>→</i><span>Validation</span><i>→</i><span class="goal">Production</span></div></div>
-      <div class="flow" data-reveal><h3>Problem Solving</h3><div class="chain"><span>Problem</span><i>→</i><span>DeepSeek</span><i>→</i><span>Claude</span><i>→</i><span>ChatGPT Verify</span><i>→</i><span class="goal">Solution</span></div></div>
-      <div class="flow" data-reveal><h3>Documentation</h3><div class="chain"><span>Requirement</span><i>→</i><span>ChatGPT</span><i>→</i><span>Claude</span><i>→</i><span>Arena Review</span><i>→</i><span class="goal">Final Doc</span></div></div>
-      <div class="flow" data-reveal><h3>Research</h3><div class="chain"><span>References</span><i>→</i><span>NotebookLM</span><i>→</i><span>Gemini</span><i>→</i><span>Perplexity</span><i>→</i><span class="goal">Final Analysis</span></div></div>
-      <div class="flow" data-reveal><h3>Dashboard & Analytics</h3><div class="chain"><span>Raw Data</span><i>→</i><span>Julius AI</span><i>→</i><span>Power BI Copilot</span><i>→</i><span class="goal">Dashboard</span></div></div>
-      <div class="flow" data-reveal><h3>Visual Planning</h3><div class="chain"><span>Idea</span><i>→</i><span>Stitch AI</span><i>→</i><span>Figma AI</span><i>→</i><span>Canva AI</span><i>→</i><span class="goal">Presentation</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- ===== RULES ===== -->
-<section id="rules">
+
+<!-- ===== AI GOVERNANCE ===== -->
+<section id="governance">
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <div>
-        <span class="kicker">06 · Golden Rules</span>
-        <h2>Always Follow</h2>
+        <span class="kicker">12 · AI Governance</span>
+        <h2>AI GOVERNANCE</h2>
       </div>
       <p>AI ecosystem-এর প্রতিটি ব্যবহারে এই নিয়মগুলো চিরকাল প্রযোজ্য।</p>
     </div>
-    <div class="rules">
-      <div class="rule" data-reveal><span class="ck">✓</span><div><div class="rt">AI is an assistant, not the final decision maker</div><div class="rs">সিদ্ধান্তের মালিক সর্বদা টিম মেম্বার।</div></div></div>
-      <div class="rule" data-reveal><span class="ck">✓</span><div><div class="rt">Every SQL query must be tested before production</div><div class="rs">Production-এ deploy-এর আগে বাধ্যতামূলক validation।</div></div></div>
-      <div class="rule" data-reveal><span class="ck">✓</span><div><div class="rt">Cross-check critical outputs with multiple AI tools</div><div class="rs">Multiple model verification → higher confidence।</div></div></div>
-      <div class="rule" data-reveal><span class="ck no">✕</span><div><div class="rt">Never share secrets</div><div class="rs">Database Passwords, API Keys, Production Credentials, Sensitive Client Data।</div></div></div>
-      <div class="rule" data-reveal><span class="ck">✓</span><div><div class="rt">Business logic validated by responsible member</div><div class="rs">Responsible person-এর sign-off অপরিহার্য।</div></div></div>
-      <div class="rule" data-reveal><span class="ck">✓</span><div><div class="rt">AI documentation reviewed before sharing</div><div class="rs">Publish-এর আগে human review বাধ্যতামূলক।</div></div></div>
+    <div class="gov-grid">
+      <div class="gov-col do" data-reveal>
+        <h3>✓ DO</h3>
+        <p class="gsub">কী সবসময় মানতে হবে</p>
+        <div class="gov-item"><span class="gck">✓</span><div><div class="gt">Validate every SQL query before production</div><div class="gs">Production-এ deploy-এর আগে বাধ্যতামূলক validation।</div></div></div>
+        <div class="gov-item"><span class="gck">✓</span><div><div class="gt">Cross-check critical outputs with multiple AI tools</div><div class="gs">Multiple model verification → higher confidence।</div></div></div>
+        <div class="gov-item"><span class="gck">✓</span><div><div class="gt">Human approval for business decisions</div><div class="gs">সিদ্ধান্তের মালিক সর্বদা টিম মেম্বার — AI is an assistant।</div></div></div>
+        <div class="gov-item"><span class="gck">✓</span><div><div class="gt">Review AI documentation before sharing</div><div class="gs">Publish-এর আগে human review বাধ্যতামূলক।</div></div></div>
+      </div>
+      <div class="gov-col never" data-reveal>
+        <h3>✕ NEVER</h3>
+        <p class="gsub">কী কখনো করবেন না</p>
+        <div class="gov-item"><span class="gck">✕</span><div><div class="gt">Never share production credentials</div><div class="gs">সর্বদা গোপন রাখুন।</div></div></div>
+        <div class="gov-item"><span class="gck">✕</span><div><div class="gt">Never expose API keys</div><div class="gs">API Keys আলাদা secure location-এ।</div></div></div>
+        <div class="gov-item"><span class="gck">✕</span><div><div class="gt">Never commit database passwords</div><div class="gs">Database Passwords কখনো repo-তে না।</div></div></div>
+        <div class="gov-item"><span class="gck">✕</span><div><div class="gt">Never leak sensitive client data</div><div class="gs">Sensitive Client Data সর্বদা protected।</div></div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ===== CTA ===== -->
-<div style="padding:8px 0 72px">
-  <div class="cta-band">
-    <div class="wrap">
-      <div>
-        <h2>পুরো গাইড এক জায়গায়</h2>
-        <p>Claude-এর ২৫ সেটিংস থেকে টিমের AI ecosystem — সব ডকুমেন্ট ও visual guide এখন dashboard hub-এ connected।</p>
-      </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a class="btn" href="claude-guide.html">Claude Guide →</a>
-        <a class="btn ghost" href="db-guide.html">DB Ecosystem</a>
-        <a class="btn ghost" href="team.html">Team</a>
-        <a class="btn ghost" href="COMBINED-GUIDE.md">Combined MD</a>
-      </div>
+<!-- ===== FINAL CTA ===== -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="final-cta" data-reveal>
+      <h2>Build better.<br>Verify everything.</h2>
+      <p>Smart tools. Strong process. Better outcomes.</p>
+      <a class="btn" href="#center">Let's Work Smarter →</a>
     </div>
   </div>
-</div>
+</section>
 
 <!-- ===== FOOTER ===== -->
 <footer>
-  <div class="wrap foot">
-    <div class="brand"><span class="mark">ক</span> কাজকর্ম শিখ</div>
-    <div class="mono">index.html · claude-guide.html · db-guide.html · COMBINED-GUIDE.md · Page1.md · Page2.md</div>
-    <div><a href="#">Back to top ↑</a></div>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="mark">ক</span>
+        <h3>কাজকর্ম শিখ</h3>
+        <p>AI Knowledge System — AI tools, workflows, documentation ও team knowledge, connected in one intelligent hub।</p>
+      </div>
+      <div class="foot-col">
+        <h4>Quick Links</h4>
+        <a href="#center">Knowledge</a>
+        <a href="#ecosystem">AI Tools</a>
+        <a href="#workflows">Workflows</a>
+        <a href="#team">Team</a>
+        <a href="#docs">Docs</a>
+      </div>
+      <div class="foot-col">
+        <h4>Resources</h4>
+        <a href="files/claude-guide.html">Claude AI Guide</a>
+        <a href="files/ecrm-tutorial.html">ECRM Guide</a>
+        <a href="files/eCRM_Complete_Documentation.html">SQL Reference</a>
+        <a href="files/db-guide.html">Best Practices</a>
+        <a href="files/COMBINED-GUIDE.md">Templates</a>
+      </div>
+      <div class="foot-col foot-sub">
+        <h4>Stay Updated</h4>
+        <p>নতুন গাইড, tool updates ও knowledge আরও।</p>
+        <form class="sub-row" id="subForm">
+          <input type="email" placeholder="your@email.com" aria-label="Email address" required>
+          <button class="btn" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 কাজকর্ম শিখ. All rights reserved.</span>
+      <span class="mono">index · claude-guide · db-guide · ecrm-tutorial · eCRM-Docs · Page1 · Page2 · Combined</span>
+    </div>
   </div>
 </footer>
 
 <button id="topbtn" aria-label="Back to top">↑</button>
 
+<!-- ===== SEARCH OVERLAY ===== -->
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-box">
+    <div class="search-input">
+      <span class="sic">⌕</span>
+      <input type="text" id="searchInput" placeholder="Search documents, tools, workflows, team, ECRM…" autocomplete="off">
+      <kbd>ESC</kbd>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
 <script>
+  // ---------- Scroll reveal ----------
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.1,rootMargin:"0px 0px -40px 0px"});
   document.querySelectorAll("[data-reveal]").forEach(el=>io.observe(el));
 
+  // ---------- Counters + progress ----------
   const counters=document.querySelectorAll("[data-count]");
   const cio=new IntersectionObserver(es=>es.forEach(e=>{
     if(e.isIntersecting){
       const el=e.target,target=+el.dataset.count;
       const dur=1200,start=performance.now();
-      const tick=(now)=>{const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,3);el.textContent=Math.round(target*ease);if(p<1)requestAnimationFrame(tick)};
+      const tick=(now)=>{const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,3);el.textContent=String(Math.round(target*ease)).padStart(2,"0");if(p<1)requestAnimationFrame(tick)};
       requestAnimationFrame(tick);cio.unobserve(el);
     }
   }),{threshold:.6});
   counters.forEach(el=>cio.observe(el));
+  const sysBar=document.getElementById("sysBar");
+  if(sysBar){const sio=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){sysBar.style.width="100%";sio.unobserve(e)}})},{threshold:.5});sio.observe(sysBar);}
 
-  const btns=document.querySelectorAll(".fbtn");
-  const tools=document.querySelectorAll("#toolgrid .tool");
-  btns.forEach(b=>b.addEventListener("click",()=>{
-    btns.forEach(x=>x.classList.remove("active"));b.classList.add("active");
-    const f=b.dataset.f;
+  // ---------- Eco tool filtering ----------
+  const btns=document.querySelectorAll(".efbtn");
+  const tools=document.querySelectorAll("#toolgrid .eco-tool");
+  function applyFilter(f){
+    btns.forEach(x=>x.classList.toggle("active",x.dataset.f===f));
     tools.forEach(t=>{
       const show=f==="all"||t.dataset.cat===f;
       t.classList.toggle("hide",!show);
       if(show){t.style.animation="none";void t.offsetWidth;t.style.animation="fade .4s ease";}
     });
-  }));
+  }
+  btns.forEach(b=>b.addEventListener("click",()=>applyFilter(b.dataset.f)));
 
+  // ---------- Command center -> filter + scroll ----------
+  document.querySelectorAll(".cmd-card[data-filter]").forEach(c=>{
+    c.addEventListener("click",e=>{
+      e.preventDefault();
+      applyFilter(c.dataset.filter);
+      document.getElementById("ecosystem").scrollIntoView({behavior:"smooth"});
+    });
+  });
+
+  // ---------- Workflow engine ----------
+  const wfs=[
+    {t:"Query Optimization",nodes:[{n:"Requirement",c:"stage"},{n:"ChatGPT",c:"stage"},{n:"DeepSeek",c:"stage"},{n:"Validation",c:"stage"},{n:"Production",c:"goal"}]},
+    {t:"Problem Solving",nodes:[{n:"Problem",c:"stage"},{n:"DeepSeek",c:"stage"},{n:"Claude",c:"stage"},{n:"ChatGPT Verify",c:"stage"},{n:"Solution",c:"goal"}]},
+    {t:"Documentation",nodes:[{n:"Requirement",c:"stage"},{n:"ChatGPT",c:"stage"},{n:"Claude",c:"stage"},{n:"Arena Review",c:"stage"},{n:"Final Doc",c:"goal"}]},
+    {t:"Research",nodes:[{n:"References",c:"stage"},{n:"NotebookLM",c:"stage"},{n:"Gemini",c:"stage"},{n:"Perplexity",c:"stage"},{n:"Final Analysis",c:"goal"}]},
+    {t:"Dashboard & Analytics",nodes:[{n:"Raw Data",c:"stage"},{n:"Julius AI",c:"stage"},{n:"Power BI Copilot",c:"stage"},{n:"Dashboard",c:"goal"}]},
+    {t:"Visual Planning",nodes:[{n:"Idea",c:"stage"},{n:"Stitch AI",c:"stage"},{n:"Figma AI",c:"stage"},{n:"Canva AI",c:"stage"},{n:"Presentation",c:"goal"}]}
+  ];
+  const wfTitle=document.getElementById("wfTitle");
+  const wfNodes=document.getElementById("wfNodes");
+  function renderWF(i){
+    wfTitle.textContent=wfs[i].t;
+    wfNodes.innerHTML="";
+    wfs[i].nodes.forEach((node,idx)=>{
+      const d=document.createElement("div");
+      d.className="wf-node "+node.c;
+      d.textContent=node.n;
+      d.style.animationDelay=(idx*0.15)+"s";
+      wfNodes.appendChild(d);
+      if(idx<wfs[i].nodes.length-1){
+        const l=document.createElement("div");
+        l.className="wf-link";l.textContent="↓";l.style.animationDelay=(idx*0.15)+"s";
+        wfNodes.appendChild(l);
+      }
+    });
+  }
+  renderWF(0);
+  document.querySelectorAll(".wf-item").forEach(item=>{
+    item.addEventListener("click",()=>{
+      document.querySelectorAll(".wf-item").forEach(x=>x.classList.remove("active"));
+      item.classList.add("active");
+      renderWF(+item.dataset.wf);
+    });
+  });
+
+  // ---------- Mobile menu ----------
+  const burger=document.getElementById("burgerBtn"),mmenu=document.getElementById("mmenu");
+  burger.addEventListener("click",()=>mmenu.classList.add("open"));
+  document.getElementById("mmenuClose").addEventListener("click",()=>mmenu.classList.remove("open"));
+  mmenu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>mmenu.classList.remove("open")));
+
+  // ---------- Back to top ----------
   const tb=document.getElementById("topbtn");
   window.addEventListener("scroll",()=>tb.classList.toggle("show",window.scrollY>500),{passive:true});
   tb.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+
+  // ---------- Subscribe ----------
+  const subForm=document.getElementById("subForm");
+  subForm.addEventListener("submit",e=>{
+    e.preventDefault();
+    subForm.querySelector("button").textContent="✓ Subscribed";
+    subForm.querySelector("button").style.background="var(--teal)";
+  });
+
+  // ---------- Command search (⌘K) ----------
+  const overlay=document.getElementById("searchOverlay");
+  const sInput=document.getElementById("searchInput");
+  const sResults=document.getElementById("searchResults");
+  const sBtn=document.getElementById("searchBtn");
+  const INDEX=[
+    {g:"Documents",t:"Claude ২৫ সেটিংস — Visual Guide",d:"claude-guide.html",i:"📘",h:"files/claude-guide.html"},
+    {g:"Documents",t:"Database Team AI Ecosystem",d:"db-guide.html",i:"🗄️",h:"files/db-guide.html"},
+    {g:"Documents",t:"ECRM Tutorial — Business ও Logic",d:"ecrm-tutorial.html",i:"📈",h:"files/ecrm-tutorial.html"},
+    {g:"Documents",t:"eCRM Complete Documentation",d:"eCRM_Complete_Documentation.html",i:"📚",h:"files/eCRM_Complete_Documentation.html"},
+    {g:"Documents",t:"Page1 — Claude ২৫টি সেটিংস",d:"Page1.md",i:"📄",h:"files/Page1.md"},
+    {g:"Documents",t:"Page2 — Database Team AI Ecosystem",d:"Page2.md",i:"📄",h:"files/Page2.md"},
+    {g:"Documents",t:"Complete Combined Guide",d:"COMBINED-GUIDE.md",i:"📚",h:"files/COMBINED-GUIDE.md"},
+    {g:"Documents",t:"Database Team — আমাদের টিম",d:"team.html",i:"👥",h:"files/team.html"},
+    {g:"Documents",t:"Gamified Recruitment System Docs",d:"gamified-recruitment-docs (1).html",i:"🎮",h:"files/gamified-recruitment-docs%20(1).html"},
+    {g:"Tools",t:"ChatGPT",d:"Core · SQL Explanation",i:"💬",h:"#ecosystem"},
+    {g:"Tools",t:"DeepSeek",d:"Core · Query Debug",i:"🐋",h:"#ecosystem"},
+    {g:"Tools",t:"Claude AI",d:"Core · Long Context",i:"🧠",h:"#ecosystem"},
+    {g:"Tools",t:"Gemini + NotebookLM",d:"Core · Research",i:"✨",h:"#ecosystem"},
+    {g:"Tools",t:"Qwen AI",d:"Core · Fast Response",i:"⚡",h:"#ecosystem"},
+    {g:"Tools",t:"Arena AI",d:"Core · Planning",i:"🥊",h:"#ecosystem"},
+    {g:"Tools",t:"Stitch AI",d:"Design · User Flow",i:"🎨",h:"#ecosystem"},
+    {g:"Tools",t:"Figma AI",d:"Design · UI/UX",i:"🖌️",h:"#ecosystem"},
+    {g:"Tools",t:"Meigen AI",d:"Design · Creative Asset",i:"🖼️",h:"#ecosystem"},
+    {g:"Tools",t:"Canva AI",d:"Design · Reports",i:"🎯",h:"#ecosystem"},
+    {g:"Tools",t:"GitHub Copilot",d:"Dev · SQL Writing",i:"🚀",h:"#ecosystem"},
+    {g:"Tools",t:"Cursor AI",d:"Dev · Refactoring",i:"💻",h:"#ecosystem"},
+    {g:"Tools",t:"Windsurf AI",d:"Dev · Rapid Prototyping",i:"🌊",h:"#ecosystem"},
+    {g:"Tools",t:"Perplexity AI",d:"Dev · Research",i:"🔎",h:"#ecosystem"},
+    {g:"Tools",t:"Julius AI",d:"Data · Analytics",i:"📈",h:"#ecosystem"},
+    {g:"Tools",t:"Power BI Copilot",d:"Data · KPI Review",i:"📊",h:"#ecosystem"},
+    {g:"Tools",t:"Tableau Pulse AI",d:"Data · Business Analytics",i:"📉",h:"#ecosystem"},
+    {g:"Tools",t:"Otter AI",d:"Meeting · Transcription",i:"🎙️",h:"#ecosystem"},
+    {g:"Tools",t:"Fireflies AI",d:"Meeting · Summarize",i:"🔥",h:"#ecosystem"},
+    {g:"Workflows",t:"Query Optimization",d:"Requirement → ChatGPT → Production",i:"⚡",h:"#workflows"},
+    {g:"Workflows",t:"Problem Solving",d:"Problem → DeepSeek → Solution",i:"🔧",h:"#workflows"},
+    {g:"Workflows",t:"Documentation",d:"Requirement → ChatGPT → Final Doc",i:"📝",h:"#workflows"},
+    {g:"Workflows",t:"Research",d:"References → NotebookLM → Analysis",i:"🔍",h:"#workflows"},
+    {g:"Workflows",t:"Dashboard & Analytics",d:"Raw Data → Julius → Dashboard",i:"📊",h:"#workflows"},
+    {g:"Workflows",t:"Visual Planning",d:"Idea → Stitch → Figma → Presentation",i:"🎨",h:"#workflows"},
+    {g:"Team",t:"Sohanur Rahman",d:"Senior Data Analyst",i:"👤",h:"#team"},
+    {g:"Team",t:"Rahat Maksud Pranto",d:"Data Analyst",i:"👤",h:"#team"},
+    {g:"Team",t:"Md Ahsamul Haque",d:"Junior Data Analyst · Author",i:"👤",h:"files/author.html"},
+    {g:"Team",t:"Shajib Kumar Shaha",d:"Jr. Database Engineer",i:"👤",h:"#team"},
+    {g:"Team",t:"Tahima",d:"ML Engineer",i:"👤",h:"#team"},
+    {g:"ECRM",t:"ECRM Knowledge Base",d:"Campaign → Contact → Survey → JML → Verification → Reporting",i:"📈",h:"#ecrm"},
+    {g:"Tutorial",t:"ECRM Tutorial — Business & Problem Solving",d:"Business logic → 5 Analytics Tasks · Practice Tasks · Reports",i:"🎓",h:"files/tutorial.html"},
+    {g:"Tutorial",t:"Problem Solving — Analytics Tasks",d:"Campaign 161 · 5 tasks · business question → SQL logic",i:"🧠",h:"files/tutorial.html#problems"},
+    {g:"Author",t:"Author Page — Profile & Presentation",d:"Author · GitHub · Video",i:"👤",h:"files/author.html"}
+  ];
+  function openSearch(){
+    overlay.classList.add("open");
+    document.body.style.overflow="hidden";
+    sInput.value="";renderSearch("");sInput.focus();
+  }
+  function closeSearch(){
+    overlay.classList.remove("open");
+    document.body.style.overflow="";
+  }
+  function renderSearch(q){
+    q=q.trim().toLowerCase();
+    sResults.innerHTML="";
+    if(!q){sResults.innerHTML='<div class="search-empty">Type to search documents, AI tools, workflows, team, ECRM…</div>';return;}
+    const groups={};
+    INDEX.forEach(it=>{
+      const hay=(it.t+" "+it.d).toLowerCase();
+      if(hay.includes(q)){(groups[it.g]=groups[it.g]||[]).push(it);}
+    });
+    const keys=Object.keys(groups);
+    if(!keys.length){sResults.innerHTML='<div class="search-empty">No results for "'+q+'"</div>';return;}
+    keys.forEach(g=>{
+      const gl=document.createElement("div");gl.className="sr-group";gl.textContent=g;gl.style.gridColumn="1 / -1";
+      sResults.appendChild(gl);
+      groups[g].forEach(it=>{
+        const row=document.createElement("a");
+        row.className="sr-item";row.href=it.h;
+        row.style.display="flex";row.style.textDecoration="none";row.style.color="inherit";
+        row.innerHTML='<span class="sri">'+it.i+'</span><span class="srt">'+it.t+'</span><span class="srd">'+it.d+'</span>';
+        row.addEventListener("click",()=>closeSearch());
+        sResults.appendChild(row);
+      });
+    });
+  }
+  sBtn.addEventListener("click",openSearch);
+  overlay.addEventListener("click",e=>{if(e.target===overlay)closeSearch();});
+  sInput.addEventListener("input",()=>renderSearch(sInput.value));
+  document.addEventListener("keydown",e=>{
+    if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();overlay.classList.contains("open")?closeSearch():openSearch();}
+    if(e.key==="Escape")closeSearch();
+  });
 </script>
 </body>
 </html>
