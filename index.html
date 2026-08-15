@@ -370,6 +370,7 @@
   @media (max-width:960px){
     nav.topnav{display:none}
     .burger{display:grid;place-items:center}
+    .topbar>div>a.go{display:none}
     .eco-stages{flex-direction:column}
     .eco-arrow{transform:rotate(90deg);align-self:center;padding:6px 0}
     .ecrm-feature{grid-template-columns:1fr;padding:28px}
@@ -386,6 +387,10 @@
     .foot-grid{grid-template-columns:1fr}
     .final-cta{margin:0 14px;padding:44px 22px}
     .hero .cta .btn{width:100%;justify-content:center}
+    .search-btn span,.search-btn kbd{display:none}
+    .search-btn{padding:9px 11px}
+    .ecrm-flow .fmeta{grid-template-columns:1fr}
+    .ref-grid{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -1030,9 +1035,9 @@
 
   // ---------- Mobile menu ----------
   const burger=document.getElementById("burgerBtn"),mmenu=document.getElementById("mmenu");
-  burger.addEventListener("click",()=>mmenu.classList.add("open"));
-  document.getElementById("mmenuClose").addEventListener("click",()=>mmenu.classList.remove("open"));
-  mmenu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>mmenu.classList.remove("open")));
+  burger.addEventListener("click",()=>{mmenu.classList.add("open");document.body.style.overflow="hidden"});
+  document.getElementById("mmenuClose").addEventListener("click",()=>{mmenu.classList.remove("open");document.body.style.overflow=""});
+  mmenu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{mmenu.classList.remove("open");document.body.style.overflow=""}));
 
   // ---------- Back to top ----------
   const tb=document.getElementById("topbtn");

@@ -132,7 +132,7 @@
   .flow span{font-size:14.5px;font-weight:600;border:1px solid var(--line-strong);border-radius:999px;padding:7px 15px;background:var(--bg)}
   .flow i{color:var(--amber);font-style:normal;font-weight:800}
 
-  .tables{width:100%;border-collapse:collapse;margin-top:8px}
+  .tables{width:100%;border-collapse:collapse;margin-top:8px;display:block;overflow-x:auto;white-space:nowrap}
   .tables th{font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);text-align:left;padding:10px 14px;border-bottom:2px solid var(--line-strong)}
   .tables td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink-soft);vertical-align:top}
   .tables tr:last-child td{border-bottom:none}
@@ -175,6 +175,11 @@
     .burger{display:grid;place-items:center}
     .layout{grid-template-columns:1fr}
     nav.toc{position:static;max-height:none}
+  }
+  @media (max-width:560px){
+    body{font-size:16px}
+    .drive-frame{min-height:340px}
+    .grid{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}

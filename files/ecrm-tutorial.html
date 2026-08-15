@@ -62,6 +62,14 @@
   nav.topnav a.go{background:var(--amber);color:#fff;font-weight:600;box-shadow:0 8px 20px -10px rgba(217,122,31,.7)}
   nav.topnav a.go:hover{transform:translateY(-1px)}
 
+  /* ---------- Mobile menu ---------- */
+  .burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;width:42px;height:42px;font-size:20px;cursor:pointer;color:var(--ink);place-items:center}
+  .mmenu{display:none;position:fixed;inset:0;z-index:300;background:rgba(250,246,238,.98);padding:88px 24px 30px;flex-direction:column;gap:6px}
+  .mmenu.open{display:flex}
+  .mmenu a{padding:14px 18px;border-radius:14px;font-weight:600;font-size:17px;text-decoration:none;border:1px solid var(--line);background:var(--paper)}
+  .mmenu a.go{background:var(--amber);color:#fff;border-color:var(--amber)}
+  .mmenu .close{margin-left:auto;background:none;border:none;font-size:26px;cursor:pointer;color:var(--ink)}
+
   /* ---------- Hero ---------- */
   .hero{position:relative;padding:76px 0 44px;overflow:hidden}
   .hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(760px 380px at 78% -8%,rgba(217,122,31,.2),transparent 60%),radial-gradient(640px 360px at 6% 12%,rgba(31,122,92,.14),transparent 55%)}
@@ -194,7 +202,9 @@
   [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
   [data-reveal].in{opacity:1;transform:none}
 
-  @media (max-width:900px){.layout{grid-template-columns:1fr}nav.toc{position:static;max-height:none;display:none}.hero{padding:52px 0 32px}}
+  @media (max-width:900px){nav.topnav{display:none}
+    .burger{display:grid}
+    .layout{grid-template-columns:1fr}nav.toc{position:static;max-height:none;display:none}.hero{padding:52px 0 32px}}
   @media (max-width:560px){body{font-size:16px}.card{padding:20px}.card .idx{font-size:18px;width:32px}.hero h1{font-size:34px}}
   @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
@@ -211,8 +221,19 @@
       <a href="claude-guide.html">Claude Guide</a>
       <a class="go" href="../index.html">Home →</a>
     </nav>
+    <button class="burger" id="burgerBtn" aria-label="Menu">☰</button>
   </div>
 </header>
+<div class="mmenu" id="mmenu">
+  <button class="close" id="mmenuClose" aria-label="Close">✕</button>
+  <a href="../index.html">← Home</a>
+  <a href="../index.html#hub">Documents</a>
+  <a href="team.html">Team</a>
+  <a href="db-guide.html">DB Guide</a>
+  <a href="claude-guide.html">Claude Guide</a>
+  <a class="go" href="../index.html">Home →</a>
+</div>
+
 
 <header class="hero">
   <div class="blob b1"></div>
@@ -982,6 +1003,13 @@
   const counters=document.querySelectorAll("[data-count]");
   const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target,target=+el.dataset.count,dur=1100,start=performance.now();const tick=(now)=>{const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,3);el.textContent=Math.round(target*ease);if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick);cio.unobserve(el)}}),{threshold:.6});
   counters.forEach(el=>cio.observe(el));
+
+  const burger=document.getElementById("burgerBtn"),mmenu=document.getElementById("mmenu");
+  if(burger){
+    burger.addEventListener("click",()=>{mmenu.classList.add("open");document.body.style.overflow="hidden"});
+    document.getElementById("mmenuClose").addEventListener("click",()=>{mmenu.classList.remove("open");document.body.style.overflow=""});
+    mmenu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{mmenu.classList.remove("open");document.body.style.overflow=""}));
+  }
 </script>
 </body>
 </html>

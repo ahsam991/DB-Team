@@ -41,7 +41,7 @@
   html{scroll-behavior:smooth;font-size:16px;scroll-padding-top:80px}
   body{
     font-family:var(--font-body);background:var(--bg);color:var(--ink);
-    line-height:1.8;font-size:16.5px;min-height:100vh;-webkit-font-smoothing:antialiased;
+    line-height:1.8;font-size:16.5px;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
@@ -72,6 +72,13 @@
   .nav-links .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm)}
   .nav-links .btn.solid{background:var(--amber);border-color:var(--amber);color:#fff;box-shadow:0 8px 20px -10px rgba(217,122,31,.7)}
   .nav-links .btn.solid:hover{transform:translateY(-1px);filter:brightness(1.06)}
+  .nav-burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;width:42px;height:42px;font-size:20px;cursor:pointer;color:var(--ink);place-items:center}
+  .mmenu{display:none;position:fixed;inset:0;z-index:300;background:rgba(250,246,238,.98);padding:88px 24px 30px;flex-direction:column;gap:6px}
+  .mmenu.open{display:flex}
+  .mmenu a{padding:14px 18px;border-radius:14px;font-weight:600;font-size:17px;text-decoration:none;border:1px solid var(--line);background:var(--paper);font-family:var(--font-body)}
+  .mmenu a.btn{display:inline-flex;align-items:center;gap:8px}
+  .mmenu a.go{background:var(--amber);color:#fff;border-color:var(--amber)}
+  .mmenu .close{margin-left:auto;background:none;border:none;font-size:26px;cursor:pointer;color:var(--ink)}
 
   /* ---------- Hero ---------- */
   .hero-header{position:relative;padding:64px 0 40px;overflow:hidden}
@@ -287,8 +294,16 @@
     .content-wrapper h2{font-size:1.4rem}
     .content-wrapper table{font-size:.8rem}
     .content-wrapper table th,.content-wrapper table td{padding:.5rem .6rem}
-    .top-nav .nav-links a:not(.btn){display:none}
+    .top-nav .nav-links{display:none}
+    .nav-burger{display:grid}
+    .top-nav{padding:0 16px}
     .search-results{left:0;padding:1.5rem}
+    .graph-info{display:none}
+    .graph-body #graph-svg{min-width:0}
+    .graph-modal-header{padding:12px 16px}
+    .graph-legend{padding:8px 12px;gap:10px}
+    .graph-controls{flex-direction:column;align-items:stretch;gap:8px}
+    .graph-controls .graph-search,.graph-controls .graph-select{width:100%}
   }
   @media print{.top-nav,.back-to-top,.reading-progress,.particles-bg,.sidebar-toc{display:none!important}body{background:#fff;color:#000}.content-wrapper h2{background:#f5f5f5;border-left-color:#333}}
   @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
@@ -317,7 +332,17 @@
             <a class="btn solid" onclick="document.getElementById('graphModal').classList.add('active');initKnowledgeGraph();">◉ Knowledge Graph</a>
             <a class="btn" href="../index.html">Home →</a>
         </div>
+        <button class="nav-burger" id="navBurgerBtn" aria-label="Menu">☰</button>
     </nav>
+    <div class="mmenu" id="mmenu">
+        <button class="close" id="mmenuClose" aria-label="Close">✕</button>
+        <a href="../index.html">← Home</a>
+        <a href="#part-i-business-documentation">Business Docs</a>
+        <a href="#part-ii">Database Docs</a>
+        <a href="#part-iii">Summary</a>
+        <a class="btn go" onclick="document.getElementById('mmenu').classList.remove('open');document.getElementById('graphModal').classList.add('active');initKnowledgeGraph();">◉ Knowledge Graph</a>
+        <a class="go" href="../index.html">Home →</a>
+    </div>
 
     <!-- Hero Header -->
     <header class="hero-header">
@@ -20566,6 +20591,17 @@ daily_material_acceptance_maps
 
     <!-- JavaScript -->
     <script>
+        // ===== MOBILE MENU =====
+        (function() {
+            const burger = document.getElementById('navBurgerBtn');
+            const mmenu = document.getElementById('mmenu');
+            if (!burger || !mmenu) return;
+            burger.addEventListener('click', () => { mmenu.classList.add('open'); document.body.style.overflow = 'hidden'; });
+            const close = document.getElementById('mmenuClose');
+            if (close) close.addEventListener('click', () => { mmenu.classList.remove('open'); document.body.style.overflow = ''; });
+            mmenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mmenu.classList.remove('open'); document.body.style.overflow = ''; }));
+        })();
+
         // ===== PARTICLES BACKGROUND =====
         (function() {
             const container = document.getElementById('particles');
