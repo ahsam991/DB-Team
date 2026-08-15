@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memories — Database Team | কাজকর্ম শিখ</title>
+<meta name="description" content="কাজকর্ম শিখ · Team Memories — V2 Technologies Database Team-এর অফিস ট্যুর, উৎসব, workshop ও celebration-এর সব ছবি ও পোস্ট, সরাসরি LinkedIn থেকে auto-fetch।">
+<meta name="theme-color" content="#faf6ee">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf6ee;
+    --bg-soft:#f1ead9;
+    --paper:#fffdf7;
+    --paper-2:#f7f1e3;
+    --ink:#231b10;
+    --ink-soft:#574b38;
+    --muted:#8b7c63;
+    --amber:#d97a1f;
+    --amber-2:#f2b134;
+    --teal:#1f7a5c;
+    --blue:#3b6fb6;
+    --red:#c4453c;
+    --purple:#8a5fb6;
+    --dark:#171512;
+    --dark-line:rgba(250,246,238,.14);
+    --line:rgba(35,27,16,.14);
+    --line-strong:rgba(35,27,16,.3);
+    --radius:16px;
+    --shadow:0 26px 60px -30px rgba(35,27,16,.35);
+    --shadow-sm:0 12px 28px -16px rgba(35,27,16,.28);
+    --font-body:"Hind Siliguri",sans-serif;
+    --font-disp:"Fraunces",serif;
+    --font-mono:"IBM Plex Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{font-family:var(--font-body);background:var(--bg);color:var(--ink);line-height:1.8;font-size:17px;overflow-x:hidden}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  .mono{font-family:var(--font-mono)}
+  a{color:inherit}
+
+  /* ---------- Topbar ---------- */
+  .top{position:sticky;top:0;z-index:100;background:rgba(250,246,238,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;text-decoration:none}
+  .brand .mark{width:32px;height:32px;border-radius:10px;background:var(--amber);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:15px;box-shadow:0 6px 16px -6px rgba(217,122,31,.6)}
+  nav.topnav{display:flex;gap:4px;align-items:center}
+  nav.topnav a{color:var(--ink-soft);text-decoration:none;font-size:14.5px;font-weight:500;padding:8px 14px;border-radius:999px;transition:all .2s}
+  nav.topnav a:hover{color:var(--ink);background:var(--paper-2)}
+  nav.topnav a.on{color:var(--amber);font-weight:600}
+  nav.topnav a.go{background:var(--amber);color:#fff;font-weight:600;box-shadow:0 8px 20px -10px rgba(217,122,31,.7)}
+  nav.topnav a.go:hover{transform:translateY(-1px)}
+  .burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;width:42px;height:42px;font-size:20px;cursor:pointer;color:var(--ink)}
+  .mmenu{display:none;position:fixed;inset:0;z-index:300;background:rgba(250,246,238,.98);padding:88px 24px 30px;flex-direction:column;gap:6px}
+  .mmenu.open{display:flex}
+  .mmenu a{padding:14px 18px;border-radius:14px;font-weight:600;font-size:17px;text-decoration:none;border:1px solid var(--line);background:var(--paper)}
+  .mmenu a.go{background:var(--amber);color:#fff;border-color:var(--amber)}
+  .mmenu .close{margin-left:auto;background:none;border:none;font-size:26px;cursor:pointer;color:var(--ink)}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;padding:70px 0 44px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(760px 380px at 78% -8%,rgba(217,122,31,.2),transparent 60%),radial-gradient(640px 360px at 6% 12%,rgba(31,122,92,.14),transparent 55%)}
+  .hero .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.45;pointer-events:none;animation:drift 14s ease-in-out infinite}
+  .hero .blob.b1{width:260px;height:260px;background:rgba(242,177,52,.4);top:-70px;right:8%}
+  .hero .blob.b2{width:220px;height:220px;background:rgba(31,122,92,.35);bottom:-50px;left:4%;animation-delay:-7s}
+  @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-20px)}}
+  .hero .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(217,122,31,.1);color:var(--amber);border:1px solid rgba(217,122,31,.35);padding:6px 14px;border-radius:999px;font-family:var(--font-mono);font-size:13px;font-weight:600;letter-spacing:.5px;animation:rise .7s .05s both}
+  .hero .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(217,122,31,.5);animation:ping 2s infinite}
+  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(217,122,31,.5)}70%{box-shadow:0 0 0 11px rgba(217,122,31,0)}100%{box-shadow:0 0 0 0 rgba(217,122,31,0)}}
+  .hero h1{font-family:var(--font-disp);font-weight:800;font-size:clamp(34px,6vw,56px);line-height:1.1;letter-spacing:-1px;max-width:860px;margin-top:22px;animation:rise .7s .15s both}
+  .hero h1 em{font-style:italic;color:var(--teal)}
+  .hero p.lead{margin-top:20px;color:var(--ink-soft);font-size:19px;max-width:700px;font-weight:300;animation:rise .7s .25s both}
+  .hero-stats{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;animation:rise .7s .35s both}
+  .stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 22px;min-width:132px;transition:all .3s}
+  .stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:rgba(217,122,31,.4)}
+  .stat b{display:block;font-family:var(--font-disp);font-size:30px;color:var(--teal);font-weight:800;line-height:1}
+  .stat span{font-size:13.5px;color:var(--muted);font-weight:500}
+  @keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+  /* ---------- Auto-fetch note ---------- */
+  .note{display:flex;align-items:flex-start;gap:14px;background:rgba(31,122,92,.07);border:1px solid rgba(31,122,92,.25);border-left:4px solid var(--teal);border-radius:var(--radius);padding:18px 20px;margin:34px 0 0;font-size:15.5px;color:var(--ink-soft)}
+  .note .n-ic{flex-shrink:0;width:40px;height:40px;border-radius:10px;background:rgba(31,122,92,.12);display:grid;place-items:center;font-size:19px}
+  .note .label{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--teal);text-transform:uppercase;display:block;margin-bottom:4px}
+  .note p{font-weight:300}
+  .note p b{color:var(--ink)}
+
+  /* ---------- Memories wall ---------- */
+  .wall{padding:40px 0 80px}
+  .col-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:24px}
+  .col-head h2{font-family:var(--font-disp);font-size:clamp(24px,3.4vw,34px);font-weight:800;letter-spacing:-.5px}
+  .col-head h2 span{color:var(--amber)}
+  .col-head p{color:var(--muted);font-size:15px}
+  .masonry{columns:3 340px;column-gap:22px}
+  .m-card{break-inside:avoid;margin-bottom:22px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:all .3s}
+  .m-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(217,122,31,.4)}
+  .m-head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .m-ava{flex-shrink:0;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-disp);font-weight:800;font-size:18px;color:#fff}
+  .m-head b{font-size:15.5px;font-weight:700;display:block;line-height:1.3}
+  .m-head span{font-size:12.5px;color:var(--muted);font-family:var(--font-mono)}
+
+  /* click-to-load post */
+  .m-post{position:relative;cursor:pointer;background:#171512}
+  .m-thumb{width:100%;display:block;aspect-ratio:4/3;object-fit:cover;filter:brightness(.82);transition:filter .3s,transform .6s}
+  .m-post:hover .m-thumb{filter:brightness(.95);transform:scale(1.02)}
+  .m-play{position:absolute;inset:0;display:grid;place-items:center}
+  .m-play .pill{display:inline-flex;align-items:center;gap:10px;background:rgba(250,246,238,.95);color:var(--ink);font-family:var(--font-mono);font-size:13px;font-weight:700;letter-spacing:.5px;padding:12px 22px;border-radius:999px;box-shadow:0 18px 40px -14px rgba(0,0,0,.55);transition:transform .25s}
+  .m-play .pill .tico{width:34px;height:34px;border-radius:50%;background:var(--amber);color:#fff;display:grid;place-items:center;font-size:15px;flex-shrink:0}
+  .m-post:hover .pill{transform:scale(1.05)}
+  .m-post .tcount{position:absolute;top:14px;right:14px;background:rgba(23,21,18,.72);color:#fff;font-family:var(--font-mono);font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;backdrop-filter:blur(4px)}
+  .m-caption{padding:16px 18px;font-size:14.5px;color:var(--ink-soft);font-weight:300}
+  .m-caption .clabel{font-family:var(--font-mono);font-size:10.5px;font-weight:700;letter-spacing:1.5px;color:var(--amber);text-transform:uppercase;display:block;margin-bottom:4px}
+  .m-caption p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+  .m-embed{width:100%;height:720px}
+  .m-embed iframe{width:100%;height:100%;border:none;display:block}
+  .m-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--paper-2)}
+  .m-foot .li{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:12px;color:var(--blue);text-decoration:none;font-weight:600}
+  .m-foot .li:hover{text-decoration:underline}
+  .m-foot .count{font-size:12.5px;color:var(--muted)}
+
+  /* ---------- How to add ---------- */
+  .howto{background:var(--paper);border:1px dashed var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin-top:44px}
+  .howto h3{font-family:var(--font-disp);font-size:19px;font-weight:800;margin-bottom:8px;color:var(--amber)}
+  .howto ol{padding-left:20px;color:var(--ink-soft);font-size:15.5px;font-weight:300}
+  .howto li{margin-bottom:6px}
+  .howto code{font-family:var(--font-mono);font-size:13px;background:var(--bg-soft);border:1px solid var(--line);padding:1px 7px;border-radius:6px;color:var(--teal)}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--dark);color:#f4efe4;margin-top:70px;padding:36px 0 28px}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+  .foot-bottom .mono{font-family:var(--font-mono);font-size:11px;color:rgba(244,239,228,.4);letter-spacing:.5px}
+  .foot-bottom span{font-size:13px;color:rgba(244,239,228,.5)}
+  .foot-links{display:flex;gap:22px;flex-wrap:wrap}
+  .foot-links a{color:rgba(244,239,228,.6);text-decoration:none;font-size:13.5px;transition:color .2s}
+  .foot-links a:hover{color:var(--amber-2)}
+
+  #topbtn{position:fixed;bottom:24px;right:24px;z-index:90;width:48px;height:48px;border-radius:50%;border:none;background:var(--amber);color:#fff;font-size:20px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;box-shadow:0 10px 24px -10px rgba(217,122,31,.8)}
+  #topbtn.show{opacity:1;pointer-events:auto}
+  #topbtn:hover{transform:translateY(-3px)}
+
+  @media (max-width:960px){
+    nav.topnav{display:none}
+    .burger{display:grid;place-items:center}
+  }
+  @media (max-width:560px){
+    body{font-size:16px}
+    .masonry{columns:1}
+    .m-embed{height:640px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== TOPBAR ===== -->
+<header class="top">
+  <div class="wrap topbar">
+    <a class="brand" href="../index.html">
+      <span class="mark">ক</span>
+      <span class="bt"><b>কাজকর্ম শিখ</b></span>
+    </a>
+    <nav class="topnav">
+      <a href="../index.html#center">Knowledge</a>
+      <a href="../index.html#ecosystem">AI Tools</a>
+      <a href="../index.html#docs">Docs</a>
+      <a href="team.html">Team</a>
+      <a class="on" href="memories.html">Memories</a>
+      <a class="go" href="ecrm-tutorial.html">Full ECRM →</a>
+    </nav>
+    <button class="burger" id="burgerBtn" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<!-- ===== MOBILE MENU ===== -->
+<div class="mmenu" id="mmenu">
+  <button class="close" id="mmenuClose" aria-label="Close">✕</button>
+  <a href="../index.html">← Home</a>
+  <a href="../index.html#center">Knowledge</a>
+  <a href="../index.html#ecosystem">AI Tools</a>
+  <a href="team.html">Team</a>
+  <a class="on" href="memories.html">Memories</a>
+  <a class="go" href="ecrm-tutorial.html">Full ECRM →</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="top">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="wrap">
+    <span class="badge"><span class="dot"></span> Database Team Memories</span>
+    <h1>আমাদের <em>Memories</em> — এক ফ্রেমে</h1>
+    <p class="lead">Office tour, উৎসব, workshop, birthday celebration — V2 Technologies Database Team-এর সব ছবি ও পোস্ট। প্রতিটা কার্ড LinkedIn post থেকে caption-সহ আসে — ফটো যতগুলোই হোক, সব নিজে থেকেই load হয়।</p>
+    <div class="hero-stats">
+      <div class="stat"><b data-count="4">0</b><span>Memory Posts</span></div>
+      <div class="stat"><b data-count="29">0</b><span>Auto Photos</span></div>
+      <div class="stat"><b>Auto</b><span>Caption Fetch</span></div>
+      <div class="stat"><b>Live</b><span>LinkedIn Sync</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="note">
+    <span class="n-ic">🪄</span>
+    <div>
+      <span class="label">Auto-fetch</span>
+      <p>প্রতিটি কার্ডের ছবি-প্রিভিউ সবসময় দেখাবে। <b>Load Post</b> চাপলে LinkedIn-এর official embed widget থেকে caption, reaction ও <b>সমস্ত ফটো</b> স্বয়ংক্রিয়ভাবে লোড হয়। নতুন post যোগ করলেই ওয়ালে চলে আসবে।</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MEMORIES WALL ===== -->
+<section class="wall">
+  <div class="wrap">
+    <div class="col-head">
+      <div>
+        <h2>Team <span>Memories</span></h2>
+        <p>সব পোস্ট তাদের নিজের LinkedIn source থেকে auto-fetch হচ্ছে</p>
+      </div>
+    </div>
+    <div class="masonry" id="wall">
+
+      <!-- Memory 1 · Jolojongoler Kabbo -->
+      <div class="m-card">
+        <div class="m-head">
+          <span class="m-ava" style="background:linear-gradient(135deg,#d97a1f,#f2b134)">V</span>
+          <div><b>V2 Technologies Ltd</b><span>Office Tour · JolOJongoler Kabbo</span></div>
+        </div>
+        <div class="m-post" onclick="loadPost(this,'https://www.linkedin.com/embed/feed/update/urn:li:activity:7488550808767352832')">
+          <img class="m-thumb" src="https://media.licdn.com/dms/image/v2/D5622AQH63qL8C50y0g/feedshare-shrink_800/B56Z.ytRwjG4Ac-/0/1785409641784?e=2147483647&v=beta&t=G45wmhD0PQo88iR6no-8LBpJ5EKel3x7BsDwGD5jaaA" alt="JolOJongoler Kabbo office tour" loading="lazy">
+          <span class="tcount">📷 5</span>
+          <div class="m-play"><span class="pill"><span class="tico">▶</span> Load Post</span></div>
+        </div>
+        <div class="m-caption">
+          <span class="clabel">Caption · Auto-fetch</span>
+          <p>The wait is finally over! Our most-awaited office tour took us to the breathtaking #JolOJongolerKabbo — a perfect escape into nature with the incredible people who make V2 Technologies Ltd. what it is…</p>
+        </div>
+        <div class="m-foot">
+          <a class="li" href="https://www.linkedin.com/posts/v2-tech-ltd_jolojongolerkabbo-jolojongolerkabbo-v2technologies-activity-7488550808767352832-rVbA" target="_blank" rel="noopener">View on LinkedIn ↗</a>
+          <span class="count">আগস্ট ২০২৬ · 31 reactions</span>
+        </div>
+      </div>
+
+      <!-- Memory 2 · Excel BI Workshop -->
+      <div class="m-card">
+        <div class="m-head">
+          <span class="m-ava" style="background:linear-gradient(135deg,#1f7a5c,#5fd4a4)">V</span>
+          <div><b>V2 Technologies Ltd</b><span>3-Day Excel BI Workshop</span></div>
+        </div>
+        <div class="m-post" onclick="loadPost(this,'https://www.linkedin.com/embed/feed/update/urn:li:activity:7375425087514210304')">
+          <img class="m-thumb" src="https://media.licdn.com/dms/image/v2/D5622AQGyjLtTuTrPdQ/feedshare-shrink_800/B56ZlrGA_WJ4Ag-/0/1758438365931?e=2147483647&v=beta&t=KdQj5KKc7OG2toyO-cfrdWqJdXvqr0PSWQBvke-mXCc" alt="Excel Business Intelligence workshop" loading="lazy">
+          <span class="tcount">📷 16</span>
+          <div class="m-play"><span class="pill"><span class="tico">▶</span> Load Post</span></div>
+        </div>
+        <div class="m-caption">
+          <span class="clabel">Caption · Auto-fetch</span>
+          <p>We are delighted to announce the successful completion of our 3-Day In-House Workshop on Excel for Business Intelligence at V2 Technologies Ltd. on 04 September 2025. Our team explored everything from Excel fundamentals to advanced BI techniques…</p>
+        </div>
+        <div class="m-foot">
+          <a class="li" href="https://www.linkedin.com/posts/v2-tech-ltd_excel-businessintelligence-teamwork-activity-7375425087514210304-ay8B" target="_blank" rel="noopener">View on LinkedIn ↗</a>
+          <span class="count">সেপ্টেম্বর ২০২৫ · 46 reactions</span>
+        </div>
+      </div>
+
+      <!-- Memory 3 · Birthday wishes -->
+      <div class="m-card">
+        <div class="m-head">
+          <span class="m-ava" style="background:linear-gradient(135deg,#8a5fb6,#c4a1f0)">A</span>
+          <div><b>MD AHSAMUL HAQUE</b><span>Birthday thanks to V2 family</span></div>
+        </div>
+        <div class="m-post" onclick="loadPost(this,'https://www.linkedin.com/embed/feed/update/urn:li:activity:7436346298552713216')">
+          <img class="m-thumb" src="https://media.licdn.com/dms/image/v2/D5622AQEzWVqI7_50_A/feedshare-shrink_800/B56ZzM1jCFIIAc-/0/1772963115541?e=2147483647&v=beta&t=1UWZYzDHIvxBBmiHajyVvLJo1mHypjMVEOAyFOLXdVs" alt="Birthday celebration with the V2 team" loading="lazy">
+          <span class="tcount">📷 3</span>
+          <div class="m-play"><span class="pill"><span class="tico">▶</span> Load Post</span></div>
+        </div>
+        <div class="m-caption">
+          <span class="clabel">Caption · Auto-fetch</span>
+          <p>Thank you, V2 Technologies Ltd, for the BIRTHDAY wishes! I am truly glad to be a part of this wonderful family. I hope this love and kindness continues to inspire me toward greater success…</p>
+        </div>
+        <div class="m-foot">
+          <a class="li" href="https://www.linkedin.com/posts/md-ahsamul-haque_thank-you-v2-technologies-ltd-for-the-ugcPost-7436346297625952256-IxzR" target="_blank" rel="noopener">View on LinkedIn ↗</a>
+          <span class="count">মার্চ ২০২৬ · 47 reactions</span>
+        </div>
+      </div>
+
+      <!-- Memory 4 · Shubho Noboborsho -->
+      <div class="m-card">
+        <div class="m-head">
+          <span class="m-ava" style="background:linear-gradient(135deg,#c4453c,#ff8c8c)">V</span>
+          <div><b>V2 Technologies Ltd</b><span>Shubho Noboborsho ১৪৩৩</span></div>
+        </div>
+        <div class="m-post" onclick="loadPost(this,'https://www.linkedin.com/embed/feed/update/urn:li:activity:7451900531297652736')">
+          <img class="m-thumb" src="https://media.licdn.com/dms/image/v2/D5622AQGFo9_o8S6jgA/feedshare-shrink_800/B56Z2p4Cl7HgAc-/0/1776671533712?e=2147483647&v=beta&t=dkjUwpE7kzJ4XvqAn4DCU1eIcmAFbx4KKhxQUdxH9PY" alt="Shubho Noboborsho celebration" loading="lazy">
+          <span class="tcount">📷 5</span>
+          <div class="m-play"><span class="pill"><span class="tico">▶</span> Load Post</span></div>
+        </div>
+        <div class="m-caption">
+          <span class="clabel">Caption · Auto-fetch</span>
+          <p>শুভ নববর্ষ ১৪৩৩ 🌸 নতুন বছরের নতুন সম্ভাবনায় এগিয়ে যাক আমাদের পথচলা।</p>
+        </div>
+        <div class="m-foot">
+          <a class="li" href="https://www.linkedin.com/posts/v2-tech-ltd_%E0%A6%B6%E0%A6%AD-%E0%A6%A8%E0%A6%AC%E0%A6%AC%E0%A6%B0%E0%A6%B7-%E0%A7%A7%E0%A7%AA%E0%A7%A9%E0%A7%A9-%E0%A6%A8%E0%A6%A4%E0%A6%A8-%E0%A6%AC%E0%A6%9B%E0%A6%B0%E0%A6%B0-%E0%A6%A8%E0%A6%A4%E0%A6%A8-%E0%A6%B8%E0%A6%AE%E0%A6%AD%E0%A6%AC%E0%A6%A8%E0%A6%AF-activity-7451900531297652736-sey4" target="_blank" rel="noopener">View on LinkedIn ↗</a>
+          <span class="count">এপ্রিল ২০২৬ · 29 reactions</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== HOW TO ADD ===== -->
+    <div class="howto">
+      <h3>➕ নতুন memory যোগ করার নিয়ম</h3>
+      <ol>
+        <li>LinkedIn-এ post-এর URL থেকে <code>activity-XXXXXXXXXXXX</code> অংশটা (সংখ্যা) নিন।</li>
+        <li>নতুন একটা <code>.m-card</code> ব্লক কপি করুন, <code>activity</code> ID, cover ছবি আর title বদলে দিন।</li>
+        <li>ফটো কতগুলোই হোক — LinkedIn embed সব auto-fetch করে, কিছুই আলাদা করা লাগে না।</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">
+      <span>© 2026 কাজকর্ম শিখ · Database Team Memories</span>
+      <div class="foot-links">
+        <a href="../index.html">Home</a>
+        <a href="team.html">Team</a>
+        <a href="author.html">Author</a>
+      </div>
+      <span class="mono">memories.html · v2</span>
+    </div>
+  </div>
+</footer>
+
+<button id="topbtn" aria-label="Back to top">↑</button>
+
+<script>
+  const tb=document.getElementById("topbtn");
+  window.addEventListener("scroll",()=>tb.classList.toggle("show",window.scrollY>500),{passive:true});
+  tb.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+  const burger=document.getElementById("burgerBtn"),mmenu=document.getElementById("mmenu");
+  burger.addEventListener("click",()=>{mmenu.classList.add("open");document.body.style.overflow="hidden"});
+  document.getElementById("mmenuClose").addEventListener("click",()=>{mmenu.classList.remove("open");document.body.style.overflow=""});
+  mmenu.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{mmenu.classList.remove("open");document.body.style.overflow=""}));
+
+  const counters=document.querySelectorAll("[data-count]");
+  const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target,target=+el.dataset.count,dur=1100,start=performance.now();const tick=(now)=>{const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,3);el.textContent=Math.round(target*ease);if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick);cio.unobserve(el)}}),{threshold:.6});
+  counters.forEach(el=>cio.observe(el));
+
+  function loadPost(btn,src){
+    if(btn.dataset.loaded)return;
+    const box=document.createElement("div");
+    box.className="m-embed";
+    const f=document.createElement("iframe");
+    f.src=src;
+    f.title="LinkedIn Post";
+    f.loading="lazy";
+    f.allowfullscreen=true;
+    box.appendChild(f);
+    btn.replaceWith(box);
+    box.dataset.loaded="1";
+  }
+</script>
+</body>
+</html>

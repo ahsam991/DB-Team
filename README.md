@@ -24,6 +24,7 @@ A static, deployable project (Vercel / Netlify ready) that packages two guides i
 | [`files/eCRM_Complete_Documentation.html`](files/eCRM_Complete_Documentation.html) | Documentation | **ECRM Complete Database Reference** — ১৩১ table, ৫ views, ১৪ modules, Knowledge Graph, search |
 | [`files/team.html`](files/team.html) | Team Page | Database Team পরিচিতি পেজ |
 | [`files/author.html`](files/author.html) | Author Page | Author profile + GitHub + Project Presentation video |
+| [`files/memories.html`](files/memories.html) | Memories Gallery | Database Team-এর ছবি ও পোস্ট — LinkedIn embed থেকে caption-সহ auto-fetch (click-to-load) |
 | [`files/Page1.md`](files/Page1.md) | Markdown | **Part 1** — Claude ব্যবহারের ২৫টি সেটিংস ও অভ্যাস |
 | [`files/Page2.md`](files/Page2.md) | Markdown | **Part 2** — Database Team AI Ecosystem |
 | [`files/COMBINED-GUIDE.md`](files/COMBINED-GUIDE.md) | Markdown | Page1 + Page2 একসাথে (৭৫০+ লাইন) |
