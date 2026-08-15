@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Database Team AI Ecosystem & Utilization Framework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0e12;
+    --bg-soft: #11161d;
+    --card: #161d26;
+    --card-hover: #1b2430;
+    --border: #26303d;
+    --text: #e6eaf1;
+    --muted: #8b97a8;
+    --accent: #3dd6a8;
+    --accent-2: #7fe0b4;
+    --amber: #f2b134;
+    --blue: #5aa2f0;
+    --radius: 16px;
+    --maxw: 1180px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body {
+    font-family: "Hind Siliguri", "Inter", sans-serif;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(61,214,168,.12), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(242,177,52,.08), transparent 55%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 17px;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 88px 0 56px; position: relative; overflow: hidden; }
+  .hero .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(61,214,168,.12); color: var(--accent-2);
+    border: 1px solid rgba(61,214,168,.35);
+    padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 500;
+    letter-spacing: .4px; margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-size: clamp(34px, 6vw, 56px); line-height: 1.18; font-weight: 700;
+    letter-spacing: -.5px; max-width: 880px;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent-2); }
+  .hero p.lead {
+    margin-top: 20px; color: var(--muted); font-size: 19px; max-width: 660px; font-weight: 300;
+  }
+  .hero-stats {
+    display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap;
+  }
+  .stat {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 22px; min-width: 140px;
+  }
+  .stat b { display: block; font-size: 28px; color: var(--accent-2); font-weight: 700; }
+  .stat span { font-size: 14px; color: var(--muted); }
+
+  /* ---------- Layout ---------- */
+  .layout { display: grid; grid-template-columns: 250px 1fr; gap: 40px; padding-bottom: 80px; }
+
+  /* ---------- Sidebar ---------- */
+  nav.toc {
+    position: sticky; top: 24px; align-self: start;
+    background: var(--bg-soft); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 18px; max-height: calc(100vh - 48px);
+    overflow-y: auto;
+  }
+  nav.toc h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 14px; font-weight: 600; }
+  nav.toc a {
+    display: block; color: var(--muted); text-decoration: none; font-size: 15px;
+    padding: 7px 10px; border-radius: 8px; border-left: 3px solid transparent;
+    transition: all .2s;
+  }
+  nav.toc a:hover { color: var(--text); background: var(--card); }
+  nav.toc a.active { color: var(--accent-2); border-left-color: var(--accent); background: rgba(61,214,168,.08); }
+  nav.toc .sub { padding-left: 14px; font-size: 14px; }
+
+  /* ---------- Sections ---------- */
+  .part { margin-bottom: 56px; }
+  .part-head {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+  }
+  .part-head .num {
+    flex-shrink: 0; width: 54px; height: 54px; border-radius: 14px;
+    display: grid; place-items: center; font-weight: 800; font-size: 22px;
+    font-family: "Inter", sans-serif;
+  }
+  .part-head h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 700; }
+  .part-head p { color: var(--muted); font-size: 15px; }
+
+  .p1 .num { background: linear-gradient(135deg,#3dd6a8,#7fe0b4); color: #0b1a13; }
+  .p2 .num { background: linear-gradient(135deg,#5aa2f0,#7cc0ff); color: #0c1522; }
+  .p3 .num { background: linear-gradient(135deg,#f0a35a,#ffd08c); color: #241507; }
+  .p4 .num { background: linear-gradient(135deg,#a78bfa,#c4b0ff); color: #120d26; }
+  .p5 .num { background: linear-gradient(135deg,#f25c5c,#ff8c8c); color: #24100f; }
+
+  .cards { display: grid; gap: 16px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 26px 28px; display: flex; gap: 20px; transition: transform .2s, border-color .2s;
+  }
+  .card:hover { transform: translateY(-2px); border-color: #3a4656; }
+  .card .idx {
+    flex-shrink: 0; font-family: "Inter", sans-serif; font-weight: 800; font-size: 22px;
+    color: var(--accent-2); opacity: .9; width: 42px; line-height: 1.2;
+  }
+  .card h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 16px; font-weight: 300; }
+  .card p .en, .card h3 .en { color: var(--text); font-weight: 500; }
+  .card .tag {
+    display: inline-block; margin-top: 12px; font-size: 12.5px; font-weight: 500;
+    color: var(--accent-2); background: rgba(61,214,168,.1); border: 1px solid rgba(61,214,168,.25);
+    padding: 3px 10px; border-radius: 999px;
+  }
+
+  /* ---------- Best-for chips ---------- */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .chips span {
+    font-size: 12.5px; font-weight: 500; border: 1px solid var(--border); border-radius: 999px;
+    padding: 4px 12px; color: var(--muted); background: var(--bg-soft);
+  }
+
+  /* ---------- Callouts (Use When) ---------- */
+  .callout {
+    margin-top: 14px; border-left: 3px solid var(--accent); background: rgba(61,214,168,.06);
+    border-radius: 0 10px 10px 0; padding: 14px 18px; font-style: italic; color: var(--text);
+    font-size: 16px;
+  }
+  .callout .label {
+    display: block; font-style: normal; font-size: 12px; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--accent-2); font-weight: 600; margin-bottom: 4px;
+  }
+
+  /* ---------- Workflows ---------- */
+  .flows { display: grid; gap: 16px; }
+  .flow {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 24px 26px;
+  }
+  .flow h3 { font-size: 19px; font-weight: 600; margin-bottom: 16px; color: var(--accent-2); }
+  .flow .chain { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .flow .chain span {
+    font-size: 13.5px; font-weight: 500; border: 1px solid var(--border); border-radius: 8px;
+    padding: 6px 12px; color: var(--muted); background: var(--bg-soft);
+  }
+  .flow .chain span.goal { background: var(--accent); color: #0b1a13; border-color: var(--accent); font-weight: 600; }
+  .flow .chain i { font-family: "Inter", sans-serif; font-style: normal; color: var(--accent); font-weight: 700; }
+
+  /* ---------- Golden rules ---------- */
+  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .rule { background: var(--card); padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-start; }
+  .rule .ck { font-weight: 700; color: var(--accent-2); flex-shrink: 0; }
+  .rule .ck.no { color: #ff8c8c; }
+  .rule p { color: var(--text); font-size: 15.5px; font-weight: 500; }
+  .rule small { display: block; color: var(--muted); font-size: 13px; font-weight: 300; }
+
+  /* ---------- Pro tips ---------- */
+  .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .tip {
+    background: linear-gradient(160deg, var(--card), var(--bg-soft));
+    border: 1px solid var(--border); border-radius: var(--radius); padding: 22px;
+    position: relative; overflow: hidden;
+  }
+  .tip::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), transparent);
+  }
+  .tip p { font-size: 15.5px; color: var(--muted); font-weight: 300; }
+
+  /* ---------- Quick start ---------- */
+  .quick {
+    background: linear-gradient(160deg, #13201b, var(--bg-soft));
+    border: 1px solid var(--border); border-radius: var(--radius); padding: 34px 32px;
+  }
+  .quick h2 { margin-bottom: 22px; font-size: 24px; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; counter-reset: step; }
+  .step {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
+    counter-increment: step; position: relative;
+  }
+  .step::before {
+    content: counter(step); position: absolute; top: -10px; left: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #0b1a13;
+    font-family: "Inter", sans-serif; font-weight: 800; font-size: 13px;
+    width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center;
+  }
+  .step h4 { font-size: 15px; margin-bottom: 6px; }
+  .step p { font-size: 13.5px; color: var(--muted); font-weight: 300; }
+
+  /* ---------- Closing ---------- */
+  .closing {
+    margin-top: 48px; background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 36px; text-align: center;
+  }
+  .closing h2 { font-size: 26px; margin-bottom: 14px; }
+  .closing p { color: var(--muted); max-width: 720px; margin: 0 auto 12px; font-weight: 300; }
+  .closing .key {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 22px;
+  }
+  .closing .key span {
+    background: var(--bg-soft); border: 1px solid var(--border); border-radius: 999px;
+    padding: 8px 18px; font-size: 15px; font-weight: 500;
+  }
+  .closing .key span b { color: var(--accent-2); }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0 40px; text-align: center; color: var(--muted); font-size: 14px; }
+
+  /* ---------- Back to top ---------- */
+  #top {
+    position: fixed; bottom: 26px; right: 26px; z-index: 50;
+    width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--border);
+    background: var(--card); color: var(--accent-2); font-size: 20px; cursor: pointer;
+    opacity: 0; pointer-events: none; transition: opacity .3s; font-family: "Inter", sans-serif;
+  }
+  #top.show { opacity: 1; pointer-events: auto; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { position: static; max-height: none; display: none; }
+    .hero { padding: 56px 0 40px; }
+    .rules { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .card { padding: 20px; }
+    .card .idx { font-size: 18px; width: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="badge">✦ Database Team · Best Tool for Specific Task</div>
+    <h1>Database Team-এর জন্য <em>AI Ecosystem & Utilization Framework</em></h1>
+    <p class="lead">"One Tool for Everything" নয় — প্রতিটি কাজের জন্য সঠিক AI tool বেছে নিন। ১৯টি tool, ৬টি workflow, Golden Rules ও Recommended Stack এক গাইডে।</p>
+    <div class="hero-stats">
+      <div class="stat"><b>১৯</b><span>AI Tools</span></div>
+      <div class="stat"><b>৫</b><span>Sections</span></div>
+      <div class="stat"><b>৬</b><span>Workflows</span></div>
+      <div class="stat"><b>৫ মিনিট</b><span>Quick Start</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="toc" id="toc">
+    <h3>বিষয়সূচী</h3>
+    <a href="#core">১. Core AI Tools</a>
+    <a href="#design" class="sub">৭. Design Tools</a>
+    <a href="#dev" class="sub">১১. Development Tools</a>
+    <a href="#data" class="sub">১৫. Data & Analytics</a>
+    <a href="#meeting" class="sub">১৮. Meeting Tools</a>
+    <a href="#workflows">Workflows</a>
+    <a href="#rules">Golden Rules</a>
+    <a href="#stack">Recommended Stack</a>
+    <a href="#tips">Pro Tips</a>
+    <a href="#quickstart">Quick Start</a>
+    <a href="#closing">শেষ কথা</a>
+  </nav>
+
+  <main>
+    <!-- ================= PART 1 ================= -->
+    <section class="part p1" id="core">
+      <div class="part-head">
+        <div class="num">১</div>
+        <div><h2>Core AI Tools</h2><p>Daily operations ও analysis-এর প্রধান tool</p></div>
+      </div>
+      <div class="cards">
+
+        <article class="card">
+          <div class="idx">01</div>
+          <div>
+            <h3><span class="en">ChatGPT</span> — Prompt Engineering ও Documentation</h3>
+            <p>কোনো requirement বুঝতে হবে, documentation লিখতে হবে, prompt optimize করতে হবে অথবা complex বিষয় সহজভাবে explain করতে হবে।</p>
+            <div class="chips"><span>Prompt Engineering</span><span>Documentation</span><span>BRD</span><span>Storytelling</span><span>SQL Explanation</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">02</div>
+          <div>
+            <h3><span class="en">DeepSeek</span> — SQL Optimization ও Debugging</h3>
+            <p>Complex query, performance issue অথবা technical troubleshooting করতে হবে।</p>
+            <div class="chips"><span>SQL Optimization</span><span>Query Debugging</span><span>Logic Building</span><span>Database Analysis</span></div>
+            <span class="tag">Technical problem-এ সেরা</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">03</div>
+          <div>
+            <h3><span class="en">Claude AI</span> — Large Documentation ও Long Context</h3>
+            <p>100+ page documentation, BRD, SRS, policy document অথবা large context analyze করতে হবে।</p>
+            <div class="chips"><span>SOP Creation</span><span>Requirement Review</span><span>Business Documents</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">04</div>
+          <div>
+            <h3><span class="en">Gemini + NotebookLM</span> — Research ও Knowledge Base</h3>
+            <p>Multiple documents analyse করতে হবে অথবা research summary তৈরি করতে হবে।</p>
+            <div class="chips"><span>Research</span><span>Document Understanding</span><span>Meeting Notes</span><span>Learning</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">05</div>
+          <div>
+            <h3><span class="en">Qwen AI</span> — Small Tasks ও Quick Validation</h3>
+            <p>দ্রুত কোনো syntax, formula বা ছোট requirement check করতে হবে।</p>
+            <div class="chips"><span>Fast Responses</span><span>Lightweight Reasoning</span></div>
+            <span class="tag">Quick check-এর জন্য</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">06</div>
+          <div>
+            <h3><span class="en">Arena AI</span> — Model Comparison ও Planning</h3>
+            <p>একই requirement বিভিন্ন AI model কীভাবে solve করছে তা compare করতে হবে।</p>
+            <div class="chips"><span>Strategic Thinking</span><span>Complex Problem Solving</span></div>
+            <span class="tag">Recommended: Direct Mode · MAX Variant</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= PART 2 ================= -->
+    <section class="part p2" id="design">
+      <div class="part-head">
+        <div class="num">২</div>
+        <div><h2>Design & Visualization Tools</h2><p>Idea থেকে visual, visual থেকে professional design</p></div>
+      </div>
+      <div class="cards">
+
+        <article class="card">
+          <div class="idx">07</div>
+          <div>
+            <h3><span class="en">Stitch AI</span> — Idea Visualization ও User Flow</h3>
+            <p>মাথার idea visual format-এ convert করতে হবে।</p>
+            <div class="chips"><span>User Flow Design</span><span>Product Thinking</span><span>Journey Mapping</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">08</div>
+          <div>
+            <h3><span class="en">Figma AI</span> — UI/UX ও Dashboard Design</h3>
+            <p>Stitch-generated concept professional design-এ convert করতে হবে।</p>
+            <div class="chips"><span>Dashboard Design</span><span>Prototyping</span><span>Design Optimization</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">09</div>
+          <div>
+            <h3><span class="en">Meigen AI</span> — Image Prompt ও Creative Concepts</h3>
+            <p>Custom image prompt বা creative asset generate করতে হবে।</p>
+            <div class="chips"><span>Creative Design Concepts</span><span>Marketing Assets</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">10</div>
+          <div>
+            <h3><span class="en">Canva AI</span> — Presentation ও Visual Documentation</h3>
+            <p>Management presentation, process flow অথবা report visually present করতে হবে।</p>
+            <div class="chips"><span>Reports</span><span>Visual Docs</span><span>Social Content</span></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= PART 3 ================= -->
+    <section class="part p3" id="dev">
+      <div class="part-head">
+        <div class="num">৩</div>
+        <div><h2>Development & Database Tools</h2><p>SQL, scripts ও project development</p></div>
+      </div>
+      <div class="cards">
+
+        <article class="card">
+          <div class="idx">11</div>
+          <div>
+            <h3><span class="en">GitHub Copilot</span> — SQL Writing ও Automation</h3>
+            <p>Daily coding, SQL development বা repetitive task automation করতে হবে।</p>
+            <div class="chips"><span>Script Generation</span><span>Code Completion</span><span>Automation Scripts</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">12</div>
+          <div>
+            <h3><span class="en">Cursor AI</span> — Project Understanding ও Refactoring</h3>
+            <p>Multiple files analyse করতে হবে অথবা large project maintain করতে হবে।</p>
+            <div class="chips"><span>Code Refactoring</span><span>Database Scripts</span><span>Technical Development</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">13</div>
+          <div>
+            <h3><span class="en">Windsurf AI</span> — End-to-End Coding ও Prototyping</h3>
+            <p>Quickly proof-of-concept অথবা development task complete করতে হবে।</p>
+            <div class="chips"><span>AI-Assisted Development</span><span>Rapid Prototyping</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">14</div>
+          <div>
+            <h3><span class="en">Perplexity AI</span> — Research ও Latest Information</h3>
+            <p>Google search-এর পরিবর্তে trusted sources সহ research করতে হবে।</p>
+            <div class="chips"><span>Documentation Reference</span><span>Technology Comparison</span></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= PART 4 ================= -->
+    <section class="part p4" id="data">
+      <div class="part-head">
+        <div class="num">৪</div>
+        <div><h2>Data & Analytics Tools</h2><p>Raw data থেকে insights ও dashboard</p></div>
+      </div>
+      <div class="cards">
+
+        <article class="card">
+          <div class="idx">15</div>
+          <div>
+            <h3><span class="en">Julius AI</span> — Excel ও CSV Analysis</h3>
+            <p>Excel, CSV বা raw data analyse করতে হবে।</p>
+            <div class="chips"><span>Data Visualization</span><span>Quick Reporting</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">16</div>
+          <div>
+            <h3><span class="en">Power BI Copilot</span> — Dashboard Analysis ও KPI Review</h3>
+            <p>Management dashboard অথবা reporting insights generate করতে হবে।</p>
+            <div class="chips"><span>Data Insights</span><span>KPI Review</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">17</div>
+          <div>
+            <h3><span class="en">Tableau Pulse AI</span> — Business Analytics ও Trend Detection</h3>
+            <p>Business performance analysis করতে হবে।</p>
+            <div class="chips"><span>Trend Detection</span><span>KPI Monitoring</span></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= PART 5 ================= -->
+    <section class="part p5" id="meeting">
+      <div class="part-head">
+        <div class="num">৫</div>
+        <div><h2>Meeting & Productivity Tools</h2><p>Meeting থেকে notes, summary ও action items</p></div>
+      </div>
+      <div class="cards">
+
+        <article class="card">
+          <div class="idx">18</div>
+          <div>
+            <h3><span class="en">Otter AI</span> — Meeting Notes ও Transcription</h3>
+            <p>Meeting recording থেকে notes generate করতে হবে।</p>
+            <div class="chips"><span>Call Transcription</span><span>Action Item Extraction</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="idx">19</div>
+          <div>
+            <h3><span class="en">Fireflies AI</span> — Meeting Summary ও Follow-Up</h3>
+            <p>Meeting discussion automatically summarize করতে হবে।</p>
+            <div class="chips"><span>Follow-Up Tasks</span><span>Team Collaboration</span></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= WORKFLOWS ================= -->
+    <section class="part" id="workflows">
+      <div class="part-head">
+        <div class="num" style="background:linear-gradient(135deg,#3dd6a8,#7fe0b4);color:#0b1a13;">⚡</div>
+        <div><h2>Recommended Workflow</h2><p>কোন কাজে কোন tool-এর sequence</p></div>
+      </div>
+      <div class="flows">
+        <div class="flow"><h3>Query Optimization</h3><div class="chain"><span>Requirement</span><i>→</i><span>ChatGPT</span><i>→</i><span>DeepSeek</span><i>→</i><span>Validation</span><i>→</i><span class="goal">Production</span></div></div>
+        <div class="flow"><h3>Problem Solving</h3><div class="chain"><span>Problem</span><i>→</i><span>DeepSeek</span><i>→</i><span>Claude</span><i>→</i><span>ChatGPT Verify</span><i>→</i><span class="goal">Solution</span></div></div>
+        <div class="flow"><h3>Documentation</h3><div class="chain"><span>Requirement</span><i>→</i><span>ChatGPT</span><i>→</i><span>Claude</span><i>→</i><span>Arena Review</span><i>→</i><span class="goal">Final Doc</span></div></div>
+        <div class="flow"><h3>Research</h3><div class="chain"><span>References</span><i>→</i><span>NotebookLM</span><i>→</i><span>Gemini</span><i>→</i><span>Perplexity</span><i>→</i><span class="goal">Final Analysis</span></div></div>
+        <div class="flow"><h3>Dashboard & Analytics</h3><div class="chain"><span>Raw Data</span><i>→</i><span>Julius AI</span><i>→</i><span>Power BI Copilot</span><i>→</i><span class="goal">Dashboard</span></div></div>
+        <div class="flow"><h3>Visual Planning</h3><div class="chain"><span>Idea</span><i>→</i><span>Stitch AI</span><i>→</i><span>Figma AI</span><i>→</i><span>Canva AI</span><i>→</i><span class="goal">Presentation</span></div></div>
+      </div>
+    </section>
+
+    <!-- ================= GOLDEN RULES ================= -->
+    <section class="part" id="rules">
+      <div class="part-head">
+        <div class="num" style="background:linear-gradient(135deg,#f2b134,#f0a35a);color:#241507;">✓</div>
+        <div><h2>Golden Rules</h2><p>Always follow</p></div>
+      </div>
+      <div class="rules">
+        <div class="rule"><span class="ck">✓</span><div><p>AI is an assistant, not the final decision maker</p><small>সিদ্ধান্তের মালিক সর্বদা টিম মেম্বার।</small></div></div>
+        <div class="rule"><span class="ck">✓</span><div><p>Every SQL query must be tested before production</p><small>Production-এ deploy-এর আগে বাধ্যতামূলক validation।</small></div></div>
+        <div class="rule"><span class="ck">✓</span><div><p>Cross-check critical outputs with multiple AI tools</p><small>Multiple model verification → higher confidence।</small></div></div>
+        <div class="rule"><span class="ck no">✕</span><div><p>Never share secrets</p><small>Database Passwords · API Keys · Production Credentials · Sensitive Client Data</small></div></div>
+        <div class="rule"><span class="ck">✓</span><div><p>Business logic validated by responsible member</p><small>Responsible person-এর sign-off অপরিহার্য।</small></div></div>
+        <div class="rule"><span class="ck">✓</span><div><p>AI documentation reviewed before sharing</p><small>Publish-এর আগে human review বাধ্যতামূলক।</small></div></div>
+      </div>
+    </section>
+
+    <!-- ================= RECOMMENDED STACK ================= -->
+    <section class="part" id="stack">
+      <div class="part-head">
+        <div class="num" style="background:linear-gradient(135deg,#5aa2f0,#7cc0ff);color:#0c1522;">◆</div>
+        <div><h2>Recommended AI Stack</h2><p>কোন কাজে কোন tool set</p></div>
+      </div>
+      <div class="tips">
+        <div class="tip"><p><b>Daily Essentials</b><br>ChatGPT · DeepSeek · Claude · Gemini · NotebookLM</p></div>
+        <div class="tip"><p><b>Development</b><br>GitHub Copilot · Cursor · Windsurf</p></div>
+        <div class="tip"><p><b>Research</b><br>Perplexity · Gemini · NotebookLM</p></div>
+        <div class="tip"><p><b>Design</b><br>Stitch AI · Figma AI · Canva AI</p></div>
+        <div class="tip"><p><b>Analytics</b><br>Julius AI · Power BI Copilot · Tableau Pulse</p></div>
+      </div>
+    </section>
+
+    <!-- ================= PRO TIPS ================= -->
+    <section class="part" id="tips">
+      <div class="part-head">
+        <div class="num" style="background:linear-gradient(135deg,#f2b134,#f0a35a);color:#241507;">★</div>
+        <div><h2>কয়েকটি Pro Tip</h2><p>টিমের daily workflow-এর জন্য</p></div>
+      </div>
+      <div class="tips">
+        <div class="tip"><p>একটি কাজে <b>একাধিক tool</b> ব্যবহার করে cross-check করুন—কোনো single model-এর output-এ blind trust নয়।</p></div>
+        <div class="tip"><p><b>SQL query production-এ যাওয়ার আগে</b> সবসময় validation ও test করুন।</p></div>
+        <div class="tip"><p><b>Sensitive data</b> (password, API key, credential) কখনো AI tool-এ paste করবেন না; placeholder ব্যবহার করুন।</p></div>
+        <div class="tip"><p><b>Long documentation</b>-এর জন্য Claude, দ্রুত technical fix-এর জন্য DeepSeek—সঠিক tool-এ সঠিক কাজ দিন।</p></div>
+        <div class="tip"><p>AI-generated documentation <b>share করার আগে review</b> করুন।</p></div>
+      </div>
+    </section>
+
+    <!-- ================= QUICK START ================= -->
+    <section class="part" id="quickstart">
+      <div class="quick">
+        <h2>৫ মিনিটের Quick Start</h2>
+        <div class="steps">
+          <div class="step"><h4>প্রথম মিনিট</h4><p>আপনার দৈনন্দিন কাজ শনাক্ত করুন—query optimization, documentation, research না analytics?</p></div>
+          <div class="step"><h4>দ্বিতীয় মিনিট</h4><p>সেই কাজের জন্য সঠিক <b>primary tool</b> বেছে নিন (query-এর জন্য DeepSeek, documentation-এর জন্য Claude)।</p></div>
+          <div class="step"><h4>তৃতীয় মিনিট</h4><p><b>Golden Rules</b> মনে রাখুন—production-এর আগে test, secrets কখনো নয়, human validation বাধ্যতামূলক।</p></div>
+          <div class="step"><h4>চতুর্থ মিনিট</h4><p>একটি <b>recommended workflow</b> নিন এবং আপনার প্রথম কাজে apply করুন।</p></div>
+          <div class="step"><h4>পঞ্চম মিনিট</h4><p>একই কাজ <b>দুটি আলাদা tool-এ</b> চালিয়ে আউটপুট cross-check করুন।</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CLOSING ================= -->
+    <section class="closing" id="closing">
+      <h2>শেষ কথা</h2>
+      <p>এই ecosystem Database Operations, Reporting, Analytics, Documentation, Planning, Research, Visualization এবং Team Productivity-এর জন্য end-to-end support দেয়। কোনো tool-ই perfect নয়—<b style="color:var(--text)">সঠিক কাজে সঠিক tool</b> ব্যবহার করলেই AI টিমের strength হয়ে ওঠে।</p>
+      <div class="key">
+        <span><b>Best Tool</b> — for specific task</span>
+        <span><b>19 Tools</b> — mapped</span>
+        <span><b>6 Workflows</b> — production-ready</span>
+        <span><b>Cross-check</b> — multiple models</span>
+        <span><b>Golden Rules</b> — always follow</span>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">Page2.md · Database Team AI Ecosystem & Utilization Framework — একটি visual guide</div>
+</footer>
+
+<button id="top" aria-label="Back to top">↑</button>
+
+<script>
+  const toc = document.getElementById("toc");
+  const links = [...toc.querySelectorAll("a")];
+  const sections = links.map(a => document.querySelector(a.getAttribute("href")));
+  const topBtn = document.getElementById("top");
+
+  window.addEventListener("scroll", () => {
+    topBtn.classList.toggle("show", window.scrollY > 500);
+    let current = sections[0];
+    for (const sec of sections) {
+      if (sec && sec.getBoundingClientRect().top <= 120) current = sec;
+    }
+    links.forEach(l => {
+      l.classList.toggle("active", l.getAttribute("href") === "#" + current.id);
+    });
+  }, { passive: true });
+
+  topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+</script>
+</body>
+</html>

@@ -1,8 +1,8 @@
-# AI Utilization Hub — Database Team
+# কাজকর্ম শিখ — AI Utilization Hub (Database Team)
 
 > **Main hub** for Claude-এর ২৫টি সেটিংস ও অভ্যাস এবং Database Team-এর Best-Tool-for-Task AI Ecosystem। সব গাইড ও ডকুমেন্ট এক dashboard-এ connected।
 
-A static, deployable project (Vercel / Netlify ready) that packages two guides into a polished landing page, a visual HTML guide, and combined markdown documentation.
+A static, deployable project (Vercel / Netlify ready) that packages two guides into a polished landing page, two visual HTML guides, and combined markdown documentation.
 
 ---
 
@@ -11,10 +11,11 @@ A static, deployable project (Vercel / Netlify ready) that packages two guides i
 | File | Type | Description |
 |------|------|-------------|
 | [`index.html`](index.html) | Dashboard / Landing | **Main hub** — document hub, 19-tool AI ecosystem dashboard with category filter, workflows, golden rules |
-| [`claude-guide.html`](claude-guide.html) | Visual Guide | Page1.md-এর সম্পূর্ণ content স্টাইলিশ, interactive HTML-এ |
+| [`claude-guide.html`](claude-guide.html) | Visual Guide | **Part 1** — Page1.md-এর সম্পূর্ণ content স্টাইলিশ, interactive HTML-এ |
+| [`db-guide.html`](db-guide.html) | Visual Guide | **Part 2** — Page2.md-এর সম্পূর্ণ content স্টাইলিশ HTML-এ (১৯টি tool, ৬টি workflow) |
 | [`Page1.md`](Page1.md) | Markdown | **Part 1** — Claude ব্যবহারের ২৫টি সেটিংস ও অভ্যাস (Setup, Speed, Security, Judgment, Advanced) |
 | [`Page2.md`](Page2.md) | Markdown | **Part 2** — Database Team AI Ecosystem: ১৯টি AI tool, ৬টি workflow, Golden Rules, Recommended Stack |
-| [`COMBINED-GUIDE.md`](COMBINED-GUIDE.md) | Markdown | Page1 + Page2 একসাথে (৭১০+ লাইন) |
+| [`COMBINED-GUIDE.md`](COMBINED-GUIDE.md) | Markdown | Page1 + Page2 একসাথে (৭৫০+ লাইন) |
 | [`README.md`](README.md) | Docs | This file |
 
 ---
