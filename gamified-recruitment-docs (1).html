@@ -204,31 +204,80 @@ p{margin:.4em 0 1em;color:var(--ink-soft);}
 
 /* ---------- terminal-style diagram card (signature element) ---------- */
 .term{
-  background:var(--paper);border:1px solid var(--line-strong);border-radius:12px;
+  background:#16110a;
+  border:1px solid #2b2316;
+  border-radius:14px;
   overflow:hidden;margin:1.3rem 0 1.8rem;
-  box-shadow:0 20px 40px -26px rgba(35,27,16,.4);
+  box-shadow:0 24px 50px -30px rgba(35,27,16,.55), inset 0 1px 0 rgba(255,255,255,.05);
+  position:relative;
+}
+.term::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;z-index:2;
+  background:linear-gradient(90deg,var(--amber),var(--amber-2),var(--teal));
 }
 .term-bar{
-  display:flex;align-items:center;gap:.5rem;
-  padding:.55rem .8rem;background:var(--bg-soft);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:.55rem;
+  padding:.65rem .95rem;background:linear-gradient(180deg,#221c12,#1a150e);
+  border-bottom:1px solid #2b2316;
 }
-.term-dot{width:10px;height:10px;border-radius:50%;}
-.term-dot.r{background:#fb7185;}
-.term-dot.y{background:#f5a524;}
-.term-dot.g{background:#34d399;}
+.term-dot{width:11px;height:11px;border-radius:50%;}
+.term-dot.r{background:#ff5f57;box-shadow:0 0 9px rgba(255,95,87,.65);}
+.term-dot.y{background:#febc2e;box-shadow:0 0 9px rgba(254,188,46,.65);}
+.term-dot.g{background:#28c840;box-shadow:0 0 9px rgba(40,200,64,.65);}
 .term-title{
-  margin-left:.5rem;font-family:var(--font-mono);font-size:.72rem;color:var(--muted);
+  margin-left:.5rem;font-family:var(--font-mono);font-size:.72rem;color:#cbb793;
+  letter-spacing:.02em;
 }
-.term-title .cursor{display:inline-block;width:6px;height:12px;background:var(--amber);
-  margin-left:6px;vertical-align:-2px;animation:blink 1.1s steps(1) infinite;}
+.term-title .prompt{color:var(--amber-2);font-weight:600;margin-right:.15rem;}
+.term-title .cursor{display:inline-block;width:7px;height:13px;background:var(--amber-2);
+  margin-left:6px;vertical-align:-2px;border-radius:1px;animation:blink 1.1s steps(1) infinite;
+  box-shadow:0 0 8px rgba(242,177,52,.7);}
 @keyframes blink{50%{opacity:0;}}
 .term pre{
-  margin:0;padding:1.1rem 1.3rem;overflow-x:auto;
-  font-family:var(--font-mono);font-size:.74rem;line-height:1.55;color:var(--ink);
+  margin:0;padding:1.15rem 1.4rem 1.35rem;overflow-x:auto;
+  font-family:var(--font-mono);font-size:.74rem;line-height:1.65;color:#d8c9a8;
   white-space:pre;
+  background:
+    radial-gradient(560px 220px at 92% 0%, rgba(217,122,31,.1), transparent 60%),
+    linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px);
+  background-size:100% 100%, 100% 26px;
 }
+.term pre .f-arrow{color:var(--amber-2);font-weight:700;text-shadow:0 0 8px rgba(242,177,52,.35);}
+.term pre .f-node{color:#7fd4b0;}
+.term pre .f-head{color:var(--amber);font-weight:700;letter-spacing:.04em;}
 .term pre::-webkit-scrollbar{height:8px;}
-.term pre::-webkit-scrollbar-thumb{background:#c9b98f;border-radius:4px;}
+.term pre::-webkit-scrollbar-thumb{background:#4a3d28;border-radius:4px;}
+
+/* ---------- visual flow diagrams ---------- */
+.vflow{display:flex;flex-direction:column;gap:.3rem;padding:1.15rem 1.4rem 1.4rem}
+.vcap{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#7fd4b0;font-weight:600;margin:.1rem 0 .2rem}
+.vstep{display:flex;align-items:center;gap:.55rem;padding:.45rem .68rem;border:1px solid #3a2f1d;border-radius:9px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));width:fit-content;max-width:100%}
+.vstep .ico{font-size:1rem;flex:0 0 auto}
+.vstep .lab{font-family:var(--font-mono);font-size:.75rem;color:#d8c9a8;line-height:1.35}
+.vstep .lab b{color:#fff;font-weight:600}
+.vstep .lab small{display:block;color:#a08c66;font-size:.6rem;letter-spacing:.02em}
+.vstep.root{background:linear-gradient(135deg,rgba(217,122,31,.55),rgba(217,122,31,.16));border-color:rgba(217,122,31,.65)}
+.vstep.root .lab b{color:#ffd9a8}
+.vstep.goal{background:linear-gradient(135deg,rgba(31,122,92,.6),rgba(31,122,92,.16));border-color:rgba(31,122,92,.7)}
+.vstep.goal .lab b{color:#b9f2d8}
+.vstep.warn{background:linear-gradient(135deg,rgba(224,82,42,.5),rgba(224,82,42,.14));border-color:rgba(224,82,42,.6)}
+.vstep.warn .lab b{color:#ffd9c9}
+.varr{display:flex;align-items:center;justify-content:center;gap:.3rem;color:var(--amber-2);font-family:var(--font-mono);font-weight:700;font-size:.85rem;padding:.08rem 0;animation:vd 1.6s ease-in-out infinite}
+.varr .a-lab{font-family:var(--font-mono);font-size:.6rem;color:#a08c66;font-weight:500;letter-spacing:.03em}
+@keyframes vd{0%,100%{transform:translateY(0);opacity:.65}50%{transform:translateY(3px);opacity:1}}
+.vtree{display:flex;flex-direction:column;gap:.3rem;margin-left:.85rem;padding-left:1.15rem;border-left:1px solid #3f3522;position:relative}
+.vtree::before{content:"";position:absolute;top:-.3rem;left:-1px;width:9px;height:1px;background:#3f3522}
+.vtree .vstep{position:relative;width:auto}
+.vtree .vstep::before{content:"";position:absolute;left:-1.15rem;top:50%;width:1.15rem;height:1px;background:#3f3522}
+.vchain{display:flex;align-items:stretch;flex-wrap:wrap;gap:.35rem}
+.vchain .vstep{flex:1;min-width:130px}
+.vchain .harr{display:flex;align-items:center;color:var(--amber-2);font-weight:700;font-size:.8rem;padding:0 .1rem;animation:ha 1.6s ease-in-out infinite}
+.vchain .harr .a-lab{font-family:var(--font-mono);font-size:.58rem;color:#a08c66;font-weight:500;margin-right:.15rem}
+@keyframes ha{0%,100%{transform:translateX(0);opacity:.65}50%{transform:translateX(3px);opacity:1}}
+.vtwo{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.vcol{display:flex;flex-direction:column;gap:.3rem;min-width:0}
+@media (max-width:700px){.vtwo{grid-template-columns:1fr}}
+
 
 /* ---------- tables ---------- */
 .table-wrap{overflow-x:auto;margin:1rem 0 1.6rem;border:1px solid var(--line-strong);border-radius:12px;background:var(--paper);}
@@ -544,53 +593,62 @@ footer a{color:var(--teal);}
       <h3 class="reveal">🧠 High-Level Business Logic</h3>
       <div class="term reveal">
         <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">business_logic.flow<span class="cursor"></span></span></div>
-        <pre>🏢 Company
-  └──► 📋 Creates Interview Program(s)
-         └──► 🔄 Defines Rounds (ordered stages)
-                └──► ❓ Assigns Questions to Rounds
-                       ├──► 🎭 Dialogue-based (with dialogue_lines)
-                       ├──► ✅ MCQ-based (with options &amp; weightage)
-                       └──► 📝 Open-ended / Other types
-
-👤 Candidate
-  ├──► 📝 Registers &amp; Enrolls in Program(s)
-  ├──► 🔗 (or) Receives One-Click Token for quick access
-  ├──► 🎮 Enters Round → Answers Questions
-  ├──► 📊 Answers are scored (auto or weighted)
-  └──► 🛡️ Anti-cheat monitors IP, screen &amp; webcam recordings</pre>
+        <div class="vflow">
+  <div class="vtwo">
+    <div class="vcol">
+      <div class="vstep root"><span class="ico">🏢</span><span class="lab"><b>Company</b></span></div>
+      <div class="varr">↓</div>
+      <div class="vstep"><span class="ico">📋</span><span class="lab"><b>Creates Interview Program(s)</b></span></div>
+      <div class="varr">↓</div>
+      <div class="vstep"><span class="ico">🔄</span><span class="lab"><b>Defines Rounds</b><small>ordered stages</small></span></div>
+      <div class="varr">↓</div>
+      <div class="vstep"><span class="ico">❓</span><span class="lab"><b>Assigns Questions to Rounds</b></span></div>
+      <div class="vtree">
+        <div class="vstep"><span class="ico">🎭</span><span class="lab"><b>Dialogue-based</b><small>with dialogue_lines</small></span></div>
+        <div class="vstep"><span class="ico">✅</span><span class="lab"><b>MCQ-based</b><small>with options &amp; weightage</small></span></div>
+        <div class="vstep"><span class="ico">📝</span><span class="lab"><b>Open-ended / Other types</b></span></div>
+      </div>
+    </div>
+    <div class="vcol">
+      <div class="vstep root"><span class="ico">👤</span><span class="lab"><b>Candidate</b></span></div>
+      <div class="vtree">
+        <div class="vstep"><span class="ico">📝</span><span class="lab"><b>Registers &amp; Enrolls in Program(s)</b></span></div>
+        <div class="vstep"><span class="ico">🔗</span><span class="lab"><b>Receives One-Click Token</b><small>(or) — for quick access</small></span></div>
+        <div class="vstep"><span class="ico">🎮</span><span class="lab"><b>Enters Round → Answers Questions</b></span></div>
+        <div class="vstep"><span class="ico">📊</span><span class="lab"><b>Answers are scored</b><small>auto or weighted</small></span></div>
+        <div class="vstep goal"><span class="ico">🛡️</span><span class="lab"><b>Anti-cheat monitors</b><small>IP, screen &amp; webcam recordings</small></span></div>
+      </div>
+    </div>
+  </div>
+</div>
       </div>
 
       <h3 class="reveal">🔄 Candidate Journey Flow</h3>
       <div class="term reveal">
         <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">candidate_journey.log<span class="cursor"></span></span></div>
-        <pre>👤 Candidate Signs Up
-      │
-      ▼
-┌──────────────┐     ┌─────────────────────┐
-│  📝 Register │────►│ 📋 Enroll in Program │
-│ (candidates) │     │ (candidateprograms)  │
-└──────────────┘     └──────────┬──────────┘
-                                 │
-                   ┌─────────────┴──────────────┐
-                   ▼                             ▼
-         ┌──────────────┐             ┌──────────────────┐
-         │ 🔗 One-Click │             │ 🎮 Enter Round    │
-         │   Token      │────────────►│(candidaterounds)  │
-         │(one_click_   │             └────────┬──────────┘
-         │  tokens)     │                      │
-         └──────────────┘                      ▼
-                                  ┌─────────────────────┐
-                                  │ ❓ Answer Questions  │
-                                  │ (candidateanswers)   │
-                                  └────────┬────────────┘
-                                           │
-                            ┌──────────────┴──────────────┐
-                            ▼                              ▼
-                  ┌──────────────────┐         ┌───────────────────┐
-                  │ 🛡️ Anti-Cheat    │         │ 📊 Score &amp; Review │
-                  │   Monitoring     │         │   (score in       │
-                  │  (anticheat)     │         │  candidateanswers)│
-                  └──────────────────┘         └───────────────────┘</pre>
+        <div class="vflow">
+  <div class="vstep root"><span class="ico">👤</span><span class="lab"><b>Candidate Signs Up</b></span></div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">📝</span><span class="lab"><b>Register</b><small>candidates</small></span></div>
+    <span class="harr">►</span>
+    <div class="vstep"><span class="ico">📋</span><span class="lab"><b>Enroll in Program</b><small>candidateprograms</small></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">🔗</span><span class="lab"><b>One-Click Token</b><small>one_click_tokens</small></span></div>
+    <span class="harr">►</span>
+    <div class="vstep"><span class="ico">🎮</span><span class="lab"><b>Enter Round</b><small>candidaterounds</small></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vstep"><span class="ico">❓</span><span class="lab"><b>Answer Questions</b><small>candidateanswers</small></span></div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">🛡️</span><span class="lab"><b>Anti-Cheat Monitoring</b><small>anticheat</small></span></div>
+    <span class="harr">◄►</span>
+    <div class="vstep goal"><span class="ico">📊</span><span class="lab"><b>Score &amp; Review</b><small>score in candidateanswers</small></span></div>
+  </div>
+</div>
       </div>
 
       <h3 class="reveal">🎯 Core Domain Concepts</h3>
@@ -625,46 +683,66 @@ footer a{color:var(--teal);}
       <h3 class="reveal">🔄 2.1 — Visual Flow Overview</h3>
       <div class="term reveal">
         <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">platform_flow.sh<span class="cursor"></span></span></div>
-        <pre>[🤝 Client Acquisition]
-        │
-        ▼
-[📝 Exam Planning] ──(sample Qs approved)──► [📋 Final Questions Prepared]
-        │
-        ▼
-[⚙️ Program Setup: Rounds + Candidates + Pass/Fail Criteria]
-        │
-        ▼
-[🔗 Unique Link Generated per Candidate]
-        │
-        ▼
-[🔍 Pre-Window: System Checks] ──(fix permissions)──► [✅ Ready]
-        │
-        ▼
-═══ 🟢 EXAM WINDOW OPENS (same time for all candidates) ═══
-        │
-        ▼
-[▶️ Start Quiz] ──► [🔒 Link Consumed] ──► [🎥 Recording Begins]
-        │
-        ▼
-[📝 Exam In Progress] ──(violation detected)──► [⚠️ Warning / Flag]
-        │                                              │
-        │                                    (3rd strike or unresolved)
-        ▼                                              ▼
-[✋ Manual Submission]                      [⚡ Auto-Submission]
-        │                                   (final, no retake)
-        │                                              │
-        └──────────────────┬───────────────────────────┘
-                            ▼
-             [📦 Data Consolidated: Answers + Recordings + Event Log]
-                            │
-                            ▼
-             [📊 Raw Report | 📋 Summary Report | 🛡️ Cheating Report]
-                            │
-                            ▼
-             [👁️ Client Review] ──(if needed)──► [📑 Reports Consolidated]
-                            │
-                            ▼
-             [✅ Client Affirms] ──► [🔄 Next Exam Cycle Planned]</pre>
+        <div class="vflow">
+  <div class="vstep root"><span class="ico">🤝</span><span class="lab"><b>Client Acquisition</b></span></div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">📝</span><span class="lab"><b>Exam Planning</b></span></div>
+    <span class="harr"><span class="a-lab">sample Qs approved</span>►</span>
+    <div class="vstep"><span class="ico">📋</span><span class="lab"><b>Final Questions Prepared</b></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vstep"><span class="ico">⚙️</span><span class="lab"><b>Program Setup</b><small>Rounds + Candidates + Pass/Fail Criteria</small></span></div>
+  <div class="varr">↓</div>
+  <div class="vstep"><span class="ico">🔗</span><span class="lab"><b>Unique Link Generated per Candidate</b></span></div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">🔍</span><span class="lab"><b>Pre-Window: System Checks</b></span></div>
+    <span class="harr"><span class="a-lab">fix permissions</span>►</span>
+    <div class="vstep goal"><span class="ico">✅</span><span class="lab"><b>Ready</b></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vstep warn"><span class="ico">🟢</span><span class="lab"><b>EXAM WINDOW OPENS</b><small>same time for all candidates</small></span></div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">▶️</span><span class="lab"><b>Start Quiz</b></span></div>
+    <span class="harr">►</span>
+    <div class="vstep"><span class="ico">🔒</span><span class="lab"><b>Link Consumed</b></span></div>
+    <span class="harr">►</span>
+    <div class="vstep"><span class="ico">🎥</span><span class="lab"><b>Recording Begins</b></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">📝</span><span class="lab"><b>Exam In Progress</b></span></div>
+    <span class="harr"><span class="a-lab">violation detected</span>►</span>
+    <div class="vstep warn"><span class="ico">⚠️</span><span class="lab"><b>Warning / Flag</b></span></div>
+  </div>
+  <div class="varr"><span class="a-lab">3rd strike or unresolved</span>↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">✋</span><span class="lab"><b>Manual Submission</b></span></div>
+    <div class="vstep warn"><span class="ico">⚡</span><span class="lab"><b>Auto-Submission</b><small>final, no retake</small></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vstep"><span class="ico">📦</span><span class="lab"><b>Data Consolidated</b><small>Answers + Recordings + Event Log</small></span></div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">📊</span><span class="lab"><b>Raw Report</b></span></div>
+    <div class="vstep"><span class="ico">📋</span><span class="lab"><b>Summary Report</b></span></div>
+    <div class="vstep"><span class="ico">🛡️</span><span class="lab"><b>Cheating Report</b></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">👁️</span><span class="lab"><b>Client Review</b></span></div>
+    <span class="harr"><span class="a-lab">if needed</span>►</span>
+    <div class="vstep"><span class="ico">📑</span><span class="lab"><b>Reports Consolidated</b></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep goal"><span class="ico">✅</span><span class="lab"><b>Client Affirms</b></span></div>
+    <span class="harr">►</span>
+    <div class="vstep"><span class="ico">🔄</span><span class="lab"><b>Next Exam Cycle Planned</b></span></div>
+  </div>
+</div>
       </div>
     </section>
 
@@ -779,25 +857,19 @@ footer a{color:var(--teal);}
       </div>
       <div class="term reveal">
         <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">permission_gate.sh<span class="cursor"></span></span></div>
-        <pre>            PRE-EXAM PERMISSION GATE
-
-   ▶️ "Start Quiz" clicked
-         │
-         ▼
-   ┌─────────────┐   ┌─────────────┐   ┌──────────┐
-   │ 📷 Camera   │   │ 🎤 Micro-   │   │ 🖥️ Full- │
-   │   access    │   │   phone     │   │  screen  │
-   │  granted?   │   │  granted?   │   │  mode?   │
-   └──────┬──────┘   └──────┬──────┘   └────┬─────┘
-          │                 │                │
-     ✅ Yes            ✅ Yes           ✅ Yes
-          │                 │                │
-          └────────────┬────┴────────────────┘
-                       ▼
-              ✅ ALL PASSED → Exam Begins
-
-          ❌ ANY DENIED → ⛔ Blocked
-              "Please grant access to proceed"</pre>
+        <div class="vflow">
+  <div class="vcap">PRE-EXAM PERMISSION GATE</div>
+  <div class="vstep root"><span class="ico">▶️</span><span class="lab"><b>"Start Quiz" clicked</b></span></div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">📷</span><span class="lab"><b>Camera access</b><small>granted?</small></span></div>
+    <div class="vstep"><span class="ico">🎤</span><span class="lab"><b>Microphone</b><small>granted?</small></span></div>
+    <div class="vstep"><span class="ico">🖥️</span><span class="lab"><b>Full-screen mode?</b></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vstep goal"><span class="ico">✅</span><span class="lab"><b>ALL PASSED → Exam Begins</b></span></div>
+  <div class="vstep warn"><span class="ico">❌</span><span class="lab"><b>ANY DENIED → ⛔ Blocked</b><small>"Please grant access to proceed"</small></span></div>
+</div>
       </div>
       <div class="table-wrap reveal">
         <table>
@@ -941,35 +1013,18 @@ footer a{color:var(--teal);}
       </div>
       <div class="term reveal">
         <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">consolidation.log<span class="cursor"></span></span></div>
-        <pre>           📦 POST-EXAM DATA CONSOLIDATION
-
-   👤 candidate_id links everything:
-
-   ┌───────────────────────┐
-   │ 📊 candidateanswers   │ ◄── All answers
-   │   • question_id       │
-   │   • answer            │
-   │   • score             │
-   │   • started_at        │
-   │   • completed_at      │
-   └───────────────────────┘
-
-   ┌───────────────────────┐
-   │ 🛡️ anticheat          │ ◄── Recordings &amp; IP
-   │   • screen_record_url │
-   │   • webcam_record_url │
-   │   • ip_address        │
-   └───────────────────────┘
-
-   ┌───────────────────────┐
-   │ 📋 Event Log          │ ◄── All violations
-   │   • tab switches      │
-   │   • full-screen exits │
-   │   • permission drops  │
-   │   • warnings issued   │
-   └───────────────────────┘
-
-   RAW DATA SOURCE for reporting</pre>
+        <div class="vflow">
+  <div class="vcap">POST-EXAM DATA CONSOLIDATION</div>
+  <div class="vstep root"><span class="ico">👤</span><span class="lab"><b>candidate_id links everything</b></span></div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">📊</span><span class="lab"><b>candidateanswers</b><small>◄ All answers · question_id · answer · score · started_at · completed_at</small></span></div>
+    <div class="vstep"><span class="ico">🛡️</span><span class="lab"><b>anticheat</b><small>◄ Recordings &amp; IP · screen_record_url · webcam_record_url · ip_address</small></span></div>
+    <div class="vstep"><span class="ico">📋</span><span class="lab"><b>Event Log</b><small>◄ All violations · tab switches · full-screen exits · permission drops · warnings issued</small></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vstep goal"><span class="ico">📦</span><span class="lab"><b>RAW DATA SOURCE for reporting</b></span></div>
+</div>
       </div>
     </section>
 
@@ -1354,15 +1409,18 @@ erDiagram
         <h4>🔌 Direct Connections (7 total: 1 incoming, 6 outgoing)</h4>
         <div class="term">
           <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">rounds.connections<span class="cursor"></span></span></div>
-          <pre>Incoming: 📋 interviewprograms (1:N)
-
-Outgoing:
-├── ❓ questions (1:N)
-├── 🔗 roundquestions (1:N)
-├── 🎮 candidaterounds (1:N)
-├── 📊 candidateanswers (1:N)
-├── 🛡️ anticheat (1:N)
-└── 🔗 one_click_tokens (1:N)</pre>
+          <div class="vflow">
+  <div class="vstep root"><span class="ico">📋</span><span class="lab"><b>Incoming</b><small>interviewprograms (1:N)</small></span></div>
+  <div class="vcap">Outgoing</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">❓</span><span class="lab"><b>questions</b><small>1:N</small></span></div>
+    <div class="vstep"><span class="ico">🔗</span><span class="lab"><b>roundquestions</b><small>1:N</small></span></div>
+    <div class="vstep"><span class="ico">🎮</span><span class="lab"><b>candidaterounds</b><small>1:N</small></span></div>
+    <div class="vstep"><span class="ico">📊</span><span class="lab"><b>candidateanswers</b><small>1:N</small></span></div>
+    <div class="vstep"><span class="ico">🛡️</span><span class="lab"><b>anticheat</b><small>1:N</small></span></div>
+    <div class="vstep"><span class="ico">🔗</span><span class="lab"><b>one_click_tokens</b><small>1:N</small></span></div>
+  </div>
+</div>
         </div>
         <h4>📋 Schema Table</h4>
         <div class="table-wrap">
@@ -1704,37 +1762,32 @@ Outgoing:
       </div>
       <div class="term reveal">
         <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">topology.map<span class="cursor"></span></span></div>
-        <pre>                     FULL DATABASE TOPOLOGY
-
-   LAYER 1 (Root)      🏢 companies
-                        │  │  │
-                     ┌──┘  │  └──────────┐
-                     ▼     ▼              ▼
-   LAYER 2        📋 interview  ❓ questions  🔗 roundquestions
-   (Content)       programs    │  │  │         ▲  ▲
-                      │        │  │  │         │  │
-                      ▼        │  │  └─────────┘  │
-   LAYER 3        🔄 rounds ──┘  │               │
-   (Rounds)         │ │ │ │      │               │
-                    │ │ │ └──────┼───────────────┘
-                    │ │ │        │
-                    │ │ │   ┌────┴────┐
-                    │ │ │   ▼         ▼
-   LAYER 4        │ │ │  ✅ options  🎭 dialogue_lines
-   (Content       │ │ │
-    Details)      │ │ │
-                  │ │ │
-   ─ ─ ─ ─ ─ ─ ─│─│─│─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
-                  │ │ │       👤 candidates
-   LAYER 5        │ │ │        │  │  │  │  │
-   (Candidate     │ │ │   ┌────┘  │  │  │  └────┐
-    Activity)     │ │ │   ▼       │  │  ▼       ▼
-                  │ │ └► 📝 cand-  │  │ 🛡️anti- 🔗 one_click_
-                  │ │    programs  │  │  cheat    tokens
-                  │ │             │  │
-                  │ └──────────► 🎮 candidaterounds
-                  │              │
-                  └────────────► 📊 candidateanswers</pre>
+        <div class="vflow">
+  <div class="vcap">FULL DATABASE TOPOLOGY</div>
+  <div class="vstep root"><span class="ico">🏢</span><span class="lab"><b>LAYER 1 · companies</b><small>Root</small></span></div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">📋</span><span class="lab"><b>LAYER 2 · interviewprograms</b><small>Content</small></span></div>
+    <div class="vstep"><span class="ico">❓</span><span class="lab"><b>questions</b><small>Content</small></span></div>
+    <div class="vstep"><span class="ico">🔗</span><span class="lab"><b>roundquestions</b><small>Content</small></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vstep"><span class="ico">🔄</span><span class="lab"><b>LAYER 3 · rounds</b><small>Rounds</small></span></div>
+  <div class="varr">↓</div>
+  <div class="vchain">
+    <div class="vstep"><span class="ico">✅</span><span class="lab"><b>LAYER 4 · options</b><small>Content Details</small></span></div>
+    <div class="vstep"><span class="ico">🎭</span><span class="lab"><b>dialogue_lines</b><small>Content Details</small></span></div>
+  </div>
+  <div class="varr">↓</div>
+  <div class="vstep"><span class="ico">👤</span><span class="lab"><b>LAYER 5 · candidates</b><small>Candidate Activity</small></span></div>
+  <div class="vtree">
+    <div class="vstep"><span class="ico">📝</span><span class="lab"><b>candidateprograms</b></span></div>
+    <div class="vstep"><span class="ico">🎮</span><span class="lab"><b>candidaterounds</b></span></div>
+    <div class="vstep"><span class="ico">🛡️</span><span class="lab"><b>anticheat</b></span></div>
+    <div class="vstep"><span class="ico">🔗</span><span class="lab"><b>one_click_tokens</b></span></div>
+    <div class="vstep"><span class="ico">📊</span><span class="lab"><b>candidateanswers</b></span></div>
+  </div>
+</div>
       </div>
     </section>
 
@@ -1770,16 +1823,27 @@ Outgoing:
       <h3 class="reveal">🟢 Category A: Content Hierarchy</h3>
       <div class="term reveal">
         <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">category_a.tree<span class="cursor"></span></span></div>
-        <pre>🏢 companies
-  └──► 📋 interviewprograms
-        └──► 🔄 rounds
-              ├──► ❓ questions (direct)
-              └──► 🔗 roundquestions
-                     └──► ❓ questions (many-to-many)
-
-❓ questions
-  ├──► ✅ options (MCQ choices)
-  └──► 🎭 dialogue_lines (Dialogue scripts)</pre>
+        <div class="vflow">
+  <div class="vstep root"><span class="ico">🏢</span><span class="lab"><b>companies</b></span></div>
+  <div class="vtree">
+    <div class="vstep"><span class="ico">📋</span><span class="lab"><b>interviewprograms</b></span></div>
+  </div>
+  <div class="vtree">
+    <div class="vstep"><span class="ico">🔄</span><span class="lab"><b>rounds</b></span></div>
+  </div>
+  <div class="vtree">
+    <div class="vstep"><span class="ico">❓</span><span class="lab"><b>questions</b><small>direct</small></span></div>
+    <div class="vstep"><span class="ico">🔗</span><span class="lab"><b>roundquestions</b></span></div>
+  </div>
+  <div class="vtree">
+    <div class="vstep"><span class="ico">❓</span><span class="lab"><b>questions</b><small>many-to-many</small></span></div>
+  </div>
+  <div class="vstep root"><span class="ico">❓</span><span class="lab"><b>questions</b></span></div>
+  <div class="vtree">
+    <div class="vstep"><span class="ico">✅</span><span class="lab"><b>options</b><small>MCQ choices</small></span></div>
+    <div class="vstep"><span class="ico">🎭</span><span class="lab"><b>dialogue_lines</b><small>Dialogue scripts</small></span></div>
+  </div>
+</div>
       </div>
       <div class="table-wrap reveal">
         <table>
@@ -1801,12 +1865,16 @@ Outgoing:
       <h3 class="reveal">🔵 Category B: Candidate Activity</h3>
       <div class="term reveal">
         <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">category_b.tree<span class="cursor"></span></span></div>
-        <pre>👤 candidates
-  ├──► 📝 candidateprograms ◄──── 📋 interviewprograms
-  ├──► 🎮 candidaterounds ◄──── 🔄 rounds
-  ├──► 📊 candidateanswers ◄──── 🔄 rounds + ❓ questions
-  ├──► 🛡️ anticheat ◄──── 🔄 rounds
-  └──► 🔗 one_click_tokens ◄──── 📋 interviewprograms + 🔄 rounds</pre>
+        <div class="vflow">
+  <div class="vstep root"><span class="ico">👤</span><span class="lab"><b>candidates</b></span></div>
+  <div class="vtree">
+    <div class="vstep"><span class="ico">📝</span><span class="lab"><b>candidateprograms</b><small>◄ interviewprograms</small></span></div>
+    <div class="vstep"><span class="ico">🎮</span><span class="lab"><b>candidaterounds</b><small>◄ rounds</small></span></div>
+    <div class="vstep"><span class="ico">📊</span><span class="lab"><b>candidateanswers</b><small>◄ rounds + questions</small></span></div>
+    <div class="vstep"><span class="ico">🛡️</span><span class="lab"><b>anticheat</b><small>◄ rounds</small></span></div>
+    <div class="vstep"><span class="ico">🔗</span><span class="lab"><b>one_click_tokens</b><small>◄ interviewprograms + rounds</small></span></div>
+  </div>
+</div>
       </div>
       <div class="table-wrap reveal">
         <table>
@@ -2159,6 +2227,27 @@ const io = new IntersectionObserver((entries)=>{
   });
 },{threshold:0.08, rootMargin:'0px 0px -40px 0px'});
 revealEls.forEach(el=>io.observe(el));
+
+// ---------- terminal flow diagram colorizer ----------
+document.querySelectorAll('.term .term-title').forEach(t=>{
+  if(!t.querySelector('.prompt')) t.insertAdjacentHTML('afterbegin','<span class="prompt">❯</span> ');
+});
+document.querySelectorAll('.term pre').forEach(pre=>{
+  const lines = pre.innerHTML.split('\n').map(line=>{
+    line = line.replace(/([▶►▼▲←→┌┐└┘├┤│─═]+)/g,'<span class="f-arrow">$1</span>');
+    line = line.replace(/\[([^\]]+)\]/g,'<span class="f-node">[$1]</span>');
+    return line;
+  });
+  pre.innerHTML = lines.join('\n');
+});
+document.querySelectorAll('.term pre').forEach(pre=>{
+  const txt = pre.textContent.trim();
+  const head = txt.split('\n')[0].trim();
+  if(head && /^[A-Z\s.()'&,()\-–—+*%/&]+$/.test(head) && head.length > 3){
+    const firstLine = pre.innerHTML.split('\n')[0];
+    pre.innerHTML = pre.innerHTML.replace(firstLine, firstLine.replace(/^(\s*)(.*)$/,'$1<span class="f-head">$2</span>'));
+  }
+});
 
 // ---------- scrollspy ----------
 const navLinks = Array.from(document.querySelectorAll('#sidebar .nav-list a'));
