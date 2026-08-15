@@ -108,6 +108,25 @@
   .sec-head h2{font-family:var(--font-disp);font-weight:800;font-size:clamp(28px,4.5vw,44px);letter-spacing:-1px;line-height:1.1}
   .sec-head p{color:var(--muted);max-width:430px;font-weight:300;font-size:16px}
 
+  /* ---------- Part switcher ---------- */
+  .part-switch{
+    display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
+    background:var(--panel);border:1px solid var(--line-strong);border-radius:999px;
+    padding:10px 18px;margin-bottom:24px;
+  }
+  .part-switch a{
+    display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);
+    font-weight:600;font-size:15px;padding:8px 18px;border-radius:999px;transition:all .2s;
+  }
+  .part-switch a:hover{background:var(--panel-2)}
+  .part-switch .pnum{
+    font-family:var(--font-mono);font-size:11px;letter-spacing:1px;background:var(--amber);color:#14100c;
+    border-radius:999px;padding:3px 10px;font-weight:700;
+  }
+  .part-switch .sw-arrow{font-family:var(--font-mono);font-style:normal;color:var(--amber);font-weight:700}
+  .flow-col{display:grid;gap:16px}
+  .flow-col .flow{margin:0}
+
   /* ---------- Hub / documents ---------- */
   .hub{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
   .hub-card{
@@ -192,7 +211,7 @@
     <div class="brand"><span class="mark">AI</span> Utilization Hub</div>
     <nav class="topnav">
       <a href="#hub">Documents</a>
-      <a href="#tools">AI Tools</a>
+      <a href="#part2">AI Tools</a>
       <a href="#workflows">Workflows</a>
       <a href="#rules">Rules</a>
       <a class="go" href="claude-guide.html">Claude Guide →</a>
@@ -209,7 +228,7 @@
     <p class="sub">Claude-এর ২৫টি সেটিংস ও অভ্যাস থেকে Database Team-এর AI ecosystem — পুরো প্রকল্পের সব গাইড, ডকুমেন্ট ও পেজ এই একটি hub-এ connected।</p>
     <div class="cta">
       <a class="btn solid" href="#hub">Documents Explore</a>
-      <a class="btn ghost" href="#tools">Tools Dashboard</a>
+      <a class="btn ghost" href="#part2">Tools Dashboard</a>
       <a class="btn ghost" href="claude-guide.html">Visual Guide</a>
     </div>
     <div class="hero-stats">
@@ -243,7 +262,12 @@
         <span class="kicker">01 · Document Hub</span>
         <h2>সব পেজ ও ডকুমেন্ট</h2>
       </div>
-      <p>প্রকল্পের প্রতিটি গাইড এখান থেকে এক ক্লিকে খুলুন — markdown, HTML বা combined format।</p>
+      <p>প্রকল্পের প্রতিটি গাইড এখান থেকে এক ক্লিকে খুলুন — markdown, HTML বা combined format। Page1 ও Page2 একে অপরের সাথে cross-linked।</p>
+    </div>
+    <div class="part-switch" data-reveal>
+      <a href="#part1"><span class="pnum">Part 1</span> Claude ২৫টি সেটিংস ও অভ্যাস</a>
+      <i class="sw-arrow">⇄</i>
+      <a href="#part2"><span class="pnum">Part 2</span> Database Team AI Ecosystem</a>
     </div>
     <div class="hub">
       <a class="hub-card" href="index.html" data-reveal>
@@ -286,8 +310,46 @@
   </div>
 </section>
 
+<!-- ===== PART 1 OVERVIEW ===== -->
+<section id="part1">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div>
+        <span class="kicker">02 · Part 1</span>
+        <h2>Claude ২৫টি সেটিংস ও অভ্যাস</h2>
+      </div>
+      <p>Setup, Speed, Security, Judgment ও Advanced — ৫টি ধাপে Claude-কে workflow হিসেবে ব্যবহার করুন। <a href="Page1.md" style="color:var(--amber);text-decoration:none;font-weight:600">মূল গাইড →</a></p>
+    </div>
+    <div class="flow-col">
+      <div class="flow" data-reveal>
+        <h3>১ · Setup ঠিক করুন</h3>
+        <div class="chain"><span>Desktop</span><i>→</i><span>Chat/Cowork</span><i>→</i><span>Project</span><i>→</i><span>Instructions</span><i>→</i><span>Skill</span></div>
+      </div>
+      <div class="flow" data-reveal>
+        <h3>২ · গতি বাড়ান</h3>
+        <div class="chain"><span>Model Selector</span><i>→</i><span>Effort</span><i>→</i><span>Extended Thinking</span><i>→</i><span>Outcome Prompt</span></div>
+      </div>
+      <div class="flow" data-reveal>
+        <h3>৩ · Security ও Privacy</h3>
+        <div class="chain"><span>Placeholder</span><i>→</i><span>Incognito Chat</span><i>→</i><span>Memory Review</span><i>→</i><span>Less Files</span></div>
+      </div>
+      <div class="flow" data-reveal>
+        <h3>৪ · নিজের বিচারবুদ্ধি</h3>
+        <div class="chain"><span>Cross-check</span><i>→</i><span>Counter-Argument</span><i>→</i><span>Self-Audit</span><i>→</i><span>Draft Verify</span></div>
+      </div>
+      <div class="flow" data-reveal>
+        <h3>৫ · Advanced</h3>
+        <div class="chain"><span>Research</span><i>→</i><span>3 Questions</span><i>→</i><span>3 Approaches</span><i>→</i><span>Pick Strongest</span></div>
+      </div>
+    </div>
+    <div style="margin-top:18px;text-align:right" data-reveal>
+      <a class="btn ghost" href="claude-guide.html">Visual Guide দেখুন →</a>
+    </div>
+  </div>
+</section>
+
 <!-- ===== TOOLS DASHBOARD ===== -->
-<section id="tools" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<section id="part2" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <div>

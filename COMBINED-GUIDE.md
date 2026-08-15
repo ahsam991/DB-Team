@@ -10,6 +10,8 @@
 
 তাই Claude থেকে আরও consistent, structured এবং efficient output পেতে এই ২৫টি সেটিংস ও অভ্যাস জেনে রাখুন।
 
+[→ Part 2 দেখুন: **Database Team AI Ecosystem & Utilization Framework** — `Page2.md`](Page2.md)
+
 ---
 
 ## প্রথম অংশ: Setup ঠিক করুন
@@ -300,17 +302,19 @@ Project Instructions-এ আপনার:
 
 তাহলেই Claude শুধু “উত্তর দেওয়ার tool” না হয়ে আপনার কাজের একটি structured collaborator হয়ে উঠতে পারে।
 
+[→ Part 2: **Database Team AI Ecosystem & Utilization Framework** — `Page2.md`](Page2.md)
+
 ---
 
 # Database Team AI Ecosystem & Utilization Framework
 
-## Purpose
-
 Database Team-এর daily operations, reporting, analysis, documentation, planning, troubleshooting, dashboard design, process improvement এবং knowledge management-এর জন্য AI tools strategicভাবে ব্যবহার করা হবে। প্রতিটি AI tool-এর আলাদা strength রয়েছে। তাই **"One Tool for Everything"** approach-এর পরিবর্তে **"Best Tool for Specific Task"** approach follow করা হবে।
+
+[← Part 1 দেখুন: **Claude ব্যবহারের ২৫টি সেটিংস ও অভ্যাস** — `Page1.md`](Page1.md)
 
 ---
 
-## Core AI Tools
+# প্রথম অংশ: Core AI Tools
 
 ### ১. ChatGPT
 
@@ -325,7 +329,7 @@ Database Team-এর daily operations, reporting, analysis, documentation, plann
 
 **Use When**
 
-কোনো requirement বুঝতে হবে, documentation লিখতে হবে, prompt optimize করতে হবে অথবা complex বিষয় সহজভাবে explain করতে হবে।
+> কোনো requirement বুঝতে হবে, documentation লিখতে হবে, prompt optimize করতে হবে অথবা complex বিষয় সহজভাবে explain করতে হবে।
 
 ---
 
@@ -341,7 +345,7 @@ Database Team-এর daily operations, reporting, analysis, documentation, plann
 
 **Use When**
 
-Complex query, performance issue অথবা technical troubleshooting করতে হবে।
+> Complex query, performance issue অথবা technical troubleshooting করতে হবে।
 
 ---
 
@@ -357,7 +361,7 @@ Complex query, performance issue অথবা technical troubleshooting কর�
 
 **Use When**
 
-100+ page documentation, BRD, SRS, policy document অথবা large context analyze করতে হবে।
+> 100+ page documentation, BRD, SRS, policy document অথবা large context analyze করতে হবে।
 
 ---
 
@@ -373,7 +377,7 @@ Complex query, performance issue অথবা technical troubleshooting কর�
 
 **Use When**
 
-Multiple documents analyse করতে হবে অথবা research summary তৈরি করতে হবে।
+> Multiple documents analyse করতে হবে অথবা research summary তৈরি করতে হবে।
 
 ---
 
@@ -388,7 +392,7 @@ Multiple documents analyse করতে হবে অথবা research summary 
 
 **Use When**
 
-দ্রুত কোনো syntax, formula বা ছোট requirement check করতে হবে।
+> দ্রুত কোনো syntax, formula বা ছোট requirement check করতে হবে।
 
 ---
 
@@ -408,11 +412,11 @@ Multiple documents analyse করতে হবে অথবা research summary 
 
 **Use When**
 
-একই requirement বিভিন্ন AI model কীভাবে solve করছে তা compare করতে হবে।
+> একই requirement বিভিন্ন AI model কীভাবে solve করছে তা compare করতে হবে।
 
 ---
 
-## Design & Visualization Tools
+# দ্বিতীয় অংশ: Design & Visualization Tools
 
 ### ৭. Stitch AI
 
@@ -425,7 +429,7 @@ Multiple documents analyse করতে হবে অথবা research summary 
 
 **Use When**
 
-মাথার idea visual format-এ convert করতে হবে।
+> মাথার idea visual format-এ convert করতে হবে।
 
 ---
 
@@ -440,7 +444,7 @@ Multiple documents analyse করতে হবে অথবা research summary 
 
 **Use When**
 
-Stitch-generated concept professional design-এ convert করতে হবে।
+> Stitch-generated concept professional design-এ convert করতে হবে।
 
 ---
 
@@ -454,7 +458,7 @@ Stitch-generated concept professional design-এ convert করতে হবে�
 
 **Use When**
 
-Custom image prompt বা creative asset generate করতে হবে।
+> Custom image prompt বা creative asset generate করতে হবে।
 
 ---
 
@@ -469,11 +473,11 @@ Custom image prompt বা creative asset generate করতে হবে।
 
 **Use When**
 
-Management presentation, process flow অথবা report visually present করতে হবে।
+> Management presentation, process flow অথবা report visually present করতে হবে।
 
 ---
 
-## Development & Database Tools
+# তৃতীয় অংশ: Development & Database Tools
 
 ### ১১. GitHub Copilot
 
@@ -486,7 +490,7 @@ Management presentation, process flow অথবা report visually present ক�
 
 **Use When**
 
-Daily coding, SQL development বা repetitive task automation করতে হবে।
+> Daily coding, SQL development বা repetitive task automation করতে হবে।
 
 ---
 
@@ -501,7 +505,7 @@ Daily coding, SQL development বা repetitive task automation করতে হ
 
 **Use When**
 
-Multiple files analyse করতে হবে অথবা large project maintain করতে হবে।
+> Multiple files analyse করতে হবে অথবা large project maintain করতে হবে।
 
 ---
 
@@ -515,7 +519,7 @@ Multiple files analyse করতে হবে অথবা large project maintai
 
 **Use When**
 
-Quickly proof-of-concept অথবা development task complete করতে হবে।
+> Quickly proof-of-concept অথবা development task complete করতে হবে।
 
 ---
 
@@ -530,11 +534,11 @@ Quickly proof-of-concept অথবা development task complete করতে হ
 
 **Use When**
 
-Google search-এর পরিবর্তে trusted sources সহ research করতে হবে।
+> Google search-এর পরিবর্তে trusted sources সহ research করতে হবে।
 
 ---
 
-## Data & Analytics Tools
+# চতুর্থ অংশ: Data & Analytics Tools
 
 ### ১৫. Julius AI
 
@@ -547,7 +551,7 @@ Google search-এর পরিবর্তে trusted sources সহ research �
 
 **Use When**
 
-Excel, CSV বা raw data analyse করতে হবে।
+> Excel, CSV বা raw data analyse করতে হবে।
 
 ---
 
@@ -561,7 +565,7 @@ Excel, CSV বা raw data analyse করতে হবে।
 
 **Use When**
 
-Management dashboard অথবা reporting insights generate করতে হবে।
+> Management dashboard অথবা reporting insights generate করতে হবে।
 
 ---
 
@@ -575,11 +579,11 @@ Management dashboard অথবা reporting insights generate করতে হ�
 
 **Use When**
 
-Business performance analysis করতে হবে।
+> Business performance analysis করতে হবে।
 
 ---
 
-## Meeting & Productivity Tools
+# পঞ্চম অংশ: Meeting & Productivity Tools
 
 ### ১৮. Otter AI
 
@@ -591,7 +595,7 @@ Business performance analysis করতে হবে।
 
 **Use When**
 
-Meeting recording থেকে notes generate করতে হবে।
+> Meeting recording থেকে notes generate করতে হবে।
 
 ---
 
@@ -605,11 +609,11 @@ Meeting recording থেকে notes generate করতে হবে।
 
 **Use When**
 
-Meeting discussion automatically summarize করতে হবে।
+> Meeting discussion automatically summarize করতে হবে।
 
 ---
 
-## Database Team Recommended Workflow
+# Database Team Recommended Workflow
 
 ### Query Optimization
 
@@ -649,7 +653,7 @@ Idea → Stitch AI → Figma AI → Canva AI → Final Presentation
 
 ---
 
-## Golden Rules
+# Golden Rules
 
 ### Always Follow
 
@@ -672,7 +676,7 @@ Idea → Stitch AI → Figma AI → Canva AI → Final Presentation
 
 ---
 
-## Recommended AI Stack for Database Team
+# Recommended AI Stack for Database Team
 
 ### Daily Essentials
 
@@ -708,4 +712,42 @@ Idea → Stitch AI → Figma AI → Canva AI → Final Presentation
 
 ---
 
-This ecosystem provides end-to-end support for Database Operations, Reporting, Analytics, Documentation, Planning, Research, Visualization, and Team Productivity.
+# কয়েকটি Pro Tip
+
+- **একটি কাজে একাধিক tool** ব্যবহার করে cross-check করুন—কোনো single model-এর output-এ blind trust নয়।
+- **SQL query production-এ যাওয়ার আগে** সবসময় validation ও test করুন।
+- **Sensitive data** (password, API key, credential) কখনো AI tool-এ paste করবেন না; placeholder ব্যবহার করুন।
+- **Long documentation**-এর জন্য Claude, দ্রুত technical fix-এর জন্য DeepSeek—সঠিক tool-এ সঠিক কাজ দিন।
+- AI-generated documentation **share করার আগে review** করুন।
+
+---
+
+# ৫ মিনিটের Quick Start
+
+### প্রথম মিনিট
+
+আপনার দৈনন্দিন কাজ শনাক্ত করুন—query optimization, documentation, research না analytics?
+
+### দ্বিতীয় মিনিট
+
+সেই কাজের জন্য সঠিক **primary tool** বেছে নিন (যেমন query-এর জন্য DeepSeek, documentation-এর জন্য Claude)।
+
+### তৃতীয় মিনিট
+
+**Golden Rules** মনে রাখুন—production-এর আগে test, secrets কখনো নয়, human validation বাধ্যতামূলক।
+
+### চতুর্থ মিনিট
+
+একটি **recommended workflow** নিন এবং আপনার প্রথম কাজে apply করুন।
+
+### পঞ্চম মিনিট
+
+একই কাজ **দুটি আলাদা tool-এ** চালিয়ে আউটপুট cross-check করুন।
+
+---
+
+## শেষ কথা
+
+এই ecosystem Database Operations, Reporting, Analytics, Documentation, Planning, Research, Visualization এবং Team Productivity-এর জন্য end-to-end support দেয়। কোনো tool-ই perfect নয়—**সঠিক কাজে সঠিক tool** ব্যবহার করলেই AI টিমের strength হয়ে ওঠে।
+
+[→ Part 1: **Claude ব্যবহারের ২৫টি সেটিংস ও অভ্যাস** — `Page1.md`](Page1.md)

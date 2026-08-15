@@ -4,6 +4,8 @@
 
 তাই Claude থেকে আরও consistent, structured এবং efficient output পেতে এই ২৫টি সেটিংস ও অভ্যাস জেনে রাখুন।
 
+[→ Part 2 দেখুন: **Database Team AI Ecosystem & Utilization Framework** — `Page2.md`](Page2.md)
+
 ---
 
 ## প্রথম অংশ: Setup ঠিক করুন
@@ -293,3 +295,5 @@ Project Instructions-এ আপনার:
 আর সবচেয়ে গুরুত্বপূর্ণ জিনিস হলো—**AI-কে শুধু প্রশ্ন করার বদলে workflow হিসেবে ব্যবহার করা।**
 
 তাহলেই Claude শুধু “উত্তর দেওয়ার tool” না হয়ে আপনার কাজের একটি structured collaborator হয়ে উঠতে পারে।
+
+[→ Part 2: **Database Team AI Ecosystem & Utilization Framework** — `Page2.md`](Page2.md)
