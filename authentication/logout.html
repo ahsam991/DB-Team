@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logging out — কাজকর্ম শিখ</title>
+<link rel="icon" href="/authentication/favicon.png" type="image/png">
+<link rel="stylesheet" href="/authentication/styles.css">
+</head>
+<body>
+  <div class="auth-card">
+    <div class="auth-logo">
+      <img src="/authentication/logo.png" alt="কাজকর্ম শিখ">
+      <div>
+        <div class="auth-title">Logging out</div>
+        <div class="auth-sub">কাজকর্ম শিখ — V2 Technologies</div>
+      </div>
+    </div>
+    <div class="loading" id="msg">Please wait…</div>
+  </div>
+  <script src="/authentication/supabase.js"></script>
+  <script src="/authentication/auth.js"></script>
+  <script>
+    (function () {
+      document.cookie.split(';').forEach(function (c) {
+        var name = c.split('=')[0].trim();
+        if (name.indexOf('sb-') === 0) {
+          document.cookie = name + '=; Path=/; Max-Age=0; SameSite=Lax';
+        }
+      });
+      AuthUtils.createSupabaseClient()
+        .then(function (supabase) {
+          return supabase.auth.signOut().catch(function () {});
+        })
+        .catch(function () {})
+        .finally(function () {
+          window.location.href = '/authentication/login.html';
+        });
+    })();
+  </script>
+</body>
+</html>

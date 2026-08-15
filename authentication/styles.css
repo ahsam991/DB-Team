@@ -1,0 +1,264 @@
+:root {
+  --amber: #d97a1f;
+  --teal: #1f7a5c;
+  --dark: #171512;
+  --bg: #faf6ee;
+  --bg-soft: #f1ead9;
+  --paper: #fffdf7;
+  --ink: #231b10;
+  --ink-soft: #574b38;
+  --muted: #8b7c63;
+  --line: rgba(35, 27, 16, 0.14);
+  --red: #c4453c;
+  --font-body: "Hind Siliguri", sans-serif;
+  --font-disp: "Fraunces", serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --radius: 20px;
+  --shadow: 0 26px 60px -30px rgba(35, 27, 16, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(217, 122, 31, 0.08), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(31, 122, 92, 0.08), transparent 40%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 36px 32px;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.auth-logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.auth-title {
+  font-family: var(--font-disp);
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.auth-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 24px;
+  letter-spacing: 0.04em;
+}
+
+.form-field {
+  margin-bottom: 16px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-field input:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(217, 122, 31, 0.15);
+}
+
+.form-error {
+  background: rgba(196, 69, 60, 0.1);
+  border: 1px solid rgba(196, 69, 60, 0.3);
+  color: var(--red);
+  font-size: 13px;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
+
+.btn {
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  border-radius: 12px;
+  background: var(--amber);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn:hover {
+  background: #c06a15;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn.teal {
+  background: var(--teal);
+}
+
+.btn.teal:hover {
+  background: #196b50;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+
+.btn.ghost:hover {
+  background: var(--bg-soft);
+}
+
+.btn.danger {
+  background: var(--red);
+}
+
+.btn.danger:hover {
+  background: #a83a32;
+}
+
+.auth-switch {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.auth-switch a {
+  color: var(--teal);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+.auth-msg {
+  font-size: 13px;
+  color: var(--teal);
+  text-align: center;
+  margin-top: 12px;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.user-row:last-child {
+  border-bottom: none;
+}
+
+.user-email {
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.user-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.user-del {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(196, 69, 60, 0.12);
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.user-del:hover {
+  background: rgba(196, 69, 60, 0.2);
+}
+
+.section-title {
+  font-family: var(--font-disp);
+  font-size: 17px;
+  font-weight: 700;
+  margin: 24px 0 12px;
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.loading {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  padding: 20px 0;
+}

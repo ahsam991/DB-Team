@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — কাজকর্ম শিখ</title>
+<link rel="icon" href="/authentication/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/authentication/styles.css">
+</head>
+<body>
+  <div class="auth-card">
+    <div class="auth-logo">
+      <img src="/authentication/logo.png" alt="কাজকর্ম শিখ">
+      <div>
+        <div class="auth-title">Login</div>
+        <div class="auth-sub">কাজকর্ম শিখ — V2 Technologies</div>
+      </div>
+    </div>
+    <form id="login-form" novalidate>
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" autofocus>
+      </div>
+      <div class="form-field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn" id="submit-btn">Login</button>
+    </form>
+    <div class="auth-switch">
+      Don't have an account? <a href="/authentication/signup.html">Sign up</a>
+    </div>
+  </div>
+
+  <script src="/authentication/supabase.js"></script>
+  <script src="/authentication/auth.js"></script>
+  <script>
+    (function () {
+      const form = document.getElementById('login-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const next = AuthUtils.getNext();
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        AuthUtils.clearError(form);
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!email || !password) {
+          AuthUtils.showError(form, 'Please enter your email and password.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Logging in…';
+
+        try {
+          const supabase = await AuthUtils.createSupabaseClient();
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+
+          const target = next === '/' ? '/' : next;
+          window.location.href = target;
+        } catch (err) {
+          let message = 'Login failed. Please try again.';
+          if (err && err.message) {
+            if (/Invalid login credentials/i.test(err.message)) {
+              message = 'Wrong email or password.';
+            } else if (/Email not confirmed/i.test(err.message)) {
+              message = 'Please confirm your email before logging in.';
+            } else {
+              message = err.message;
+            }
+          }
+          AuthUtils.showError(form, message);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Login';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

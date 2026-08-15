@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — কাজকর্ম শিখ</title>
+<link rel="icon" href="/authentication/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/authentication/styles.css">
+</head>
+<body>
+  <div class="auth-card" style="max-width: 560px;">
+    <div class="auth-logo">
+      <img src="/authentication/logo.png" alt="কাজকর্ম শিখ">
+      <div>
+        <div class="auth-title">Admin Panel</div>
+        <div class="auth-sub">User management — V2 Technologies</div>
+      </div>
+    </div>
+
+    <div id="loading" class="loading">Loading users…</div>
+
+    <div id="panel" style="display:none;">
+      <div class="section-title">Add a user</div>
+      <form id="add-form" novalidate>
+        <div class="form-field">
+          <label for="new-email">Email</label>
+          <input type="email" id="new-email" placeholder="user@example.com" required>
+        </div>
+        <div class="form-field">
+          <label for="new-password">Password</label>
+          <input type="text" id="new-password" placeholder="Temporary password" required>
+        </div>
+        <button type="submit" class="btn teal" id="add-btn">Add user</button>
+      </form>
+
+      <div class="section-title">Approved users</div>
+      <div id="user-list"></div>
+
+      <button type="button" class="btn ghost" id="logout-btn" style="margin-top:24px;">Log out</button>
+    </div>
+  </div>
+
+  <script src="/authentication/supabase.js"></script>
+  <script src="/authentication/auth.js"></script>
+  <script>
+    (function () {
+      const loading = document.getElementById('loading');
+      const panel = document.getElementById('panel');
+      const userList = document.getElementById('user-list');
+      const addForm = document.getElementById('add-form');
+      const logoutBtn = document.getElementById('logout-btn');
+
+      async function loadUsers() {
+        try {
+          const res = await fetch('/api/admin/users', { cache: 'no-store' });
+          const data = await res.json();
+          if (!res.ok) {
+            loading.textContent = data.error || 'Failed to load users.';
+            return;
+          }
+          renderUsers(data);
+        } catch (err) {
+          loading.textContent = 'Failed to load users.';
+        }
+      }
+
+      function renderUsers(users) {
+        loading.style.display = 'none';
+        panel.style.display = 'block';
+        userList.innerHTML = '';
+        if (!users.length) {
+          userList.innerHTML = '<div class="hint">No users yet.</div>';
+          return;
+        }
+        users.forEach((u) => {
+          const row = document.createElement('div');
+          row.className = 'user-row';
+          row.innerHTML =
+            '<div>' +
+            '<div class="user-email"></div>' +
+            '<div class="user-meta"></div>' +
+            '</div>' +
+            '<button class="user-del" type="button">Delete</button>';
+          row.querySelector('.user-email').textContent = u.email;
+          const created = u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '?';
+          row.querySelector('.user-meta').textContent = 'Joined ' + created;
+          row.querySelector('.user-del').addEventListener('click', () => deleteUser(u.id, u.email, row));
+          userList.appendChild(row);
+        });
+      }
+
+      async function deleteUser(id, email, row) {
+        if (!confirm('Delete user ' + email + '?')) return;
+        const res = await fetch('/api/admin/users', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id }),
+        });
+        if (res.ok) {
+          row.remove();
+        } else {
+          const data = await res.json().catch(() => ({}));
+          alert(data.error || 'Failed to delete user.');
+        }
+      }
+
+      addForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const email = document.getElementById('new-email').value.trim();
+        const password = document.getElementById('new-password').value;
+        const addBtn = document.getElementById('add-btn');
+
+        if (!email || !password) return;
+
+        addBtn.disabled = true;
+        addBtn.textContent = 'Adding…';
+        try {
+          const res = await fetch('/api/admin/users', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            alert(data.error || 'Failed to add user.');
+          } else {
+            document.getElementById('new-email').value = '';
+            document.getElementById('new-password').value = '';
+            await loadUsers();
+          }
+        } catch (err) {
+          alert('Failed to add user.');
+        } finally {
+          addBtn.disabled = false;
+          addBtn.textContent = 'Add user';
+        }
+      });
+
+      logoutBtn.addEventListener('click', async function () {
+        try {
+          const supabase = await AuthUtils.createSupabaseClient();
+          await supabase.auth.signOut();
+        } catch (err) {}
+        window.location.href = '/authentication/login.html';
+      });
+
+      loadUsers();
+    })();
+  </script>
+</body>
+</html>

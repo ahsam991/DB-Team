@@ -81,6 +81,46 @@ vercel
 
 ---
 
+## 🔐 Authentication (Supabase Auth — required for Vercel)
+
+The entire site is locked behind authentication. A Vercel **Routing Middleware** (`middleware.js`) validates the Supabase session cookie on every request and redirects unauthenticated visitors to `/authentication/login.html`. Without a valid login the site does not work.
+
+### Pages
+| Page | URL | Access |
+|------|-----|--------|
+| Login | `/authentication/login.html` | Public |
+| Sign up | `/authentication/signup.html` | Public |
+| Admin (manage users) | `/authentication/admin.html` | Admins only |
+| Log out | `/authentication/logout.html` | Public |
+
+### Vercel environment variables
+Set these in **Vercel → Project → Settings → Environment Variables** (Production + Preview):
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `SUPABASE_URL` | ✅ | Your Supabase project URL, e.g. `https://hgipkotrchoksdpuotjt.supabase.co` |
+| `SUPABASE_ANON_KEY` | ✅ | Public anon key — **Supabase → Project → Settings → API** |
+| `SUPABASE_SERVICE_ROLE_KEY` | ✅ | Service role key (server-side only, never exposed) for admin user management |
+| `ADMIN_EMAILS` | ✅ | Comma-separated emails allowed to access `/authentication/admin.html`, e.g. `admin@example.com,dev@example.com` |
+
+> ⚠️ The service role key bypasses RLS — keep it server-side only (used in `api/admin/users.js`, never in the browser).
+
+### How it works
+1. `middleware.js` runs on every request (except `/api/*`, login/signup and their assets). It reads the Supabase session cookie, calls `getUser()`, and redirects to `/login?next=<path>` when there is no valid session. Admin routes also require the email to be in `ADMIN_EMAILS`.
+2. `authentication/login.html` signs in with email + password and stores the session in cookies.
+3. `authentication/signup.html` creates an account (email + password). Existing admins can then approve/delete users from the Admin panel.
+4. `api/admin/users.js` (service role) lists, creates and deletes users — admin-only.
+5. `api/config.js` serves the public `SUPABASE_URL` + `SUPABASE_ANON_KEY` to the browser.
+
+### Local test
+Create a `.env.local` with the four variables above, then:
+```bash
+npx vercel dev
+```
+Open the printed local URL — you'll be redirected to the login page.
+
+---
+
 ## 🛠️ Development Notes
 
 This project was built with opencode and two custom skills:

@@ -13,6 +13,11 @@ graphify-out/
 # Editor / opencode
 node_modules/
 
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+
 # Logs
 *.log
 # ECRM source project (has secrets; keep local)

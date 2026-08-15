@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign up — কাজকর্ম শিখ</title>
+<link rel="icon" href="/authentication/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/authentication/styles.css">
+</head>
+<body>
+  <div class="auth-card">
+    <div class="auth-logo">
+      <img src="/authentication/logo.png" alt="কাজকর্ম শিখ">
+      <div>
+        <div class="auth-title">Sign up</div>
+        <div class="auth-sub">কাজকর্ম শিখ — V2 Technologies</div>
+      </div>
+    </div>
+    <form id="signup-form" novalidate>
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" autofocus>
+      </div>
+      <div class="form-field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="At least 6 characters" required minlength="6" autocomplete="new-password">
+      </div>
+      <div class="form-field">
+        <label for="confirm">Confirm password</label>
+        <input type="password" id="confirm" name="confirm" placeholder="Repeat password" required minlength="6" autocomplete="new-password">
+      </div>
+      <button type="submit" class="btn teal" id="submit-btn">Create account</button>
+      <div class="hint">After signing up, an admin must approve your access before you can log in.</div>
+    </form>
+    <div class="auth-switch">
+      Already have an account? <a href="/authentication/login.html">Login</a>
+    </div>
+  </div>
+
+  <script src="/authentication/supabase.js"></script>
+  <script src="/authentication/auth.js"></script>
+  <script>
+    (function () {
+      const form = document.getElementById('signup-form');
+      const submitBtn = document.getElementById('submit-btn');
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        AuthUtils.clearError(form);
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const confirm = document.getElementById('confirm').value;
+
+        if (!email || !password) {
+          AuthUtils.showError(form, 'Please fill in all fields.');
+          return;
+        }
+        if (password.length < 6) {
+          AuthUtils.showError(form, 'Password must be at least 6 characters.');
+          return;
+        }
+        if (password !== confirm) {
+          AuthUtils.showError(form, 'Passwords do not match.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Creating account…';
+
+        try {
+          const supabase = await AuthUtils.createSupabaseClient();
+          const { error } = await supabase.auth.signUp({ email, password });
+          if (error) throw error;
+
+          form.innerHTML =
+            '<div class="auth-msg">Account created! An admin will approve your access. ' +
+            'You can close this page or <a href="/authentication/login.html">go to login</a>.</div>';
+        } catch (err) {
+          let message = 'Sign up failed. Please try again.';
+          if (err && err.message) {
+            if (/already registered/i.test(err.message)) {
+              message = 'This email is already registered. Please login instead.';
+            } else {
+              message = err.message;
+            }
+          }
+          AuthUtils.showError(form, message);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Create account';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
