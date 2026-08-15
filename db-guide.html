@@ -3,251 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Database Team AI Ecosystem & Utilization Framework</title>
+<title>Database Team AI Ecosystem — কাজকর্ম শিখ</title>
+<meta name="description" content="কাজকর্ম শিখ · Database Team AI Ecosystem & Utilization Framework — ১৯টি AI tool, ৬টি workflow, Golden Rules।">
+<meta name="theme-color" content="#faf6ee">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hind+Siliguri:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0b0e12;
-    --bg-soft: #11161d;
-    --card: #161d26;
-    --card-hover: #1b2430;
-    --border: #26303d;
-    --text: #e6eaf1;
-    --muted: #8b97a8;
-    --accent: #3dd6a8;
-    --accent-2: #7fe0b4;
-    --amber: #f2b134;
-    --blue: #5aa2f0;
-    --radius: 16px;
-    --maxw: 1180px;
+  :root{
+    --bg:#faf6ee;
+    --bg-soft:#f1ead9;
+    --paper:#fffdf7;
+    --paper-2:#f7f1e3;
+    --ink:#231b10;
+    --ink-soft:#574b38;
+    --muted:#8b7c63;
+    --amber:#d97a1f;
+    --amber-2:#f2b134;
+    --teal:#1f7a5c;
+    --blue:#3b6fb6;
+    --red:#c4453c;
+    --line:rgba(35,27,16,.14);
+    --line-strong:rgba(35,27,16,.3);
+    --radius:16px;
+    --shadow:0 26px 60px -30px rgba(35,27,16,.35);
+    --shadow-sm:0 12px 28px -16px rgba(35,27,16,.28);
+    --font-body:"Hind Siliguri",sans-serif;
+    --font-disp:"Fraunces",serif;
+    --font-mono:"IBM Plex Mono",monospace;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
-  body {
-    font-family: "Hind Siliguri", "Inter", sans-serif;
-    background:
-      radial-gradient(1200px 600px at 80% -10%, rgba(61,214,168,.12), transparent 60%),
-      radial-gradient(900px 500px at -10% 20%, rgba(242,177,52,.08), transparent 55%),
-      var(--bg);
-    color: var(--text);
-    line-height: 1.75;
-    font-size: 17px;
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{
+    font-family:var(--font-body);background:var(--bg);color:var(--ink);
+    line-height:1.8;font-size:17px;overflow-x:hidden;
   }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  .en{color:var(--ink);font-weight:600}
+  a{color:inherit}
+
+  /* ---------- Topbar ---------- */
+  .top{position:sticky;top:0;z-index:100;background:rgba(250,246,238,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;text-decoration:none}
+  .brand .mark{width:32px;height:32px;border-radius:10px;background:var(--amber);color:#fff;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:15px;box-shadow:0 6px 16px -6px rgba(217,122,31,.6)}
+  nav.topnav{display:flex;gap:4px;align-items:center}
+  nav.topnav a{color:var(--ink-soft);text-decoration:none;font-size:14.5px;font-weight:500;padding:8px 14px;border-radius:999px;transition:all .2s}
+  nav.topnav a:hover{color:var(--ink);background:var(--paper-2)}
+  nav.topnav a.go{background:var(--amber);color:#fff;font-weight:600;box-shadow:0 8px 20px -10px rgba(217,122,31,.7)}
+  nav.topnav a.go:hover{transform:translateY(-1px)}
 
   /* ---------- Hero ---------- */
-  .hero { padding: 88px 0 56px; position: relative; overflow: hidden; }
-  .hero .badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(61,214,168,.12); color: var(--accent-2);
-    border: 1px solid rgba(61,214,168,.35);
-    padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 500;
-    letter-spacing: .4px; margin-bottom: 22px;
-  }
-  .hero h1 {
-    font-size: clamp(34px, 6vw, 56px); line-height: 1.18; font-weight: 700;
-    letter-spacing: -.5px; max-width: 880px;
-  }
-  .hero h1 em { font-style: normal; color: var(--accent-2); }
-  .hero p.lead {
-    margin-top: 20px; color: var(--muted); font-size: 19px; max-width: 660px; font-weight: 300;
-  }
-  .hero-stats {
-    display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap;
-  }
-  .stat {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 16px 22px; min-width: 140px;
-  }
-  .stat b { display: block; font-size: 28px; color: var(--accent-2); font-weight: 700; }
-  .stat span { font-size: 14px; color: var(--muted); }
+  .hero{position:relative;padding:72px 0 44px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(760px 380px at 78% -8%,rgba(31,122,92,.16),transparent 60%),radial-gradient(640px 360px at 6% 12%,rgba(242,177,52,.2),transparent 55%)}
+  .hero .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.45;pointer-events:none;animation:drift 14s ease-in-out infinite}
+  .hero .blob.b1{width:260px;height:260px;background:rgba(31,122,92,.35);top:-70px;right:8%}
+  .hero .blob.b2{width:220px;height:220px;background:rgba(242,177,52,.4);bottom:-50px;left:4%;animation-delay:-7s}
+  @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-20px)}}
+  .hero .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(31,122,92,.1);color:var(--teal);border:1px solid rgba(31,122,92,.3);padding:6px 14px;border-radius:999px;font-family:var(--font-mono);font-size:13px;font-weight:600;letter-spacing:.5px;animation:rise .7s .05s both}
+  .hero h1{font-family:var(--font-disp);font-weight:800;font-size:clamp(34px,6vw,56px);line-height:1.12;letter-spacing:-1px;max-width:880px;margin-top:22px;animation:rise .7s .15s both}
+  .hero h1 em{font-style:italic;color:var(--teal)}
+  .hero p.lead{margin-top:20px;color:var(--ink-soft);font-size:19px;max-width:660px;font-weight:300;animation:rise .7s .25s both}
+  .hero-stats{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;animation:rise .7s .35s both}
+  .stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 22px;min-width:130px;transition:all .3s}
+  .stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:rgba(217,122,31,.4)}
+  .stat b{display:block;font-family:var(--font-disp);font-size:30px;color:var(--teal);font-weight:800;line-height:1}
+  .stat span{font-size:13.5px;color:var(--muted);font-weight:500}
+  @keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 
   /* ---------- Layout ---------- */
-  .layout { display: grid; grid-template-columns: 250px 1fr; gap: 40px; padding-bottom: 80px; }
+  .layout{display:grid;grid-template-columns:250px 1fr;gap:40px;padding-bottom:80px}
 
   /* ---------- Sidebar ---------- */
-  nav.toc {
-    position: sticky; top: 24px; align-self: start;
-    background: var(--bg-soft); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 20px 18px; max-height: calc(100vh - 48px);
-    overflow-y: auto;
-  }
-  nav.toc h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 14px; font-weight: 600; }
-  nav.toc a {
-    display: block; color: var(--muted); text-decoration: none; font-size: 15px;
-    padding: 7px 10px; border-radius: 8px; border-left: 3px solid transparent;
-    transition: all .2s;
-  }
-  nav.toc a:hover { color: var(--text); background: var(--card); }
-  nav.toc a.active { color: var(--accent-2); border-left-color: var(--accent); background: rgba(61,214,168,.08); }
-  nav.toc .sub { padding-left: 14px; font-size: 14px; }
+  nav.toc{position:sticky;top:82px;align-self:start;background:var(--paper);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px 16px;max-height:calc(100vh - 100px);overflow-y:auto;box-shadow:var(--shadow-sm)}
+  nav.toc h3{font-family:var(--font-mono);font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;font-weight:600}
+  nav.toc a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14.5px;padding:7px 10px;border-radius:8px;border-left:3px solid transparent;transition:all .2s}
+  nav.toc a:hover{color:var(--ink);background:var(--paper-2)}
+  nav.toc a.active{color:var(--amber);border-left-color:var(--amber);background:rgba(217,122,31,.07);font-weight:600}
+  nav.toc .sub{padding-left:16px;font-size:14px}
 
   /* ---------- Sections ---------- */
-  .part { margin-bottom: 56px; }
-  .part-head {
-    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
-  }
-  .part-head .num {
-    flex-shrink: 0; width: 54px; height: 54px; border-radius: 14px;
-    display: grid; place-items: center; font-weight: 800; font-size: 22px;
-    font-family: "Inter", sans-serif;
-  }
-  .part-head h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 700; }
-  .part-head p { color: var(--muted); font-size: 15px; }
+  .part{margin-bottom:52px}
+  .part-head{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+  .part-head .num{flex-shrink:0;width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:22px;font-family:var(--font-mono)}
+  .part-head h2{font-family:var(--font-disp);font-size:clamp(22px,3vw,30px);font-weight:800}
+  .part-head p{color:var(--muted);font-size:15px}
+  .p1 .num{background:linear-gradient(135deg,var(--teal),#5fd4a4);color:#fff}
+  .p2 .num{background:linear-gradient(135deg,#3b6fb6,#7cc0ff);color:#fff}
+  .p3 .num{background:linear-gradient(135deg,#f0a35a,#ffd08c);color:#fff}
+  .p4 .num{background:linear-gradient(135deg,#8a5fb6,#c4a1f0);color:#fff}
+  .p5 .num{background:linear-gradient(135deg,#c4453c,#ff8c8c);color:#fff}
 
-  .p1 .num { background: linear-gradient(135deg,#3dd6a8,#7fe0b4); color: #0b1a13; }
-  .p2 .num { background: linear-gradient(135deg,#5aa2f0,#7cc0ff); color: #0c1522; }
-  .p3 .num { background: linear-gradient(135deg,#f0a35a,#ffd08c); color: #241507; }
-  .p4 .num { background: linear-gradient(135deg,#a78bfa,#c4b0ff); color: #120d26; }
-  .p5 .num { background: linear-gradient(135deg,#f25c5c,#ff8c8c); color: #24100f; }
-
-  .cards { display: grid; gap: 16px; }
-  .card {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 26px 28px; display: flex; gap: 20px; transition: transform .2s, border-color .2s;
-  }
-  .card:hover { transform: translateY(-2px); border-color: #3a4656; }
-  .card .idx {
-    flex-shrink: 0; font-family: "Inter", sans-serif; font-weight: 800; font-size: 22px;
-    color: var(--accent-2); opacity: .9; width: 42px; line-height: 1.2;
-  }
-  .card h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
-  .card p { color: var(--muted); font-size: 16px; font-weight: 300; }
-  .card p .en, .card h3 .en { color: var(--text); font-weight: 500; }
-  .card .tag {
-    display: inline-block; margin-top: 12px; font-size: 12.5px; font-weight: 500;
-    color: var(--accent-2); background: rgba(61,214,168,.1); border: 1px solid rgba(61,214,168,.25);
-    padding: 3px 10px; border-radius: 999px;
-  }
+  .cards{display:grid;gap:14px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;display:flex;gap:18px;transition:all .3s}
+  .card:hover{transform:translateY(-3px);border-color:rgba(217,122,31,.4);box-shadow:var(--shadow-sm)}
+  .card .idx{flex-shrink:0;font-family:var(--font-mono);font-weight:700;font-size:22px;color:var(--teal);opacity:.9;width:42px;line-height:1.2}
+  .card h3{font-size:20px;font-weight:700;margin-bottom:8px}
+  .card p{color:var(--ink-soft);font-size:16px;font-weight:300}
+  .card .tag{display:inline-block;margin-top:12px;font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--amber);background:rgba(217,122,31,.08);border:1px solid rgba(217,122,31,.3);padding:3px 10px;border-radius:999px}
 
   /* ---------- Best-for chips ---------- */
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-  .chips span {
-    font-size: 12.5px; font-weight: 500; border: 1px solid var(--border); border-radius: 999px;
-    padding: 4px 12px; color: var(--muted); background: var(--bg-soft);
-  }
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chips span{font-size:12.5px;font-weight:500;border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--ink-soft);background:var(--bg-soft)}
 
-  /* ---------- Callouts (Use When) ---------- */
-  .callout {
-    margin-top: 14px; border-left: 3px solid var(--accent); background: rgba(61,214,168,.06);
-    border-radius: 0 10px 10px 0; padding: 14px 18px; font-style: italic; color: var(--text);
-    font-size: 16px;
-  }
-  .callout .label {
-    display: block; font-style: normal; font-size: 12px; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--accent-2); font-weight: 600; margin-bottom: 4px;
-  }
+  /* ---------- Callouts ---------- */
+  .callout{margin-top:14px;border-left:3px solid var(--teal);background:rgba(31,122,92,.07);border-radius:0 10px 10px 0;padding:14px 18px;font-style:italic;color:var(--ink);font-size:16px}
+  .callout .label{display:block;font-style:normal;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--teal);font-weight:600;margin-bottom:4px}
 
   /* ---------- Workflows ---------- */
-  .flows { display: grid; gap: 16px; }
-  .flow {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 24px 26px;
-  }
-  .flow h3 { font-size: 19px; font-weight: 600; margin-bottom: 16px; color: var(--accent-2); }
-  .flow .chain { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-  .flow .chain span {
-    font-size: 13.5px; font-weight: 500; border: 1px solid var(--border); border-radius: 8px;
-    padding: 6px 12px; color: var(--muted); background: var(--bg-soft);
-  }
-  .flow .chain span.goal { background: var(--accent); color: #0b1a13; border-color: var(--accent); font-weight: 600; }
-  .flow .chain i { font-family: "Inter", sans-serif; font-style: normal; color: var(--accent); font-weight: 700; }
+  .flows{display:grid;gap:14px}
+  .flow{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;transition:all .3s}
+  .flow:hover{border-color:rgba(31,122,92,.4);transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+  .flow h3{font-family:var(--font-disp);font-size:20px;font-weight:800;margin-bottom:16px;color:var(--teal)}
+  .flow .chain{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+  .flow .chain span{font-size:13.5px;font-weight:500;border:1px solid var(--line-strong);border-radius:8px;padding:6px 12px;color:var(--ink-soft);background:var(--paper-2);transition:all .2s}
+  .flow .chain span:hover{border-color:var(--amber);color:var(--amber)}
+  .flow .chain span.goal{background:var(--teal);color:#fff;border-color:var(--teal);font-weight:600}
+  .flow .chain i{font-family:var(--font-mono);font-style:normal;color:var(--amber);font-weight:700;animation:arrowmove 2s ease-in-out infinite}
+  @keyframes arrowmove{0%,100%{transform:translateX(0);opacity:.6}50%{transform:translateX(5px);opacity:1}}
 
   /* ---------- Golden rules ---------- */
-  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-  .rule { background: var(--card); padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-start; }
-  .rule .ck { font-weight: 700; color: var(--accent-2); flex-shrink: 0; }
-  .rule .ck.no { color: #ff8c8c; }
-  .rule p { color: var(--text); font-size: 15.5px; font-weight: 500; }
-  .rule small { display: block; color: var(--muted); font-size: 13px; font-weight: 300; }
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line-strong);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
+  .rule{background:var(--paper);padding:20px 24px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start;transition:all .25s}
+  .rule:hover{background:var(--bg-soft)}
+  .rule .ck{font-family:var(--font-mono);font-weight:700;color:var(--teal);flex-shrink:0}
+  .rule .ck.no{color:var(--red)}
+  .rule p{color:var(--ink);font-size:15.5px;font-weight:600}
+  .rule small{display:block;color:var(--muted);font-size:13px;font-weight:300}
 
   /* ---------- Pro tips ---------- */
-  .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-  .tip {
-    background: linear-gradient(160deg, var(--card), var(--bg-soft));
-    border: 1px solid var(--border); border-radius: var(--radius); padding: 22px;
-    position: relative; overflow: hidden;
-  }
-  .tip::before {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-2), transparent);
-  }
-  .tip p { font-size: 15.5px; color: var(--muted); font-weight: 300; }
+  .tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+  .tip{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px;position:relative;overflow:hidden;transition:all .3s}
+  .tip:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+  .tip::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),var(--amber-2),transparent)}
+  .tip p{font-size:15.5px;color:var(--ink-soft);font-weight:300}
 
   /* ---------- Quick start ---------- */
-  .quick {
-    background: linear-gradient(160deg, #13201b, var(--bg-soft));
-    border: 1px solid var(--border); border-radius: var(--radius); padding: 34px 32px;
-  }
-  .quick h2 { margin-bottom: 22px; font-size: 24px; }
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; counter-reset: step; }
-  .step {
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
-    counter-increment: step; position: relative;
-  }
-  .step::before {
-    content: counter(step); position: absolute; top: -10px; left: 16px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #0b1a13;
-    font-family: "Inter", sans-serif; font-weight: 800; font-size: 13px;
-    width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center;
-  }
-  .step h4 { font-size: 15px; margin-bottom: 6px; }
-  .step p { font-size: 13.5px; color: var(--muted); font-weight: 300; }
+  .quick{background:linear-gradient(160deg,var(--paper),var(--bg-soft));border:1px solid var(--line-strong);border-radius:var(--radius);padding:32px 30px;box-shadow:var(--shadow-sm)}
+  .quick h2{font-family:var(--font-disp);font-size:24px;font-weight:800;margin-bottom:22px}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;counter-reset:step}
+  .step{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;counter-increment:step;position:relative;transition:all .3s}
+  .step:hover{border-color:rgba(217,122,31,.4);transform:translateY(-3px)}
+  .step::before{content:counter(step);position:absolute;top:-10px;left:16px;background:linear-gradient(135deg,var(--amber),var(--amber-2));color:#fff;font-family:var(--font-mono);font-weight:700;font-size:13px;width:26px;height:26px;border-radius:8px;display:grid;place-items:center}
+  .step h4{font-size:15px;margin-bottom:6px;font-weight:700}
+  .step p{font-size:13.5px;color:var(--muted);font-weight:300}
 
   /* ---------- Closing ---------- */
-  .closing {
-    margin-top: 48px; background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 36px; text-align: center;
-  }
-  .closing h2 { font-size: 26px; margin-bottom: 14px; }
-  .closing p { color: var(--muted); max-width: 720px; margin: 0 auto 12px; font-weight: 300; }
-  .closing .key {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 22px;
-  }
-  .closing .key span {
-    background: var(--bg-soft); border: 1px solid var(--border); border-radius: 999px;
-    padding: 8px 18px; font-size: 15px; font-weight: 500;
-  }
-  .closing .key span b { color: var(--accent-2); }
+  .closing{margin-top:48px;background:var(--paper);border:1px solid var(--line-strong);border-radius:var(--radius);padding:36px;text-align:center;box-shadow:var(--shadow-sm)}
+  .closing h2{font-family:var(--font-disp);font-size:26px;font-weight:800;margin-bottom:14px}
+  .closing p{color:var(--ink-soft);max-width:720px;margin:0 auto 12px;font-weight:300}
+  .closing .key{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}
+  .closing .key span{background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;padding:8px 18px;font-size:15px;font-weight:500}
+  .closing .key span b{color:var(--amber)}
 
-  footer { border-top: 1px solid var(--border); padding: 28px 0 40px; text-align: center; color: var(--muted); font-size: 14px; }
+  footer{border-top:1px solid var(--line);padding:28px 0 40px;text-align:center;color:var(--muted);font-size:14px}
 
   /* ---------- Back to top ---------- */
-  #top {
-    position: fixed; bottom: 26px; right: 26px; z-index: 50;
-    width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--border);
-    background: var(--card); color: var(--accent-2); font-size: 20px; cursor: pointer;
-    opacity: 0; pointer-events: none; transition: opacity .3s; font-family: "Inter", sans-serif;
-  }
-  #top.show { opacity: 1; pointer-events: auto; }
+  #top{position:fixed;bottom:24px;right:24px;z-index:90;width:48px;height:48px;border-radius:50%;border:none;background:var(--amber);color:#fff;font-size:20px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;box-shadow:0 10px 24px -10px rgba(217,122,31,.8);font-family:var(--font-mono)}
+  #top.show{opacity:1;pointer-events:auto}
+  #top:hover{transform:translateY(-3px)}
 
-  @media (max-width: 900px) {
-    .layout { grid-template-columns: 1fr; }
-    nav.toc { position: static; max-height: none; display: none; }
-    .hero { padding: 56px 0 40px; }
-    .rules { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 560px) {
-    body { font-size: 16px; }
-    .card { padding: 20px; }
-    .card .idx { font-size: 18px; width: 32px; }
-  }
+  [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  [data-reveal].in{opacity:1;transform:none}
+
+  @media (max-width:900px){.layout{grid-template-columns:1fr}nav.toc{position:static;max-height:none;display:none}.hero{padding:52px 0 32px}.rules{grid-template-columns:1fr}}
+  @media (max-width:560px){body{font-size:16px}.card{padding:20px}.card .idx{font-size:18px;width:32px}}
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
 
+<header class="top">
+  <div class="wrap topbar">
+    <a class="brand" href="index.html"><span class="mark">ক</span> কাজকর্ম শিখ</a>
+    <nav class="topnav">
+      <a href="index.html#hub">Documents</a>
+      <a href="claude-guide.html">Claude Guide</a>
+      <a class="go" href="index.html">Home →</a>
+    </nav>
+  </div>
+</header>
+
 <header class="hero">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
   <div class="wrap">
-    <div class="badge">✦ Database Team · Best Tool for Specific Task</div>
+    <div class="badge">✦ Database Team · Best Tool for Specific Task · Part 2</div>
     <h1>Database Team-এর জন্য <em>AI Ecosystem & Utilization Framework</em></h1>
     <p class="lead">"One Tool for Everything" নয় — প্রতিটি কাজের জন্য সঠিক AI tool বেছে নিন। ১৯টি tool, ৬টি workflow, Golden Rules ও Recommended Stack এক গাইডে।</p>
     <div class="hero-stats">
-      <div class="stat"><b>১৯</b><span>AI Tools</span></div>
-      <div class="stat"><b>৫</b><span>Sections</span></div>
-      <div class="stat"><b>৬</b><span>Workflows</span></div>
-      <div class="stat"><b>৫ মিনিট</b><span>Quick Start</span></div>
+      <div class="stat"><b data-count="19">0</b><span>AI Tools</span></div>
+      <div class="stat"><b data-count="5">0</b><span>Sections</span></div>
+      <div class="stat"><b data-count="6">0</b><span>Workflows</span></div>
+      <div class="stat"><b data-count="5">0</b><span>Min Quick Start</span></div>
     </div>
   </div>
 </header>
@@ -277,7 +229,7 @@
       </div>
       <div class="cards">
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">01</div>
           <div>
             <h3><span class="en">ChatGPT</span> — Prompt Engineering ও Documentation</h3>
@@ -286,7 +238,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">02</div>
           <div>
             <h3><span class="en">DeepSeek</span> — SQL Optimization ও Debugging</h3>
@@ -296,7 +248,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">03</div>
           <div>
             <h3><span class="en">Claude AI</span> — Large Documentation ও Long Context</h3>
@@ -305,7 +257,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">04</div>
           <div>
             <h3><span class="en">Gemini + NotebookLM</span> — Research ও Knowledge Base</h3>
@@ -314,7 +266,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">05</div>
           <div>
             <h3><span class="en">Qwen AI</span> — Small Tasks ও Quick Validation</h3>
@@ -324,7 +276,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">06</div>
           <div>
             <h3><span class="en">Arena AI</span> — Model Comparison ও Planning</h3>
@@ -345,7 +297,7 @@
       </div>
       <div class="cards">
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">07</div>
           <div>
             <h3><span class="en">Stitch AI</span> — Idea Visualization ও User Flow</h3>
@@ -354,7 +306,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">08</div>
           <div>
             <h3><span class="en">Figma AI</span> — UI/UX ও Dashboard Design</h3>
@@ -363,7 +315,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">09</div>
           <div>
             <h3><span class="en">Meigen AI</span> — Image Prompt ও Creative Concepts</h3>
@@ -372,7 +324,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">10</div>
           <div>
             <h3><span class="en">Canva AI</span> — Presentation ও Visual Documentation</h3>
@@ -392,7 +344,7 @@
       </div>
       <div class="cards">
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">11</div>
           <div>
             <h3><span class="en">GitHub Copilot</span> — SQL Writing ও Automation</h3>
@@ -401,7 +353,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">12</div>
           <div>
             <h3><span class="en">Cursor AI</span> — Project Understanding ও Refactoring</h3>
@@ -410,7 +362,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">13</div>
           <div>
             <h3><span class="en">Windsurf AI</span> — End-to-End Coding ও Prototyping</h3>
@@ -419,7 +371,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">14</div>
           <div>
             <h3><span class="en">Perplexity AI</span> — Research ও Latest Information</h3>
@@ -439,7 +391,7 @@
       </div>
       <div class="cards">
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">15</div>
           <div>
             <h3><span class="en">Julius AI</span> — Excel ও CSV Analysis</h3>
@@ -448,7 +400,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">16</div>
           <div>
             <h3><span class="en">Power BI Copilot</span> — Dashboard Analysis ও KPI Review</h3>
@@ -457,7 +409,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">17</div>
           <div>
             <h3><span class="en">Tableau Pulse AI</span> — Business Analytics ও Trend Detection</h3>
@@ -477,7 +429,7 @@
       </div>
       <div class="cards">
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">18</div>
           <div>
             <h3><span class="en">Otter AI</span> — Meeting Notes ও Transcription</h3>
@@ -486,7 +438,7 @@
           </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-reveal>
           <div class="idx">19</div>
           <div>
             <h3><span class="en">Fireflies AI</span> — Meeting Summary ও Follow-Up</h3>
@@ -501,23 +453,23 @@
     <!-- ================= WORKFLOWS ================= -->
     <section class="part" id="workflows">
       <div class="part-head">
-        <div class="num" style="background:linear-gradient(135deg,#3dd6a8,#7fe0b4);color:#0b1a13;">⚡</div>
+        <div class="num" style="background:linear-gradient(135deg,var(--teal),#5fd4a4);color:#fff;">⚡</div>
         <div><h2>Recommended Workflow</h2><p>কোন কাজে কোন tool-এর sequence</p></div>
       </div>
       <div class="flows">
-        <div class="flow"><h3>Query Optimization</h3><div class="chain"><span>Requirement</span><i>→</i><span>ChatGPT</span><i>→</i><span>DeepSeek</span><i>→</i><span>Validation</span><i>→</i><span class="goal">Production</span></div></div>
-        <div class="flow"><h3>Problem Solving</h3><div class="chain"><span>Problem</span><i>→</i><span>DeepSeek</span><i>→</i><span>Claude</span><i>→</i><span>ChatGPT Verify</span><i>→</i><span class="goal">Solution</span></div></div>
-        <div class="flow"><h3>Documentation</h3><div class="chain"><span>Requirement</span><i>→</i><span>ChatGPT</span><i>→</i><span>Claude</span><i>→</i><span>Arena Review</span><i>→</i><span class="goal">Final Doc</span></div></div>
-        <div class="flow"><h3>Research</h3><div class="chain"><span>References</span><i>→</i><span>NotebookLM</span><i>→</i><span>Gemini</span><i>→</i><span>Perplexity</span><i>→</i><span class="goal">Final Analysis</span></div></div>
-        <div class="flow"><h3>Dashboard & Analytics</h3><div class="chain"><span>Raw Data</span><i>→</i><span>Julius AI</span><i>→</i><span>Power BI Copilot</span><i>→</i><span class="goal">Dashboard</span></div></div>
-        <div class="flow"><h3>Visual Planning</h3><div class="chain"><span>Idea</span><i>→</i><span>Stitch AI</span><i>→</i><span>Figma AI</span><i>→</i><span>Canva AI</span><i>→</i><span class="goal">Presentation</span></div></div>
+        <div class="flow" data-reveal><h3>Query Optimization</h3><div class="chain"><span>Requirement</span><i>→</i><span>ChatGPT</span><i>→</i><span>DeepSeek</span><i>→</i><span>Validation</span><i>→</i><span class="goal">Production</span></div></div>
+        <div class="flow" data-reveal><h3>Problem Solving</h3><div class="chain"><span>Problem</span><i>→</i><span>DeepSeek</span><i>→</i><span>Claude</span><i>→</i><span>ChatGPT Verify</span><i>→</i><span class="goal">Solution</span></div></div>
+        <div class="flow" data-reveal><h3>Documentation</h3><div class="chain"><span>Requirement</span><i>→</i><span>ChatGPT</span><i>→</i><span>Claude</span><i>→</i><span>Arena Review</span><i>→</i><span class="goal">Final Doc</span></div></div>
+        <div class="flow" data-reveal><h3>Research</h3><div class="chain"><span>References</span><i>→</i><span>NotebookLM</span><i>→</i><span>Gemini</span><i>→</i><span>Perplexity</span><i>→</i><span class="goal">Final Analysis</span></div></div>
+        <div class="flow" data-reveal><h3>Dashboard & Analytics</h3><div class="chain"><span>Raw Data</span><i>→</i><span>Julius AI</span><i>→</i><span>Power BI Copilot</span><i>→</i><span class="goal">Dashboard</span></div></div>
+        <div class="flow" data-reveal><h3>Visual Planning</h3><div class="chain"><span>Idea</span><i>→</i><span>Stitch AI</span><i>→</i><span>Figma AI</span><i>→</i><span>Canva AI</span><i>→</i><span class="goal">Presentation</span></div></div>
       </div>
     </section>
 
     <!-- ================= GOLDEN RULES ================= -->
     <section class="part" id="rules">
       <div class="part-head">
-        <div class="num" style="background:linear-gradient(135deg,#f2b134,#f0a35a);color:#241507;">✓</div>
+        <div class="num" style="background:linear-gradient(135deg,var(--amber),var(--amber-2));color:#fff;">✓</div>
         <div><h2>Golden Rules</h2><p>Always follow</p></div>
       </div>
       <div class="rules">
@@ -533,30 +485,30 @@
     <!-- ================= RECOMMENDED STACK ================= -->
     <section class="part" id="stack">
       <div class="part-head">
-        <div class="num" style="background:linear-gradient(135deg,#5aa2f0,#7cc0ff);color:#0c1522;">◆</div>
+        <div class="num" style="background:linear-gradient(135deg,#3b6fb6,#7cc0ff);color:#fff;">◆</div>
         <div><h2>Recommended AI Stack</h2><p>কোন কাজে কোন tool set</p></div>
       </div>
       <div class="tips">
-        <div class="tip"><p><b>Daily Essentials</b><br>ChatGPT · DeepSeek · Claude · Gemini · NotebookLM</p></div>
-        <div class="tip"><p><b>Development</b><br>GitHub Copilot · Cursor · Windsurf</p></div>
-        <div class="tip"><p><b>Research</b><br>Perplexity · Gemini · NotebookLM</p></div>
-        <div class="tip"><p><b>Design</b><br>Stitch AI · Figma AI · Canva AI</p></div>
-        <div class="tip"><p><b>Analytics</b><br>Julius AI · Power BI Copilot · Tableau Pulse</p></div>
+        <div class="tip" data-reveal><p><b>Daily Essentials</b><br>ChatGPT · DeepSeek · Claude · Gemini · NotebookLM</p></div>
+        <div class="tip" data-reveal><p><b>Development</b><br>GitHub Copilot · Cursor · Windsurf</p></div>
+        <div class="tip" data-reveal><p><b>Research</b><br>Perplexity · Gemini · NotebookLM</p></div>
+        <div class="tip" data-reveal><p><b>Design</b><br>Stitch AI · Figma AI · Canva AI</p></div>
+        <div class="tip" data-reveal><p><b>Analytics</b><br>Julius AI · Power BI Copilot · Tableau Pulse</p></div>
       </div>
     </section>
 
     <!-- ================= PRO TIPS ================= -->
     <section class="part" id="tips">
       <div class="part-head">
-        <div class="num" style="background:linear-gradient(135deg,#f2b134,#f0a35a);color:#241507;">★</div>
+        <div class="num" style="background:linear-gradient(135deg,var(--amber),var(--amber-2));color:#fff;">★</div>
         <div><h2>কয়েকটি Pro Tip</h2><p>টিমের daily workflow-এর জন্য</p></div>
       </div>
       <div class="tips">
-        <div class="tip"><p>একটি কাজে <b>একাধিক tool</b> ব্যবহার করে cross-check করুন—কোনো single model-এর output-এ blind trust নয়।</p></div>
-        <div class="tip"><p><b>SQL query production-এ যাওয়ার আগে</b> সবসময় validation ও test করুন।</p></div>
-        <div class="tip"><p><b>Sensitive data</b> (password, API key, credential) কখনো AI tool-এ paste করবেন না; placeholder ব্যবহার করুন।</p></div>
-        <div class="tip"><p><b>Long documentation</b>-এর জন্য Claude, দ্রুত technical fix-এর জন্য DeepSeek—সঠিক tool-এ সঠিক কাজ দিন।</p></div>
-        <div class="tip"><p>AI-generated documentation <b>share করার আগে review</b> করুন।</p></div>
+        <div class="tip" data-reveal><p>একটি কাজে <b>একাধিক tool</b> ব্যবহার করে cross-check করুন—কোনো single model-এর output-এ blind trust নয়।</p></div>
+        <div class="tip" data-reveal><p><b>SQL query production-এ যাওয়ার আগে</b> সবসময় validation ও test করুন।</p></div>
+        <div class="tip" data-reveal><p><b>Sensitive data</b> (password, API key, credential) কখনো AI tool-এ paste করবেন না; placeholder ব্যবহার করুন।</p></div>
+        <div class="tip" data-reveal><p><b>Long documentation</b>-এর জন্য Claude, দ্রুত technical fix-এর জন্য DeepSeek—সঠিক tool-এ সঠিক কাজ দিন।</p></div>
+        <div class="tip" data-reveal><p>AI-generated documentation <b>share করার আগে review</b> করুন।</p></div>
       </div>
     </section>
 
@@ -575,9 +527,9 @@
     </section>
 
     <!-- ================= CLOSING ================= -->
-    <section class="closing" id="closing">
+    <section class="closing" id="closing" data-reveal>
       <h2>শেষ কথা</h2>
-      <p>এই ecosystem Database Operations, Reporting, Analytics, Documentation, Planning, Research, Visualization এবং Team Productivity-এর জন্য end-to-end support দেয়। কোনো tool-ই perfect নয়—<b style="color:var(--text)">সঠিক কাজে সঠিক tool</b> ব্যবহার করলেই AI টিমের strength হয়ে ওঠে।</p>
+      <p>এই ecosystem Database Operations, Reporting, Analytics, Documentation, Planning, Research, Visualization এবং Team Productivity-এর জন্য end-to-end support দেয়। কোনো tool-ই perfect নয়—<b style="color:var(--ink)">সঠিক কাজে সঠিক tool</b> ব্যবহার করলেই AI টিমের strength হয়ে ওঠে।</p>
       <div class="key">
         <span><b>Best Tool</b> — for specific task</span>
         <span><b>19 Tools</b> — mapped</span>
@@ -590,29 +542,31 @@
 </div>
 
 <footer>
-  <div class="wrap">Page2.md · Database Team AI Ecosystem & Utilization Framework — একটি visual guide</div>
+  <div class="wrap">Page2.md · Database Team AI Ecosystem & Utilization Framework — একটি visual guide · <a href="index.html" style="color:var(--amber);text-decoration:none">কাজকর্ম শিখ</a></div>
 </footer>
 
 <button id="top" aria-label="Back to top">↑</button>
 
 <script>
-  const toc = document.getElementById("toc");
-  const links = [...toc.querySelectorAll("a")];
-  const sections = links.map(a => document.querySelector(a.getAttribute("href")));
-  const topBtn = document.getElementById("top");
+  const toc=document.getElementById("toc");
+  const links=[...toc.querySelectorAll("a")];
+  const sections=links.map(a=>document.querySelector(a.getAttribute("href")));
+  const topBtn=document.getElementById("top");
 
-  window.addEventListener("scroll", () => {
-    topBtn.classList.toggle("show", window.scrollY > 500);
-    let current = sections[0];
-    for (const sec of sections) {
-      if (sec && sec.getBoundingClientRect().top <= 120) current = sec;
-    }
-    links.forEach(l => {
-      l.classList.toggle("active", l.getAttribute("href") === "#" + current.id);
-    });
-  }, { passive: true });
+  window.addEventListener("scroll",()=>{
+    topBtn.classList.toggle("show",window.scrollY>500);
+    let current=sections[0];
+    for(const sec of sections){if(sec&&sec.getBoundingClientRect().top<=120)current=sec}
+    links.forEach(l=>{l.classList.toggle("active",l.getAttribute("href")==="#"+current.id)});
+  },{passive:true});
+  topBtn.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
 
-  topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.1,rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll("[data-reveal]").forEach(el=>io.observe(el));
+
+  const counters=document.querySelectorAll("[data-count]");
+  const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target,target=+el.dataset.count,dur=1100,start=performance.now();const tick=(now)=>{const p=Math.min((now-start)/dur,1);const ease=1-Math.pow(1-p,3);el.textContent=Math.round(target*ease);if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick);cio.unobserve(el)}}),{threshold:.6});
+  counters.forEach(el=>cio.observe(el));
 </script>
 </body>
 </html>
